@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>This is the HomeView</h1>
+  <h1>This is an login page</h1>
 </template>
 
 <style>
