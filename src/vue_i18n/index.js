@@ -20,7 +20,7 @@ const messages = {
 }
 
 const i18n = createI18n({
-    locale: 'en', // 使用的语言，这里默认为zh中文
+    locale: 'en', // 使用的语言，这里默认为en英文
     legacy: false,
     messages,
 })

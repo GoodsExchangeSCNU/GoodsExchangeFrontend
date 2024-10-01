@@ -1,1 +1,15 @@
-{}
+{
+  "username_input": "Username: ",
+  "password_input": "Password: ",
+  "reenter_password_input": "Reenter_password: ",
+  "login_button": "Login",
+  "register_button": "Register",
+  "language_button": "Language Change to Chinese",
+  "login_failed": "Login failed, please check your username and password.",
+  "login_success": "Login success",
+  "input_empty": "Username or Password cannot be empty",
+  "password_not_match": "Twice passwords don't match.",
+  "register_success": "Register success, please login.",
+  "user_exist": "Username already exists",
+  "register_failed": "Register failed"
+}

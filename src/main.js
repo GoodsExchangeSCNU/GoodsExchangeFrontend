@@ -7,6 +7,8 @@ import router from './router'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
 import i18n from './vue_i18n/index.js'
+import ElementPlus from 'element-plus';
+
 
 axios.defaults.baseURL = "http://127.0.0.1:5000/api/v1.0"
 axios.defaults.withCredentials = true
@@ -26,5 +28,6 @@ router.beforeEach((to, from, next) => {
 app.use(router)
 app.use(VueAxios, axios)
 app.use(i18n)
+app.use(ElementPlus);
 
 app.mount('#app')
