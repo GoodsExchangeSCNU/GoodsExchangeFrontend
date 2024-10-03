@@ -60,7 +60,7 @@ const change_style = () => {
           <div><span>{{ t("login.website_name") }}</span></div>
         </h2>
         <p> </p>
-        <img src="@\assets\login_img.jpg" alt="Website icon">
+        <img src="@\assets\website_icon.jpg" alt="Website icon">
         <p>{{ t("login.has_account") }}</p>
         <button id="login" @click="change_style">{{ t("login.go_login") }}</button>
       </div>
@@ -69,7 +69,7 @@ const change_style = () => {
           <div><span>{{ t("login.website_name") }}</span></div>
         </h2>
         <p> </p>
-        <img src="@\assets\login_img.jpg" alt="Website icon">
+        <img src="@\assets\website_icon.jpg" alt="Website icon">
         <p>{{ t("login.no_account") }}</p>
         <button id="register" @click="change_style">{{ t("login.go_register") }}</button>
       </div>
@@ -119,13 +119,24 @@ const change_style = () => {
 
 .functional-container {
   background-color: #ffffff;
-  margin: auto auto auto 5%;
+  margin: 10% auto auto 5%;
   width: 650px;
   height: 415px;
   border-radius: 5px;
   /* 阴影 */
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   /* 相对定位 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.slogan-container {
+  margin: 10% auto auto 5%;
+  width: 650px;
+  height: 415px;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
