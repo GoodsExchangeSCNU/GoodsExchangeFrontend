@@ -8,8 +8,8 @@ import router from "@/router/index.js";
 
 import PatternCheck from "@/utils/pattern.js";
 
-const { t, locale } = useI18n(); // 解构出t函数和locale属性
-// t函数用于获取当前语言环境下的文本；locale属性用于获取当前语言环境
+const { t } = useI18n(); // 解构出t函数
+// t函数用于获取当前语言环境下的文本
 
 const form = reactive({
   username:"",

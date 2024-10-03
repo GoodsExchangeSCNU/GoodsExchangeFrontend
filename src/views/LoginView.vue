@@ -5,8 +5,8 @@ import { useI18n } from "vue-i18n";
 import RegisterBlock from '@/components/login/RegisterBlock.vue'
 import LoginBlock from '@/components/login/LoginBlock.vue'
 
-const { t, locale } = useI18n(); // 解构出t函数和locale属性
-// t函数用于获取当前语言环境下的文本；locale属性用于获取当前语言环境
+const { t } = useI18n(); // 解构出t函数
+// t函数用于获取当前语言环境下的文本
 
 let slide_tip = false
 let ref_style = ref({
@@ -85,7 +85,7 @@ const change_style = () => {
 }
 
 .slogan {
-  font-size: 35px;
+  font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
   background: #8e9aaf;

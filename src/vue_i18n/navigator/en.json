@@ -1,3 +1,7 @@
 {
-
+  "home_page":"Home",
+  "sell_page":"Sell",
+  "chat_page":"Message",
+  "personal_page": "Profile",
+  "change_language": "Change into Chinese"
 }
