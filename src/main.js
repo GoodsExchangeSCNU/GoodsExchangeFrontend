@@ -9,6 +9,8 @@ import axios from 'axios'
 import i18n from './vue_i18n/index.js'
 import ElementPlus from 'element-plus';
 
+import { ElMessage } from 'element-plus';
+
 
 axios.defaults.baseURL = "http://127.0.0.1:5000/api/v1.0"
 axios.defaults.withCredentials = true
@@ -20,6 +22,7 @@ router.beforeEach((to, from, next) => {
   // 如果没有token，并且当前目标页面不是登录页
   if (!localStorage.getItem("token") && to.path !== "/login") {
     next("/login");  // 重定向到登录页面
+    ElMessage.error("Please login first!")
   } else {
     next();  // 否则继续访问目标页面
   }

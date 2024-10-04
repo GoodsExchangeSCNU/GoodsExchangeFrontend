@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import ProfileView from '../views/ProfileView.vue'
+import SellView from "../views/SellView.vue";
+import MessageView from "../views/MessageView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,12 +21,25 @@ const router = createRouter({
     { // 登录与注册界面
       path: '/login',
       name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      // 组件惰性加载案例
       // component: () => import('../views/LoginView.vue')
       component: LoginView
-    }
+    },
+    { // 我的出售界面
+      path: '/sell',
+      name: 'sell',
+      component: SellView
+    },
+    { // 个人信息界面
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView
+    },
+    { // 聊天室列表界面
+      path: '/message',
+      name: 'message',
+      component: MessageView
+    },
   ]
 })
 

@@ -1,0 +1,10 @@
+{
+  "home_page":"我要购买",
+  "sell_page":"我要出售",
+  "chat_page":"我的消息",
+  "personal_page": "个人中心",
+  "change_language": "切换为英语",
+  "logout": "退出登录",
+  "personal_info": "个人信息",
+  "username_error": "头像信息获取失败"
+}

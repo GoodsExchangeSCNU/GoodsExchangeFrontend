@@ -1,128 +1,252 @@
 <script setup>
-import { reactive } from "vue";
+import { ref } from 'vue'
 import { useI18n } from "vue-i18n";
-import { ElMessage } from "element-plus";
 
-import axios from "axios";
-import router from "@/router/index.js";
+import RegisterBlock from '@/components/login/RegisterBlock.vue'
+import LoginBlock from '@/components/login/LoginBlock.vue'
 
-const { t, locale } = useI18n(); // 解构出t函数和locale属性
-// t函数用于获取当前语言环境下的文本；locale属性用于获取当前语言环境
+// 组件全局变量定义
+const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
+let slide_tip = false // 用于切换登录和注册表单的滑动提示
+let ref_style = ref({
+  transform: 'translateX(0%)'
+}) // 登录和注册表单的样式
+let show_change = ref(false) // 控制登录和注册表单的显示隐藏
+let loading_tip = ref(false) // 控制登录和注册表单的加载提示
 
-const form = reactive({
-  username:"",
-  password:"",
-  verifyPassword:""
-}) // 创建响应式对象，作为登录和注册时的表单数据
-
-const change = () => {
+// 组件全局函数定义
+function loading_seconds(seconds) {
   /**
-   * 切换语言环境
+   * 控制加载提示的显示时间
+   * @param {number} seconds 显示时间，单位为秒
    */
-  locale.value = locale.value === "en" ? "zh" : "en";
+  setTimeout(function () {
+    loading_tip.value = false
+  }, seconds * 1000);
 }
 
-const handleLoginClick = () => {
+function waiting_change(seconds) {
   /**
-   * 处理登录按钮点击事件
+   * 控制登录和注册表单的显示时间
+   * @param {number} seconds 显示时间，单位为秒
    */
-  if(form.username === "" || form.password === "" || form.verifyPassword === ""){
-    // 如果用户名或密码为空，则提示用户输入
-    ElMessage.error(t("login.input_empty"))
-    return;
-  }
-
-  else if (form.password !== form.verifyPassword){
-    // 如果两次输入的密码不一致，则提示用户
-    ElMessage.error(t("login.password_not_match"))
-    return;
-  }
-
-  axios.post("/user/login",{
-    username: form.username,
-    password: form.password,
-    confirm_password: form.verifyPassword
-  }).then(res => {
-    if(res.status === 200){
-      // 请求成功保存返回的token数据并跳转到首页
-      ElMessage.success(t("login.login_success"))
-      localStorage.setItem("token",res.data.access)
-      localStorage.setItem("refresh",res.data.refresh)
-      router.push("/home")
-    }
-    else{
-      // login登录API未自定义返回状态码，HTTP状态码非200时表示登录失败
-      ElMessage.error(t("login.login_failed"))
-    }
-  }).catch(res => {
-    console.log(res)
-    ElMessage.error(t("login.login_failed"))
-  })
+  setTimeout(function () {
+    show_change.value = !show_change.value
+  }, seconds * 1000)
 }
 
-const handleRegisterClick = () => {
+const change_style = () => {
   /**
-   * 处理注册按钮点击事件
+   * 控制登录和注册表单的切换
    */
-  if(form.username === "" || form.password === "" || form.verifyPassword === ""){
-    // 如果用户名或密码为空，则提示用户输入
-    ElMessage.error(t("login.input_empty"))
-  }
-  else if (form.password !== form.verifyPassword){
-    // 如果两次输入的密码不一致，则提示用户
-    ElMessage.error(t("login.password_not_match"))
-  }
-
-  axios.post("/user/register",{
-    username: form.username,
-    password: form.password,
-    confirm_password: form.verifyPassword
-  }).then(res => {
-    if(res.status === 200){
-      // 请求成功根据返回的code判断注册是否成功
-      if (res.data.code === 101){
-        // 如果返回的code为101，则表示用户已存在
-        ElMessage.error(t("login.user_exist"))
-      }
-      else if (res.data.code === 102){
-        // 如果返回的code为102，则表示因其他错误导致注册失败
-        ElMessage.success(t("login.register_failed"))
-      }
-      else if (res.data.code === 0){
-        // 注册成功
-        ElMessage.success(t("login.register_success"))
-      }
-    }
-    else{
-      ElMessage.error(t("login.register_failed"))
-    }
-  }).catch(res => {
-    console.log(res)
-    ElMessage.error(t("login.register_failed"))
-  })
+  loading_tip.value = true
+  waiting_change(0.2)
+  slide_tip = !slide_tip
+  ref_style.value.transform = slide_tip ? 'translateX(80%)' : 'translateX(0%)'
+  loading_seconds(0.4)
 }
 </script>
 
 <template>
-  <el-button @click="change">{{ t("login.language_button") }}</el-button>
-  <el-card style="width: 350px; margin: 100px auto">
-    <el-form
-        :model="form"
-        label-width="auto"
-    >
-      <el-form-item :label="t('login.username_input')">
-        <el-input v-model="form.username"/>
-      </el-form-item>
-      <el-form-item :label="t('login.password_input')">
-        <el-input v-model="form.password" type="password"/>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="handleLoginClick">{{t('login.login_button')}}</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div class="center-container">
+    <div class="slogan-container">
+      <!-- 标语展示板块 -->
+      <div class="slogan">Buy or sell second-hand goods</div>
+      <div class="slogan">Go on GoodsExchange!!!!!!!!!!</div>
+    </div>
+    <div class="functional-container">
+      <!-- 登录和注册板块 -->
+      <div class="form-box" :style="ref_style" v-loading=loading_tip element-loading-background="#83A7EA">
+        <div class="register-box" v-show=show_change>
+          <h1>register</h1>
+          <RegisterBlock />
+        </div>
+        <div class="login-box" v-show=!show_change>
+          <h1>login</h1>
+          <LoginBlock />
+        </div>
+      </div>
+      <!-- 左右显示内容 - 左 -->
+      <div class="con-box left">
+        <h2>{{ t("login.welcome") }}
+          <div><span>{{ t("login.website_name") }}</span></div>
+        </h2>
+        <p> </p>
+        <img src="@\assets\website_icon.jpg" alt="Website icon">
+        <p>{{ t("login.has_account") }}</p>
+        <button id="login" @click="change_style">{{ t("login.go_login") }}</button>
+      </div>
+      <!-- 左右显示内容 - 右 -->
+      <div class="con-box right">
+        <h2>{{ t("login.welcome") }}
+          <div><span>{{ t("login.website_name") }}</span></div>
+        </h2>
+        <p> </p>
+        <img src="@\assets\website_icon.jpg" alt="Website icon">
+        <p>{{ t("login.no_account") }}</p>
+        <button id="register" @click="change_style">{{ t("login.go_register") }}</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.slogan-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto 5% auto auto;
+}
 
+.slogan {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  background: #8e9aaf;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  animation: pulse 2s infinite;
+}
+
+/* 定义渐变颜色的动画 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.center-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #CAD9F1;
+}
+
+.functional-container {
+  background-color: #ffffff;
+  margin: 10% auto auto 5%;
+  width: 650px;
+  height: 415px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.slogan-container {
+  margin: 10% auto auto 5%;
+  width: 650px;
+  height: 415px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.form-box {
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  background-color: #83A7EA;
+  width: 320px;
+  height: 500px;
+  border-radius: 5px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  transition: 0.5s ease-in-out;
+}
+
+
+.register-box,
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 5px;
+}
+
+.con-box {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.con-box.left {
+  left: -2%;
+}
+
+.con-box.right {
+  right: -2%;
+}
+
+.con-box h2 {
+  color: #8e9aaf;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.con-box p {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #8e9aaf;
+  text-align: center;
+}
+
+.con-box span {
+  color: #83A7EA;
+}
+
+.con-box img {
+  width: 150px;
+  height: 150px;
+  opacity: 0.9;
+  margin: 40px 0;
+}
+
+.con-box button {
+  margin-top: 3%;
+  background-color: #fff;
+  color: #83A7EA;
+  border: 1px solid #83A7EA;
+  padding: 6px 10px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  outline: none;
+  cursor: pointer;
+}
+
+.con-box button:hover {
+  background-color: #83A7EA;
+  color: #fff;
+}
 </style>

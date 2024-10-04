@@ -4,7 +4,7 @@
 
 <template>
   <div class="center-container">
-    <h1>This is the HomeView</h1>
+    <h1>This is the SellView</h1>
   </div>
 </template>
 
