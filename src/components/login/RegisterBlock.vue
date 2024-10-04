@@ -7,30 +7,31 @@ import axios from "axios";
 
 import PatternCheck from "@/utils/pattern.js";
 
-const { t } = useI18n(); // 解构出t函数
-// t函数用于获取当前语言环境下的文本
-
+// 组件全局变量定义
+const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
 const form = reactive({
   username:"",
   password:"",
   verifyPassword:""
 }) // 创建响应式对象，作为登录和注册时的表单数据
 
+// 组件全局函数定义
 const handleRegisterClick = () => {
   /**
    * 处理注册按钮点击事件
    */
   if(form.username === "" || form.password === "" || form.verifyPassword === ""){
-    // 如果用户名或密码为空，则提示用户输入
+    // 如果用户名或密码为空，则提示用户输入账号密码
     ElMessage.error(t("login.input_empty"))
     return;
   }
   else if (form.password !== form.verifyPassword){
-    // 如果两次输入的密码不一致，则提示用户
+    // 如果两次输入的密码不一致，则提示用户两次输入的密码不一致
     ElMessage.error(t("login.password_not_match"))
     return;
   }
 
+  // 检查输入的用户名和密码是否合法
   let username_res = PatternCheck.username_check(form.username)
   let password_res = PatternCheck.password_check(form.password)
   if (!username_res.valid){
@@ -42,6 +43,7 @@ const handleRegisterClick = () => {
     return;
   }
 
+  // 发送注册请求
   axios.post("/user/register",{
     username: form.username,
     password: form.password,
@@ -72,6 +74,9 @@ const handleRegisterClick = () => {
 }
 
 const resetForm = () => {
+  /**
+   * 重置表单数据
+   */
   form.username = ""
   form.password = ""
   form.verifyPassword = ""

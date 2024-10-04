@@ -21,9 +21,7 @@ const router = createRouter({
     { // 登录与注册界面
       path: '/login',
       name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      // 组件惰性加载案例
       // component: () => import('../views/LoginView.vue')
       component: LoginView
     },
