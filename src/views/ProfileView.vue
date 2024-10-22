@@ -5,7 +5,6 @@
 <template>
   <div class="center-container">
     <h1>This is the ProfileView</h1>
-    <el-avatar>??</el-avatar>
   </div>
 </template>
 
