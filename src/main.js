@@ -12,7 +12,7 @@ import ElementPlus from 'element-plus';
 import { ElMessage } from 'element-plus';
 
 
-axios.defaults.baseURL = "http://127.0.0.1:5000/api/v1.0"
+axios.defaults.baseURL = "/api"
 axios.defaults.withCredentials = true
 
 const app = createApp(App)
