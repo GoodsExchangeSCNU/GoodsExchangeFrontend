@@ -3,7 +3,7 @@ import { reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
 
-import axios from "axios";
+import axios from "../../axios_client/index.js";
 import router from "@/router/index.js";
 
 import PatternCheck from "@/utils/pattern.js";

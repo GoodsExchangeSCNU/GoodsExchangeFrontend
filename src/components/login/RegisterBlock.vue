@@ -3,9 +3,12 @@ import { reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
 
-import axios from "axios";
+import axios from "../../axios_client/index.js";
 
 import PatternCheck from "@/utils/pattern.js";
+
+// 组件向父组件传递事件定义
+const emit = defineEmits(["registerSuccess"]);
 
 // 组件全局变量定义
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
@@ -62,6 +65,7 @@ const handleRegisterClick = () => {
       else if (res.data.code === 0){
         // 注册成功
         ElMessage.success(t("login.register_success"))
+        emit("registerSuccess")
       }
     }
     else{

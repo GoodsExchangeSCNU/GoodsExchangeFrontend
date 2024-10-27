@@ -45,6 +45,10 @@ const change_style = () => {
   ref_style.value.transform = slide_tip ? 'translateX(80%)' : 'translateX(0%)'
   loading_seconds(0.4)
 }
+
+const handleRegisterSuccess = () => {
+  change_style();
+}
 </script>
 
 <template>
@@ -59,7 +63,7 @@ const change_style = () => {
       <div class="form-box" :style="ref_style" v-loading=loading_tip element-loading-background="#83A7EA">
         <div class="register-box" v-show=show_change>
           <h1>register</h1>
-          <RegisterBlock />
+          <RegisterBlock @registerSuccess="handleRegisterSuccess"/>
         </div>
         <div class="login-box" v-show=!show_change>
           <h1>login</h1>

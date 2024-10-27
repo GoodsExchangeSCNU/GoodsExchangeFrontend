@@ -7,19 +7,23 @@ import other_en from './other/en.json' assert {type: "json"}
 import other_zh from './other/zh.json' assert {type: "json"}
 import navigator_en from './navigator/en.json' assert {type: "json"}
 import navigator_zh from './navigator/zh.json' assert {type: "json"}
+import axios_client_en from './axios_client/en.json' assert {type: "json"}
+import axios_client_zh from './axios_client/zh.json' assert {type: "json"}
 
 const messages = {
     en: {
         home: home_en,
         login: login_en,
         other: other_en,
-        navigator: navigator_en
+        navigator: navigator_en,
+        axios_client: axios_client_en
     },
     zh: {
         home: home_zh,
         login: login_zh,
         other: other_zh,
-        navigator: navigator_zh
+        navigator: navigator_zh,
+        axios_client: axios_client_zh
     }
 }
 

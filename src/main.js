@@ -5,15 +5,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import VueAxios from 'vue-axios'
-import axios from 'axios'
+import axios from './axios_client/index.js'
 import i18n from './vue_i18n/index.js'
 import ElementPlus from 'element-plus';
 
 import { ElMessage } from 'element-plus';
-
-
-axios.defaults.baseURL = "/api"
-axios.defaults.withCredentials = true
 
 const app = createApp(App)
 
