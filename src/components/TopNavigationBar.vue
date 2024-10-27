@@ -9,22 +9,34 @@ import axios from '../axios_client/index.js';
 const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
-const username = ref('');
-const avatar_char = computed(() => username.value.slice(0, 2).toUpperCase());
+let username = ref('');
+let avatar_char = computed(() => username.value.slice(0, 2).toUpperCase());
 
 // 获取用户名的函数
 const fetchUsername = async () => {
   try {
-    const res = await axios.get('/user/info');
-    if (res.data.code === 0) {
-      username.value = res.data.data.username;
-      console.log(`username: ${username.value}`);
-    } else {
-      console.log(res.data);
+    axios.get('/user/info').then((res) => {
+      if (res.status === 200) {
+        if (res.data.code === 0){
+          username.value = res.data.data.username;
+        }
+        else{
+          console.warn(res.data);
+          ElMessage.error(t('navigator.username_error'));
+          username.value = '??';
+        }
+      } else {
+        console.warn(res.data);
+        ElMessage.error(t('navigator.username_error'));
+        username.value = '??';
+      }
+    }).catch((error) => {
+      console.error(error);
       ElMessage.error(t('navigator.username_error'));
       username.value = '??';
-    }
-  } catch (error) {
+    });
+  }
+  catch (error) {
     console.error(error);
     ElMessage.error(t('navigator.username_error'));
     username.value = '??';

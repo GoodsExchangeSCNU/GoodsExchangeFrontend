@@ -1,7 +1,8 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
+import { View, Hide } from '@element-plus/icons-vue';
 
 import axios from "../../axios_client/index.js";
 
@@ -17,6 +18,8 @@ const form = reactive({
   password:"",
   verifyPassword:""
 }) // 创建响应式对象，作为登录和注册时的表单数据
+const passwordVisible_first = ref(false); // 控制输入密码是否可见的状态
+const passwordVisible_second = ref(false); // 控制确认密码是否可见的状态
 
 // 组件全局函数定义
 const handleRegisterClick = () => {
@@ -85,19 +88,50 @@ const resetForm = () => {
   form.password = ""
   form.verifyPassword = ""
 }
+// 切换密码可见性
+const togglePasswordVisibilityFirst = () => {
+  passwordVisible_first.value = !passwordVisible_first.value;
+}
+
+const togglePasswordVisibilitySecond = () => {
+  passwordVisible_second.value = !passwordVisible_second.value;
+}
+
 </script>
 
 <template>
-  <el-card style="max-width: 350px">
+  <el-card style="max-width: 300px">
     <el-form :model="form" label-width="auto">
       <el-form-item :label="t('login.username_input')">
         <el-input v-model="form.username"/>
       </el-form-item>
       <el-form-item :label="t('login.password_input')">
-        <el-input v-model="form.password" type="password"/>
+        <el-input
+            v-model="form.password"
+            :type="passwordVisible_first ? 'text' : 'password'"
+            autocomplete="off"
+        >
+          <!-- 密码输入框右侧的眼睛图标 -->
+          <template #suffix>
+            <el-icon @click="togglePasswordVisibilityFirst">
+              <component :is="passwordVisible_first ? Hide : View" />
+            </el-icon>
+          </template>
+        </el-input>
       </el-form-item>
       <el-form-item :label="t('login.reenter_password_input')">
-        <el-input v-model="form.verifyPassword" type="password"/>
+        <el-input
+            v-model="form.verifyPassword"
+            :type="passwordVisible_second ? 'text' : 'password'"
+            autocomplete="off"
+        >
+          <!-- 密码输入框右侧的眼睛图标 -->
+          <template #suffix>
+            <el-icon @click="togglePasswordVisibilitySecond">
+              <component :is="passwordVisible_second ? Hide : View" />
+            </el-icon>
+          </template>
+        </el-input>
       </el-form-item>
     </el-form>
     <div class="register-button">

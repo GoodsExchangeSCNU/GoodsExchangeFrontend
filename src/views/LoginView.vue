@@ -47,6 +47,9 @@ const change_style = () => {
 }
 
 const handleRegisterSuccess = () => {
+  /**
+   * 注册成功后的回调函数，用于切换到登录表单
+   */
   change_style();
 }
 </script>
