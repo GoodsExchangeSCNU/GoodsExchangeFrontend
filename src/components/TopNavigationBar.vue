@@ -2,9 +2,9 @@
 import { onMounted, ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
-import { ElMessage } from 'element-plus';
+import { ChatLineRound, House, Sell, Switch, User } from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 import axios from '../axios_client/index.js';
-import {ChatLineRound, House, Sell, Switch, User} from "@element-plus/icons-vue";
 
 // 组件全局变量定义
 const { t, locale } = useI18n();

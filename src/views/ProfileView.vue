@@ -3,6 +3,9 @@ import {computed, onMounted, ref} from "vue";
 import axios from "@/axios_client/index.js";
 import { useI18n } from "vue-i18n";
 import { Sell, ShoppingTrolley, User} from "@element-plus/icons-vue";
+import PersonalData from "@/components/profile/PersonalData.vue";
+import PurchaseInfo from "@/components/profile/PurchaseInfo.vue";
+import SaleInfo from "@/components/profile/SaleInfo.vue";
 
 // 组件全局变量定义
 let username = ref("");
@@ -12,9 +15,14 @@ let contact = ref("");
 let facauty = ref(""); // 院系
 let dormitory = ref("");
 let avatar_char = computed(() => username.value.slice(0, 2).toUpperCase());
-let email_shown = computed(() => email.value === "" ? t("profile.detail_none_shown") : email.value);
-let dormitory_shown = computed(() => dormitory.value === "" ? t("profile.detail_none_shown") : dormitory.value);
+let email_shown = computed(
+    () => ((email.value === "") || (email.value === null)) ? t("profile.detail_none_shown") : email.value
+);
+let dormitory_shown = computed(
+    () => ((dormitory.value === "") || (dormitory.value === null)) ? t("profile.detail_none_shown") : dormitory.value
+);
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
+let activeIndex = ref("1"); // 控制显示的内容，初始化为个人数据页面
 
 // 组件全局函数定义
 onMounted(() => {
@@ -23,10 +31,10 @@ onMounted(() => {
       if (res.data.code === 0) {
         username.value = res.data.data.username;
         email.value = res.data.data.email;
-        student_id.value = res.data.data.student_id;
-        contact.value = res.data.data.contact;
-        facauty.value = res.data.data.facauty;
-        dormitory.value = res.data.data.dormitory;
+        student_id.value = res.data.data.profile.student_id;
+        contact.value = res.data.data.profile.contact;
+        facauty.value = res.data.data.profile.facauty;
+        dormitory.value = res.data.data.profile.dormitory;
       }
       else{
         console.warn("获取用户信息失败")
@@ -42,6 +50,7 @@ onMounted(() => {
 });
 
 const handleSelect = (key, keyPath) => {
+  activeIndex.value = key[0];
 
 }
 </script>
@@ -75,6 +84,7 @@ const handleSelect = (key, keyPath) => {
           <div class="selector-container">
             <h4>{{t("profile.more_info_title")}}</h4>
             <el-menu
+                default-active="1"
                 class="el-menu-vertical"
                 @select="handleSelect"
             >
@@ -95,7 +105,15 @@ const handleSelect = (key, keyPath) => {
         </div>
         <div class="empty-container"/>
         <div class="right-container">
-
+          <div v-if="activeIndex === '1'">
+            <PersonalData />
+          </div>
+          <div v-else-if="activeIndex === '2'">
+            <PurchaseInfo />
+          </div>
+          <div v-else-if="activeIndex === '3'">
+            <SaleInfo />
+          </div>
         </div>
       </div>
     </div>
