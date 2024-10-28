@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import axios from '../axios_client/index.js';
+import {ChatLineRound, House, Sell, Switch, User} from "@element-plus/icons-vue";
 
 // 组件全局变量定义
 const { t, locale } = useI18n();
@@ -114,12 +115,25 @@ watch(
     <el-menu-item index="0" disabled>
       <span class="logo_word">GoodsExchange</span>
     </el-menu-item>
-    <el-menu-item index="1">{{ t("navigator.home_page") }}</el-menu-item>
-    <el-menu-item index="2">{{ t("navigator.sell_page") }}</el-menu-item>
-    <el-menu-item index="3">{{ t("navigator.chat_page") }}</el-menu-item>
-    <el-menu-item index="4">{{ t("navigator.personal_page") }}</el-menu-item>
+    <el-menu-item index="1">
+      <el-icon><House /></el-icon>
+      <span>{{ t("navigator.home_page") }}</span>
+    </el-menu-item>
+    <el-menu-item index="2">
+      <el-icon><Sell /></el-icon>
+      <span>{{ t("navigator.sell_page") }}</span>
+    </el-menu-item>
+    <el-menu-item index="3">
+      <el-icon><ChatLineRound /></el-icon>
+      <span>{{ t("navigator.chat_page") }}</span>
+    </el-menu-item>
+    <el-menu-item index="4">
+      <el-icon><User /></el-icon>
+      <span>{{ t("navigator.personal_page") }}</span>
+    </el-menu-item>
     <el-menu-item index="5" @click="change_language">
-      {{ t("navigator.change_language") }}
+      <el-icon><Switch /></el-icon>
+      <span>{{ t("navigator.change_language") }}</span>
     </el-menu-item>
     <el-sub-menu index="6">
       <template #title>

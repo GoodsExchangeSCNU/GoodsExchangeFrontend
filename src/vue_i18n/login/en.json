@@ -24,5 +24,6 @@
   "password_only_letter_error": "Passwords cannot consist of only letters",
   "password_illegal_error": "The password can only contain numbers and letters",
   "username_length_error": "The username must be between 6 and 20 characters in length",
-  "username_illegal_error": "The user name can contain only numbers, letters, underscores (_), and minus (-)."
+  "username_illegal_error": "The user name can contain only numbers, letters, underscores (_), and minus (-).",
+  "login_first": "Please log in first"
 }

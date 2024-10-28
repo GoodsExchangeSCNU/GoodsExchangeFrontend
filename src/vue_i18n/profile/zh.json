@@ -1,3 +1,11 @@
 {
-  "personal_info_title": "个人信息"
+  "personal_info_title": "个人信息",
+  "detail_none_shown": "未设置",
+  "username": "用户ID",
+  "email": "邮箱",
+  "dormitory": "宿舍",
+  "personal_data": "个人资料 >",
+  "my_purchase": "我的购买 >",
+  "my_sale": "我的出售 >",
+  "more_info_title": "更多信息"
 }

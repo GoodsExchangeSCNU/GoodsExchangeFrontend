@@ -1,3 +1,11 @@
 {
-  "personal_info_title": "Personal Information"
+  "personal_info_title": "Personal Information",
+  "detail_none_shown": "None",
+  "username": "User ID",
+  "email": "Email",
+  "dormitory": "Dormitory",
+  "personal_data": "Personal Data >",
+  "my_purchase": "My Purchase >",
+  "my_sale": "My Sale >",
+  "more_info_title": "More Information"
 }
