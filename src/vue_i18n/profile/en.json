@@ -14,5 +14,7 @@
   "personal_data_title": "Your Profile",
   "edit_button": "Edit your profile",
   "save_button": "Save",
-  "cancel_button": "Cancel"
+  "cancel_button": "Cancel",
+  "info_updated_success": "Information updated successfully",
+  "info_updated_fail": "Information updated failed"
 }

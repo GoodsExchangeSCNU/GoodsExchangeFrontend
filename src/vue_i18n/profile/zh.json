@@ -14,5 +14,7 @@
   "personal_data_title": "个人资料",
   "edit_button": "编辑个人信息",
   "save_button": "保存",
-  "cancel_button": "取消"
+  "cancel_button": "取消",
+  "info_updated_success": "信息更新成功",
+  "info_updated_fail": "信息更新失败"
 }

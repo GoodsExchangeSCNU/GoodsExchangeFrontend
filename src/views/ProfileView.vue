@@ -51,12 +51,18 @@ onMounted(() => {
   })
 });
 
-const handleSelect = (key, keyPath) => {
+const handleSelect = (key) => {
   activeIndex.value = key[0];
 }
 
-const onUpdateSuccess = () => {
-
+const onUpdateSuccess = (updateData) => {
+  username.value = updateData.username;
+  email.value = updateData.email;
+  student_id.value = updateData.student_id;
+  contact.value = updateData.contact;
+  facauty.value = updateData.facauty;
+  dormitory.value = updateData.dormitory;
+  componentKey.value += 1;
 }
 
 </script>
@@ -74,14 +80,9 @@ const onUpdateSuccess = () => {
             <h4>{{t("profile.personal_info_title")}}</h4>
             <div class="info-block">
               <div class="info-column">
-                <p>{{t("profile.username")}}:</p>
-                <p>{{t("profile.email")}}:</p>
-                <p>{{t("profile.dormitory")}}:</p>
-              </div>
-              <div class="info-detail">
-                <p>{{username}}</p>
-                <p>{{email_shown}}</p>
-                <p>{{dormitory_shown}}</p>
+                <p><b>{{t("profile.username")}}</b>: {{username}}</p>
+                <p><b>{{t("profile.email")}}</b>: {{email_shown}}</p>
+                <p><b>{{t("profile.dormitory")}}</b>: {{dormitory_shown}}</p>
               </div>
             </div>
           </div>
@@ -218,15 +219,12 @@ h4 {
 }
 
 .info-column {
-  width: 40%;
   font-size: 16px;
   color: #333333;
 }
 
-.info-detail {
-  width: 60%;
-  font-size: 16px;
-  color: #666666;
+.info-column p b{
+  font-weight: bold !important;
 }
 
 .bottom-container {

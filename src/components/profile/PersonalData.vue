@@ -1,6 +1,9 @@
 <script setup>
-  import { onMounted, ref, reactive} from "vue";
+  import {onMounted, ref, reactive, computed} from "vue";
   import { useI18n } from "vue-i18n";
+  import { EditPen } from "@element-plus/icons-vue";
+  import axios from "@/axios_client/index.js";
+  import { ElMessage } from "element-plus";
 
   // 组件事件与属性定义
   const props = defineProps({
@@ -39,7 +42,24 @@
     dormitory: "",
   })
 
-  // 组件全局函数定义
+  const calendar = ref("null")
+  const selectDate = (val) => {
+    if (!calendar.value) return
+    calendar.value.selectDate(val)
+  }
+  let origin_avatar_char = computed(() => origin_form.username.slice(0, 2).toUpperCase());
+  let modify_avatar_char = computed(() => modify_form.username.slice(0, 2).toUpperCase());
+
+// 组件全局函数定义
+  function clearModifyInfo() {
+    modify_form.username = origin_form.username
+    modify_form.email = origin_form.email
+    modify_form.student_id = origin_form.student_id
+    modify_form.contact = origin_form.contact
+    modify_form.facauty = origin_form.facauty
+    modify_form.dormitory = origin_form.dormitory
+  }
+
   onMounted(() => {
     origin_form.username = props.username
     origin_form.email = props.email
@@ -61,17 +81,58 @@
   }
 
   const handleSave = () => {
+    axios.put("/user/update", {
+      username: modify_form.username,
+      email: modify_form.email,
+      profile: {
+        student_id: modify_form.student_id,
+        contact: modify_form.contact,
+        facauty: modify_form.facauty,
+        dormitory: modify_form.dormitory
+      }
+    }).then(res => {
+      if(res.status === 200){
+        if (res.data.code === 0) {
+          origin_form.username = res.data.data.username
+          origin_form.email = res.data.data.email
+          origin_form.student_id = res.data.data.profile.student_id
+          origin_form.contact = res.data.data.profile.contact
+          origin_form.facauty = res.data.data.profile.facauty
+          origin_form.dormitory = res.data.data.profile.dormitory
+          emits("updateSuccess", {
+            username: origin_form.username,
+            email: origin_form.email,
+            student_id: origin_form.student_id,
+            contact: origin_form.contact,
+            facauty: origin_form.facauty,
+            dormitory: origin_form.dormitory,
+          })
+          ElMessage.success(t("profile.info_updated_success"))
+          clearModifyInfo()
+        }
+        else{
+          console.warn("更新用户信息失败")
+          ElMessage.error(t("profile.info_updated_fail"))
+          clearModifyInfo()
+        }
+      }
+      else{
+        console.warn("更新用户信息失败")
+        ElMessage.error(t("profile.info_updated_fail"))
+        clearModifyInfo()
+      }
+    }).catch(res => {
+      console.warn("更新用户信息失败")
+      ElMessage.error(t("profile.info_updated_fail"))
+      console.warn(res)
+      clearModifyInfo()
+    })
     isEdit.value = false
   }
 
   const handleCancel = () => {
     isEdit.value = false
-    modify_username.value = origin_username.value
-    modify_email.value = origin_email.value
-    modify_student_id.value = origin_student_id.value
-    modify_contact.value = origin_contact.value
-    modify_facauty.value = origin_facauty.value
-    modify_dormitory.value = origin_dormitory.value
+    clearModifyInfo()
   }
 </script>
 
@@ -86,40 +147,109 @@
         <el-button @click="handleCancel">{{ t("profile.cancel_button") }}</el-button>
       </div>
       <div v-else>
-        <el-button type="primary" @click="handleEdit">{{ t("profile.edit_button") }}</el-button>
+
+        <el-button type="primary" @click="handleEdit">
+          <el-icon><EditPen /></el-icon>
+           {{ t("profile.edit_button") }}
+        </el-button>
       </div>
     </div>
-    <div class="profile-detail-block">
-      <div v-if="isEdit" class="edit-selector">
+    <div class="above-container">
+      <div class="profile-detail-block">
+        <div v-if="isEdit" class="edit-selector">
+          <div class="avatar-container">
+            <el-avatar :size="100" shape="square" class="avatar">{{modify_avatar_char}}</el-avatar>
+            <h3>{{username}}</h3>
+          </div>
+          <el-form :model="modify_form" label-position="top">
+            <el-form-item :label="t('profile.username')" >
+              <el-input v-model="modify_form.username"/>
+            </el-form-item>
+            <el-form-item :label="t('profile.email')">
+              <el-input v-model="modify_form.email"/>
+            </el-form-item>
+            <el-form-item :label="t('profile.student_id')">
+              <el-input v-model="modify_form.student_id"/>
+            </el-form-item>
+            <el-form-item :label="t('profile.contact')">
+              <el-input v-model="modify_form.contact"/>
+            </el-form-item>
+            <el-form-item :label="t('profile.facauty')">
+              <el-input v-model="modify_form.facauty"/>
+            </el-form-item>
+            <el-form-item :label="t('profile.dormitory')">
+              <el-input v-model="modify_form.dormitory"/>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div v-else class="edit-selector">
+          <div class="avatar-container">
+            <el-avatar :size="100" shape="square" class="avatar">{{origin_avatar_char}}</el-avatar>
+            <h3>{{username}}</h3>
+          </div>
+          <el-form :model="origin_form" label-position="top">
+            <el-form-item :label="t('profile.username')" >
+              <el-input v-model="origin_form.username" disabled/>
+            </el-form-item>
+            <el-form-item :label="t('profile.email')">
+              <el-input v-model="origin_form.email" disabled/>
+            </el-form-item>
+            <el-form-item :label="t('profile.student_id')">
+              <el-input v-model="origin_form.student_id" disabled/>
+            </el-form-item>
+            <el-form-item :label="t('profile.contact')">
+              <el-input v-model="origin_form.contact" disabled/>
+            </el-form-item>
+            <el-form-item :label="t('profile.facauty')">
+              <el-input v-model="origin_form.facauty" disabled/>
+            </el-form-item>
+            <el-form-item :label="t('profile.dormitory')">
+              <el-input v-model="origin_form.dormitory" disabled/>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+      <div class="other-info-block">
+        <el-calendar ref="calendar">
+          <template #header="{ date }">
+            <span class="date-string">{{ date }}</span>
+          </template>
+        </el-calendar>
+      </div>
+    </div>
+    <div class="rest-container">
 
-      </div>
-      <div v-else class="edit-selector">
-        <el-form :model="origin_form" label-position="top">
-          <el-form-item :label="t('profile.username')">
-            <el-input v-model="origin_form.username" disabled/>
-          </el-form-item>
-          <el-form-item :label="t('profile.email')">
-            <el-input v-model="origin_form.email" disabled/>
-          </el-form-item>
-          <el-form-item :label="t('profile.student_id')">
-            <el-input v-model="origin_form.student_id" disabled/>
-          </el-form-item>
-          <el-form-item :label="t('profile.contact')">
-            <el-input v-model="origin_form.contact" disabled/>
-          </el-form-item>
-          <el-form-item :label="t('profile.facauty')">
-            <el-input v-model="origin_form.facauty" disabled/>
-          </el-form-item>
-          <el-form-item :label="t('profile.dormitory')">
-            <el-input v-model="origin_form.dormitory" disabled/>
-          </el-form-item>
-        </el-form>
-      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.above-container {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  font-size: 40px;
+  background-color: #79b7f8;
+  color: #ffffff;
+}
+
+.edit-selector h3 {
+  margin-left: 10px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
 .personal-data-container {
   width: 100%;
   display: flex;
@@ -147,14 +277,44 @@
 
 .profile-detail-block {
   margin-top: 5%;
-  margin-left: 15%;
-  margin-right: 15%;
-  width: 70%;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 50%;
+}
+
+.other-info-block {
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 40%;
+  border-left: 1px solid #dcdcdc;
+  padding-left: 20px;
 }
 
 .edit-selector {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.el-form-item {
+  margin-bottom: 30px;
+}
+
+.date-string {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.rest-container {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-top: 1px solid #dcdcdc;
+  padding-top: 20px;
 }
 </style>
