@@ -51,21 +51,23 @@ onMounted(() => {
 
 const handleSelect = (key, keyPath) => {
   activeIndex.value = key[0];
+}
+
+const onUpdateSuccess = () => {
 
 }
+
 </script>
 
 <template>
   <div style="display: flex; justify-content: center; width: 100%" >
     <div class="center-container">
-      <div class="above-container">
-        <div class="avatar-info">
-          <el-avatar :size="100" shape="square" class="avatar">{{avatar_char}}</el-avatar>
-          <h3>{{username}}</h3>
-        </div>
-      </div>
       <div class="bottom-container">
         <div class="left-container">
+          <div class="avatar-info">
+            <el-avatar :size="100" shape="square" class="avatar">{{avatar_char}}</el-avatar>
+            <h3>{{username}}</h3>
+          </div>
           <div class="personal-info">
             <h4>{{t("profile.personal_info_title")}}</h4>
             <div class="info-block">
@@ -106,7 +108,15 @@ const handleSelect = (key, keyPath) => {
         <div class="empty-container"/>
         <div class="right-container">
           <div v-if="activeIndex === '1'">
-            <PersonalData />
+            <PersonalData
+                :username="username"
+                :contact="contact"
+                :student_id="student_id"
+                :facauty="facauty"
+                :email="email"
+                :dormitory="dormitory"
+                @updateSuccess="onUpdateSuccess"
+            />
           </div>
           <div v-else-if="activeIndex === '2'">
             <PurchaseInfo />
@@ -132,16 +142,25 @@ const handleSelect = (key, keyPath) => {
   margin-top: 50px;
 }
 
-.above-container {
+.avatar-info {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-.avatar-info {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start; /* 垂直居上 */
-  margin-bottom: 50px;
+.avatar-info::after {
+  content: "";
+  display: block;
+  width: 90%; /* 明确设置宽度 */
+  height: 1px;
+  background-color: #969494;
+  margin-top: 20px;
 }
+
 
 .avatar {
   font-size: 40px;
@@ -150,7 +169,6 @@ const handleSelect = (key, keyPath) => {
 }
 
 h3 {
-  margin-left: 20px;
   font-size: 32px;
   font-weight: bold;
 }
@@ -170,11 +188,21 @@ h4 {
 .personal-info::after {
   content: "";
   display: block;
+  width: 90%; /* 明确设置宽度 */
   height: 1px;
   background-color: #969494;
-  margin-left: 5%;
   margin-top: 20px;
-  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.selector-container::after {
+  content: "";
+  display: block;
+  width: 90%; /* 明确设置宽度 */
+  height: 1px;
+  background-color: #969494;
+  margin-top: 20px;
+  margin-left: 5%;
 }
 
 .info-block {
