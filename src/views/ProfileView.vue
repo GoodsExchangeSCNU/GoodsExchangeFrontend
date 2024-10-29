@@ -23,6 +23,7 @@ let dormitory_shown = computed(
 );
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
 let activeIndex = ref("1"); // 控制显示的内容，初始化为个人数据页面
+let componentKey = ref(0); // 用于强制刷新子组件
 
 // 组件全局函数定义
 onMounted(() => {
@@ -43,6 +44,7 @@ onMounted(() => {
     else{
       console.warn("获取用户信息失败")
     }
+    componentKey.value += 1;
   }).catch(res => {
     console.warn("获取用户信息失败")
     console.warn(res)
@@ -107,7 +109,7 @@ const onUpdateSuccess = () => {
         </div>
         <div class="empty-container"/>
         <div class="right-container">
-          <div v-if="activeIndex === '1'">
+          <div v-if="activeIndex === '1'" class="active-block">
             <PersonalData
                 :username="username"
                 :contact="contact"
@@ -115,13 +117,14 @@ const onUpdateSuccess = () => {
                 :facauty="facauty"
                 :email="email"
                 :dormitory="dormitory"
+                :key="componentKey"
                 @updateSuccess="onUpdateSuccess"
             />
           </div>
-          <div v-else-if="activeIndex === '2'">
+          <div v-else-if="activeIndex === '2'" class="active-block">
             <PurchaseInfo />
           </div>
-          <div v-else-if="activeIndex === '3'">
+          <div v-else-if="activeIndex === '3'" class="active-block">
             <SaleInfo />
           </div>
         </div>
@@ -266,5 +269,10 @@ h4 {
 .selector-container {
   margin-top: 20px;
   width: 100%;
+}
+
+.right-container .active-block {
+  width: 100%;
+  height: 100%;
 }
 </style>

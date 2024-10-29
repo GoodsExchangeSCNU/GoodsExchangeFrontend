@@ -4,8 +4,15 @@
   "username": "User ID",
   "email": "Email",
   "dormitory": "Dormitory",
+  "student_id": "Student ID",
+  "contact": "Contact",
+  "facauty": "Faculty",
   "personal_data": "Personal Data >",
   "my_purchase": "My Purchase >",
   "my_sale": "My Sale >",
-  "more_info_title": "More Information"
+  "more_info_title": "More Information",
+  "personal_data_title": "Your Profile",
+  "edit_button": "Edit your profile",
+  "save_button": "Save",
+  "cancel_button": "Cancel"
 }

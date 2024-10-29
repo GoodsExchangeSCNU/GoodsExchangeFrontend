@@ -4,8 +4,15 @@
   "username": "用户ID",
   "email": "邮箱",
   "dormitory": "宿舍",
+  "student_id": "学号",
+  "contact": "联系方式",
+  "facauty": "院系",
   "personal_data": "个人资料 >",
   "my_purchase": "我的购买 >",
   "my_sale": "我的出售 >",
-  "more_info_title": "更多信息"
+  "more_info_title": "更多信息",
+  "personal_data_title": "个人资料",
+  "edit_button": "编辑个人信息",
+  "save_button": "保存",
+  "cancel_button": "取消"
 }
