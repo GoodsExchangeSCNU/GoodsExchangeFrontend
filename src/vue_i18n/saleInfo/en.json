@@ -17,5 +17,8 @@
   "completed_intro": "After the seller sends the goods, the buyer confirms receipt of the goods and enters the completed state.",
   "shipped": "Shipped",
   "shipped_intro": "The seller will enter this state after confirming the sale and completing the shipment.",
-  "state_intro_title": "The State of the Order"
+  "state_intro_title": "The State of the Order",
+  "table_info_empty": "No transaction records",
+  "navigator_to_sell": "Sell something?",
+  "navigator_to_buy": "Buy something?"
 }

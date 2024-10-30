@@ -278,7 +278,7 @@ h4 {
 
 .bottom-container {
   display: grid;
-  grid-template-columns: 0.35fr 0.05fr 1fr;
+  grid-template-columns: 25% 2% 73%;
   width: 100%;
   height: 100%;
 }

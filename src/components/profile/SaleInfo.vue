@@ -71,7 +71,7 @@ const stateViewOff = () => {
     </div>
     <div class="divided-line"></div>
     <div class="table-block">
-      <TableInfo />
+      <TableInfo is-sell="true"/>
     </div>
     <el-dialog
       :title="t('saleInfo.state_intro_title')"
@@ -101,7 +101,9 @@ const stateViewOff = () => {
 
 <style scoped>
 .table-block {
-  width: 100%;
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 98%;
   margin-top: 20px;
 }
 
@@ -113,7 +115,7 @@ const stateViewOff = () => {
 
 h2 {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 650;
   margin-top: 10px;
   margin-bottom: 10px;
 }

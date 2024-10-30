@@ -17,6 +17,8 @@
   "completed_intro": "卖方发货之后买方确认收货，进入完成状态。",
   "shipped": "已发货",
   "shipped_intro": "卖家在确认出售之后，并完成发货后，将会进入此状态。",
-  "state_intro_title": "交易状态介绍"
-
+  "state_intro_title": "交易状态介绍",
+  "table_info_empty": "暂无交易记录",
+  "navigator_to_sell": "去卖点东西？",
+  "navigator_to_buy": "去买点东西？"
 }
