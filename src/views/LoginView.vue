@@ -55,45 +55,43 @@ const handleRegisterSuccess = () => {
 </script>
 
 <template>
-  <div style="display: flex; justify-content: center; width: 100%;">
-    <div class="center-container">
-      <div class="slogan-container">
-        <!-- 标语展示板块 -->
-        <div class="slogan">Buy or sell second-hand goods</div>
-        <div class="slogan">Go on GoodsExchange!!!!!!!!!!</div>
+  <div class="center-container">
+    <div class="slogan-container">
+      <!-- 标语展示板块 -->
+      <div class="slogan">Buy or sell second-hand goods</div>
+      <div class="slogan">Go on GoodsExchange!!!!!!!!!!</div>
+    </div>
+    <div class="functional-container">
+      <!-- 登录和注册板块 -->
+      <div class="form-box" :style="ref_style" v-loading=loading_tip element-loading-background="#83A7EA">
+        <div class="register-box" v-show=show_change>
+          <h1>register</h1>
+          <RegisterBlock @registerSuccess="handleRegisterSuccess"/>
+        </div>
+        <div class="login-box" v-show=!show_change>
+          <h1>login</h1>
+          <LoginBlock />
+        </div>
       </div>
-      <div class="functional-container">
-        <!-- 登录和注册板块 -->
-        <div class="form-box" :style="ref_style" v-loading=loading_tip element-loading-background="#83A7EA">
-          <div class="register-box" v-show=show_change>
-            <h1>register</h1>
-            <RegisterBlock @registerSuccess="handleRegisterSuccess"/>
-          </div>
-          <div class="login-box" v-show=!show_change>
-            <h1>login</h1>
-            <LoginBlock />
-          </div>
-        </div>
-        <!-- 左右显示内容 - 左 -->
-        <div class="con-box left">
-          <h2>{{ t("login.welcome") }}
-            <div><span>{{ t("login.website_name") }}</span></div>
-          </h2>
-          <p> </p>
-          <img src="@\assets\website_icon.jpg" alt="Website icon">
-          <p>{{ t("login.has_account") }}</p>
-          <button id="login" @click="change_style">{{ t("login.go_login") }}</button>
-        </div>
-        <!-- 左右显示内容 - 右 -->
-        <div class="con-box right">
-          <h2>{{ t("login.welcome") }}
-            <div><span>{{ t("login.website_name") }}</span></div>
-          </h2>
-          <p> </p>
-          <img src="@\assets\website_icon.jpg" alt="Website icon">
-          <p>{{ t("login.no_account") }}</p>
-          <button id="register" @click="change_style">{{ t("login.go_register") }}</button>
-        </div>
+      <!-- 左右显示内容 - 左 -->
+      <div class="con-box left">
+        <h2>{{ t("login.welcome") }}
+          <div><span>{{ t("login.website_name") }}</span></div>
+        </h2>
+        <p> </p>
+        <img src="@\assets\website_icon.jpg" alt="Website icon">
+        <p>{{ t("login.has_account") }}</p>
+        <button id="login" @click="change_style">{{ t("login.go_login") }}</button>
+      </div>
+      <!-- 左右显示内容 - 右 -->
+      <div class="con-box right">
+        <h2>{{ t("login.welcome") }}
+          <div><span>{{ t("login.website_name") }}</span></div>
+        </h2>
+        <p> </p>
+        <img src="@\assets\website_icon.jpg" alt="Website icon">
+        <p>{{ t("login.no_account") }}</p>
+        <button id="register" @click="change_style">{{ t("login.go_register") }}</button>
       </div>
     </div>
   </div>
@@ -135,7 +133,7 @@ const handleRegisterSuccess = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background-color: #CAD9F1;
   max-width: 1200px;
   min-width: 1200px;

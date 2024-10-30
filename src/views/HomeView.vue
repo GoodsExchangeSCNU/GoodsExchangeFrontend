@@ -8,12 +8,14 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .center-container{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  max-width: 1200px;
+  min-width: 1200px;
+  height: 100%;
   background-color: #CAD9F1;
 }
 </style>

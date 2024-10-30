@@ -71,77 +71,75 @@ const handleOtherSelect = (key) => {
 </script>
 
 <template>
-  <div style="display: flex; justify-content: center; width: 100%" >
-    <div class="center-container">
-      <div class="bottom-container">
-        <div class="left-container">
-          <div class="avatar-info">
-            <el-avatar :size="100" shape="square" class="avatar">{{avatar_char}}</el-avatar>
-            <h3>{{username}}</h3>
-          </div>
-          <div class="personal-info">
-            <h4>{{t("profile.personal_info_title")}}</h4>
-            <div class="info-block">
-              <div class="info-column">
-                <p><b>{{t("profile.username")}}</b>: {{username}}</p>
-                <p><b>{{t("profile.email")}}</b>: {{email_shown}}</p>
-                <p><b>{{t("profile.dormitory")}}</b>: {{dormitory_shown}}</p>
-              </div>
+  <div class="center-container">
+    <div class="bottom-container">
+      <div class="left-container">
+        <div class="avatar-info">
+          <el-avatar :size="100" shape="square" class="avatar">{{avatar_char}}</el-avatar>
+          <h3>{{username}}</h3>
+        </div>
+        <div class="personal-info">
+          <h4>{{t("profile.personal_info_title")}}</h4>
+          <div class="info-block">
+            <div class="info-column">
+              <p><b>{{t("profile.username")}}</b>: {{username}}</p>
+              <p><b>{{t("profile.email")}}</b>: {{email_shown}}</p>
+              <p><b>{{t("profile.dormitory")}}</b>: {{dormitory_shown}}</p>
             </div>
           </div>
-          <div class="selector-container">
-            <h4>{{t("profile.more_info_title")}}</h4>
-            <el-menu
-                default-active="1"
-                class="el-menu-vertical"
-                @select="handleSelect"
-            >
-              <el-menu-item index="1">
-                <el-icon><User /></el-icon>
-                <span>{{t("profile.personal_data")}}</span>
-              </el-menu-item>
-              <el-menu-item index="2">
-                <el-icon><ShoppingTrolley /></el-icon>
-                <span>{{t("profile.my_purchase")}}</span>
-              </el-menu-item>
-              <el-menu-item index="3">
-                <el-icon><Sell /></el-icon>
-                <span>{{t("profile.my_sale")}}</span>
-              </el-menu-item>
-            </el-menu>
-          </div>
-          <div class="other-container">
-            <h4>{{t("profile.setting_block_title")}}</h4>
-            <el-menu
-              class="el-menu-vertical"
-              @select="handleOtherSelect"
-            >
-              <el-menu-item index="1">
-                <el-icon><Lock /></el-icon>
-                <span>{{t("profile.change_password")}}</span>
-              </el-menu-item>
-            </el-menu>
-          </div>
         </div>
-        <div class="right-container">
-          <div v-if="activeIndex === '1'" class="active-block">
-            <PersonalData
-                :username="username"
-                :contact="contact"
-                :student_id="student_id"
-                :facauty="facauty"
-                :email="email"
-                :dormitory="dormitory"
-                :key="componentKey"
-                @updateSuccess="onUpdateSuccess"
-            />
-          </div>
-          <div v-else-if="activeIndex === '2'" class="active-block">
-            <PurchaseInfo />
-          </div>
-          <div v-else-if="activeIndex === '3'" class="active-block">
-            <SaleInfo />
-          </div>
+        <div class="selector-container">
+          <h4>{{t("profile.more_info_title")}}</h4>
+          <el-menu
+              default-active="1"
+              class="el-menu-vertical"
+              @select="handleSelect"
+          >
+            <el-menu-item index="1">
+              <el-icon><User /></el-icon>
+              <span>{{t("profile.personal_data")}}</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <el-icon><ShoppingTrolley /></el-icon>
+              <span>{{t("profile.my_purchase")}}</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <el-icon><Sell /></el-icon>
+              <span>{{t("profile.my_sale")}}</span>
+            </el-menu-item>
+          </el-menu>
+        </div>
+        <div class="other-container">
+          <h4>{{t("profile.setting_block_title")}}</h4>
+          <el-menu
+            class="el-menu-vertical"
+            @select="handleOtherSelect"
+          >
+            <el-menu-item index="1">
+              <el-icon><Lock /></el-icon>
+              <span>{{t("profile.change_password")}}</span>
+            </el-menu-item>
+          </el-menu>
+        </div>
+      </div>
+      <div class="right-container">
+        <div v-if="activeIndex === '1'" class="active-block">
+          <PersonalData
+              :username="username"
+              :contact="contact"
+              :student_id="student_id"
+              :facauty="facauty"
+              :email="email"
+              :dormitory="dormitory"
+              :key="componentKey"
+              @updateSuccess="onUpdateSuccess"
+          />
+        </div>
+        <div v-else-if="activeIndex === '2'" class="active-block">
+          <PurchaseInfo />
+        </div>
+        <div v-else-if="activeIndex === '3'" class="active-block">
+          <SaleInfo />
         </div>
       </div>
     </div>
@@ -158,6 +156,7 @@ const handleOtherSelect = (key) => {
   max-width: 1200px;
   min-width: 1200px;
   margin-top: 50px;
+  background-color: #CAD9F1;
 }
 
 .avatar-info {
