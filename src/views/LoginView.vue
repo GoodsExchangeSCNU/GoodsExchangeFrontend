@@ -55,7 +55,7 @@ const handleRegisterSuccess = () => {
 </script>
 
 <template>
-  <div style="display: flex; justify-content: center; width: 100%;">
+  <div class="basic-container">
     <div class="center-container">
       <div class="slogan-container">
         <!-- 标语展示板块 -->
@@ -100,6 +100,14 @@ const handleRegisterSuccess = () => {
 </template>
 
 <style scoped>
+.basic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #CAD9F1;
+}
+
 .slogan-container {
   display: flex;
   flex-direction: column;

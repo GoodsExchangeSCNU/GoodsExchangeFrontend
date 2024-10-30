@@ -71,7 +71,7 @@ const handleOtherSelect = (key) => {
 </script>
 
 <template>
-  <div style="display: flex; justify-content: center; width: 100%" >
+  <div class="basic-container">
     <div class="center-container">
       <div class="bottom-container">
         <div class="left-container">
@@ -149,6 +149,14 @@ const handleOtherSelect = (key) => {
 </template>
 
 <style scoped>
+.basic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #CAD9F1;
+}
+
 .center-container{
   display: flex;
   flex-direction: column;
