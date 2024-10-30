@@ -68,7 +68,6 @@ const onUpdateSuccess = (updateData) => {
 const handleOtherSelect = (key) => {
   
 }
-
 </script>
 
 <template>

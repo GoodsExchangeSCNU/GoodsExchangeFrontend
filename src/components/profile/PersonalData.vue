@@ -4,6 +4,7 @@
   import { EditPen } from "@element-plus/icons-vue";
   import axios from "@/axios_client/index.js";
   import { ElMessage } from "element-plus";
+  import PatternCheck from "@/utils/pattern.js";
 
   // 组件事件与属性定义
   const props = defineProps({
@@ -81,6 +82,11 @@
   }
 
   const handleSave = () => {
+    let username_res = PatternCheck.username_check(modify_form.username)
+    if (!username_res.valid){
+      ElMessage.error(t(username_res.error))
+      return;
+    }
     axios.put("/user/update", {
       username: modify_form.username,
       email: modify_form.email,
@@ -217,9 +223,7 @@
         </el-calendar>
       </div>
     </div>
-    <div class="rest-container">
-
-    </div>
+    <div class="rest-container" />
   </div>
 </template>
 

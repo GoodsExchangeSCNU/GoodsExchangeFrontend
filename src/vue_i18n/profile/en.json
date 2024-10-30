@@ -18,5 +18,7 @@
   "info_updated_success": "Information updated successfully",
   "info_updated_fail": "Information updated failed",
   "setting_block_title": "Basic Setting",
-  "change_password": "Change the password >"
+  "change_password": "Change the password >",
+  "purchase_info_title": "My Purchase",
+  "sell_info_title": "My Sale"
 }

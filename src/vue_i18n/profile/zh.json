@@ -18,5 +18,7 @@
   "info_updated_success": "信息更新成功",
   "info_updated_fail": "信息更新失败",
   "setting_block_title": "基本设置",
-  "change_password": "修改密码 >"
+  "change_password": "修改密码 >",
+  "purchase_info_title": "我的购买",
+  "sell_info_title": "我的出售"
 }
