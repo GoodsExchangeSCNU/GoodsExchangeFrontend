@@ -10,8 +10,8 @@
   const props = defineProps({
     username: String,
     email: String,
-    student_id: String,
-    contact: String,
+    student_id: Number,
+    contact: Number,
     facauty: String, // 院系
     dormitory: String,
     componentKey: Number,
@@ -28,8 +28,8 @@
   const origin_form = reactive({
     username: "",
     email: "",
-    student_id: "",
-    contact: "",
+    student_id: null,
+    contact: null,
     facauty: "",
     dormitory: "",
   })

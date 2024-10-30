@@ -2,10 +2,12 @@
 import {computed, onMounted, ref} from "vue";
 import axios from "@/axios_client/index.js";
 import { useI18n } from "vue-i18n";
-import { Sell, ShoppingTrolley, User, Lock } from "@element-plus/icons-vue";
+import { Sell, ShoppingTrolley, User, Lock, Setting } from "@element-plus/icons-vue";
 import PersonalData from "@/components/profile/PersonalData.vue";
 import PurchaseInfo from "@/components/profile/PurchaseInfo.vue";
 import SaleInfo from "@/components/profile/SaleInfo.vue";
+import PasswordDialog from "@/components/profile/PasswordDialog.vue";
+import SettingsDialog from "@/components/profile/SettingsDialog.vue";
 
 // 组件全局变量定义
 let username = ref("");
@@ -24,6 +26,8 @@ let dormitory_shown = computed(
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
 let activeIndex = ref("1"); // 控制显示的内容，初始化为个人数据页面
 let componentKey = ref(0); // 用于强制刷新子组件
+let passwordDialogVisible = ref(false); // 控制修改密码对话框的显示
+let settingsDialogVisible = ref(false); // 控制设置对话框的显示
 
 // 组件全局函数定义
 onMounted(() => {
@@ -66,7 +70,13 @@ const onUpdateSuccess = (updateData) => {
 }
 
 const handleOtherSelect = (key) => {
-  
+  if (key[0] === "1") {
+    passwordDialogVisible.value = true;
+  }
+  else if (key[0] === "2") {
+    settingsDialogVisible.value = true;
+  }
+  componentKey.value += 1;
 }
 </script>
 
@@ -120,6 +130,10 @@ const handleOtherSelect = (key) => {
                 <el-icon><Lock /></el-icon>
                 <span>{{t("profile.change_password")}}</span>
               </el-menu-item>
+              <el-menu-item index="2">
+                <el-icon><Setting /></el-icon>
+                <span>{{t("profile.settings")}}</span>
+              </el-menu-item>
             </el-menu>
           </div>
         </div>
@@ -142,6 +156,18 @@ const handleOtherSelect = (key) => {
           <div v-else-if="activeIndex === '3'" class="active-block">
             <SaleInfo />
           </div>
+          <PasswordDialog
+              :isPasswordDialogVisiable="passwordDialogVisible"
+              :key="componentKey"
+              @updateCancel="passwordDialogVisible = false"
+              @updateSuccess="passwordDialogVisible = false"
+          />
+          <SettingsDialog
+              :isSettingsDialogVisiable="settingsDialogVisible"
+              :key="componentKey"
+              @updateCancel="settingsDialogVisible = false"
+              @updateSuccess="settingsDialogVisible = false"
+          />
         </div>
       </div>
     </div>
