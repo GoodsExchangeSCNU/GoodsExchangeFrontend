@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import StateIcon from "@/components/profile/StateIcon.vue";
 import {Warning} from "@element-plus/icons-vue";
+import TableInfo from "@/components/profile/TableInfo.vue";
 
 // 组件全局变量定义
 const { t } = useI18n();
@@ -67,6 +68,10 @@ const stateViewOff = () => {
       <StateIcon :state="5" class="icon"/>
       <StateIcon :state="6" class="icon"/>
     </div>
+    <div class = "divided-line"></div>
+    <div class="table-block">
+      <TableInfo />
+    </div>
     <el-dialog
         :title="t('saleInfo.state_intro_title')"
         v-model=dialogVisible
@@ -90,11 +95,20 @@ const stateViewOff = () => {
       <h2>{{t("saleInfo.shipped")}}</h2>
       <p>{{t("saleInfo.shipped_intro")}}</p>
     </el-dialog>
-
   </div>
 </template>
 
 <style scoped>
+.table-block {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.divided-line {
+  width: 100%;
+  margin-top: 10px;
+  border-top: 1px solid #ebeef5;
+}
 .info-intro-icon {
   margin-left: 10px;
 }

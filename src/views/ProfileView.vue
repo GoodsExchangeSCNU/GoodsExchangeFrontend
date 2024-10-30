@@ -137,6 +137,7 @@ const handleOtherSelect = (key) => {
             </el-menu>
           </div>
         </div>
+        <div></div>
         <div class="right-container">
           <div v-if="activeIndex === '1'" class="active-block">
             <PersonalData
@@ -277,8 +278,7 @@ h4 {
 
 .bottom-container {
   display: grid;
-  grid-template-columns: 0.35fr 1fr;
-  gap: 30px;
+  grid-template-columns: 0.35fr 0.05fr 1fr;
   width: 100%;
   height: 100%;
 }
