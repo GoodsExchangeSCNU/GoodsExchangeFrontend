@@ -60,8 +60,10 @@ const handleLogout = () => {
   <el-dialog
       v-model="isVisiable"
       :title="t('profile.settings_title')"
-      width="20%"
+      width="30%"
       draggable
+      @close="cancelChangeSettings"
+      @closed="cancelChangeSettings"
   >
     <h4>{{t('profile.language_setting')}}</h4>
     <el-select

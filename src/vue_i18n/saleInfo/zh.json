@@ -1,0 +1,22 @@
+{
+  "latest_three_month": "最近三个月",
+  "latest_six_month": "最近半年",
+  "latest_one_year": "最近一年",
+  "all": "全部记录",
+  "init": "初始化",
+  "init_intro": "",
+  "withdrawn": "已撤回",
+  "withdrawn_intro": "111",
+  "purchase": "购买中",
+  "purchase_intro": "",
+  "sold": "已出售",
+  "sold_intro": "",
+  "declined": "已拒绝",
+  "declined_intro": "",
+  "completed": "已完成",
+  "completed_intro": "",
+  "shipped": "已发货",
+  "shipped_intro": "",
+  "state_intro_title": "交易状态介绍"
+
+}

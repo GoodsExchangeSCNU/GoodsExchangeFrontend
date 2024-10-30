@@ -11,6 +11,8 @@ import axios_client_en from './axios_client/en.json' assert {type: "json"}
 import axios_client_zh from './axios_client/zh.json' assert {type: "json"}
 import profile_en from './profile/en.json' assert {type: "json"}
 import profile_zh from './profile/zh.json' assert {type: "json"}
+import saleInfo_en from './saleInfo/en.json' assert {type: "json"}
+import saleInfo_zh from './saleInfo/zh.json' assert {type: "json"}
 
 const messages = {
     en: {
@@ -20,6 +22,7 @@ const messages = {
         navigator: navigator_en,
         axios_client: axios_client_en,
         profile: profile_en,
+        saleInfo: saleInfo_en
     },
     zh: {
         home: home_zh,
@@ -28,6 +31,7 @@ const messages = {
         navigator: navigator_zh,
         axios_client: axios_client_zh,
         profile: profile_zh,
+        saleInfo: saleInfo_zh
     }
 }
 

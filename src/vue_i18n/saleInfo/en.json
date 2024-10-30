@@ -1,0 +1,21 @@
+{
+  "latest_three_month": "Latest 3 month",
+  "latest_six_month": "Latest 6 month",
+  "latest_one_year": "Latest 1 year",
+  "all": "All record",
+  "init": "Initiated",
+  "init_intro": "111",
+  "withdrawn": "Withdrawn",
+  "withdrawn_intro": "",
+  "purchase": "Purchased",
+  "purchase_intro": "",
+  "sold": "Sold",
+  "sold_intro": "",
+  "declined": "Declined",
+  "declined_intro": "",
+  "completed": "Completed",
+  "completed_intro": "",
+  "shipped": "Shipped",
+  "shipped_intro": "",
+  "state_intro_title": "The State of the Order"
+}

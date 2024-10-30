@@ -84,8 +84,10 @@ const cancelChangePassword = () => {
   <el-dialog
     v-model="isVisiable"
     :title="t('profile.change_password_title')"
-    width="20%"
+    width="40%"
     draggable
+    @close="cancelChangePassword"
+    @closed="cancelChangePassword"
   >
     <el-form
       :model="form"

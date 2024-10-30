@@ -179,7 +179,7 @@ const handleOtherSelect = (key) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background-color: #CAD9F1;
 }
 
