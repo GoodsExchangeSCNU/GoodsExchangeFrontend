@@ -16,5 +16,7 @@
   "save_button": "保存",
   "cancel_button": "取消",
   "info_updated_success": "信息更新成功",
-  "info_updated_fail": "信息更新失败"
+  "info_updated_fail": "信息更新失败",
+  "setting_block_title": "基本设置",
+  "change_password": "修改密码 >"
 }

@@ -16,5 +16,7 @@
   "save_button": "Save",
   "cancel_button": "Cancel",
   "info_updated_success": "Information updated successfully",
-  "info_updated_fail": "Information updated failed"
+  "info_updated_fail": "Information updated failed",
+  "setting_block_title": "Basic Setting",
+  "change_password": "Change the password >"
 }

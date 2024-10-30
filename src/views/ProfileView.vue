@@ -2,7 +2,7 @@
 import {computed, onMounted, ref} from "vue";
 import axios from "@/axios_client/index.js";
 import { useI18n } from "vue-i18n";
-import { Sell, ShoppingTrolley, User} from "@element-plus/icons-vue";
+import { Sell, ShoppingTrolley, User, Lock } from "@element-plus/icons-vue";
 import PersonalData from "@/components/profile/PersonalData.vue";
 import PurchaseInfo from "@/components/profile/PurchaseInfo.vue";
 import SaleInfo from "@/components/profile/SaleInfo.vue";
@@ -65,6 +65,10 @@ const onUpdateSuccess = (updateData) => {
   componentKey.value += 1;
 }
 
+const handleOtherSelect = (key) => {
+  
+}
+
 </script>
 
 <template>
@@ -107,8 +111,19 @@ const onUpdateSuccess = (updateData) => {
               </el-menu-item>
             </el-menu>
           </div>
+          <div class="other-container">
+            <h4>{{t("profile.setting_block_title")}}</h4>
+            <el-menu
+              class="el-menu-vertical"
+              @select="handleOtherSelect"
+            >
+              <el-menu-item index="1">
+                <el-icon><Lock /></el-icon>
+                <span>{{t("profile.change_password")}}</span>
+              </el-menu-item>
+            </el-menu>
+          </div>
         </div>
-        <div class="empty-container"/>
         <div class="right-container">
           <div v-if="activeIndex === '1'" class="active-block">
             <PersonalData
@@ -138,9 +153,9 @@ const onUpdateSuccess = (updateData) => {
 .center-container{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* 水平居左 */
-  align-items: flex-start; /* 垂直居上 */
-  height: 100vh;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
   max-width: 1200px;
   min-width: 1200px;
   margin-top: 50px;
@@ -159,7 +174,7 @@ const onUpdateSuccess = (updateData) => {
 .avatar-info::after {
   content: "";
   display: block;
-  width: 90%; /* 明确设置宽度 */
+  width: 90%;
   height: 1px;
   background-color: #969494;
   margin-top: 20px;
@@ -192,7 +207,7 @@ h4 {
 .personal-info::after {
   content: "";
   display: block;
-  width: 90%; /* 明确设置宽度 */
+  width: 90%;
   height: 1px;
   background-color: #969494;
   margin-top: 20px;
@@ -202,7 +217,7 @@ h4 {
 .selector-container::after {
   content: "";
   display: block;
-  width: 90%; /* 明确设置宽度 */
+  width: 90%;
   height: 1px;
   background-color: #969494;
   margin-top: 20px;
@@ -214,8 +229,8 @@ h4 {
   margin-bottom: 5px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* 水平居左 */
-  align-items: flex-start; /* 垂直居上 */
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .info-column {
@@ -228,10 +243,9 @@ h4 {
 }
 
 .bottom-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start; /* 水平居左 */
-  align-items: flex-start; /* 垂直居上 */
+  display: grid;
+  grid-template-columns: 0.35fr 1fr;
+  gap: 30px;
   width: 100%;
   height: 100%;
 }
@@ -239,25 +253,19 @@ h4 {
 .left-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* 水平居左 */
-  align-items: flex-start; /* 垂直居上 */
-  width: 23%;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 100%;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-.empty-container {
-  width: 2%;
-}
-
 .right-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* 水平居左 */
-  align-items: flex-start; /* 垂直居上 */
-  width: 75%;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 100%;
   background-color: #ffffff;
   border-radius: 5px;
@@ -272,5 +280,10 @@ h4 {
 .right-container .active-block {
   width: 100%;
   height: 100%;
+}
+
+.other-container {
+  margin-top: 20px;
+  width: 100%;
 }
 </style>
