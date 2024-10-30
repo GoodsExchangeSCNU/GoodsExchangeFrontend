@@ -16,5 +16,7 @@
   "save_button": "保存",
   "cancel_button": "取消",
   "info_updated_success": "信息更新成功",
-  "info_updated_fail": "信息更新失败"
+  "info_updated_fail": "信息更新失败",
+  "purchase_info_title": "我的购买",
+  "sell_info_title": "我的出售"
 }

@@ -64,7 +64,6 @@ const onUpdateSuccess = (updateData) => {
   dormitory.value = updateData.dormitory;
   componentKey.value += 1;
 }
-
 </script>
 
 <template>

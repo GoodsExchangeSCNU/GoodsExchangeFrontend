@@ -16,5 +16,7 @@
   "save_button": "Save",
   "cancel_button": "Cancel",
   "info_updated_success": "Information updated successfully",
-  "info_updated_fail": "Information updated failed"
+  "info_updated_fail": "Information updated failed",
+  "purchase_info_title": "My Purchase",
+  "sell_info_title": "My Sale"
 }
