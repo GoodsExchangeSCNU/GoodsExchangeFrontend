@@ -71,7 +71,7 @@ const stateViewOff = () => {
     </div>
     <div class="divided-line"></div>
     <div class="table-block">
-      <TableInfo is-sell="true"/>
+      <TableInfo :is-sell="true" />
     </div>
     <el-dialog
       :title="t('saleInfo.state_intro_title')"
