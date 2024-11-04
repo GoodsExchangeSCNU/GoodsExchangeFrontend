@@ -36,5 +36,6 @@
   "event_operation_shipped": "Shipped",
   "event_operation_not_received": "Not Received",
   "event_operation_received": "Confirm Received",
-    "event_operation_agree": "Agree Trade"
+  "event_operation_agree": "Agree Trade",
+  "picture_load_failed": "Failed to load picture"
 }

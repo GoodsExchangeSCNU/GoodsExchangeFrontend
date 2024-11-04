@@ -36,5 +36,6 @@
   "event_operation_shipped": "已发货",
   "event_operation_not_received": "未收到",
   "event_operation_received": "确认收货",
-  "event_operation_agree": "同意交易"
+  "event_operation_agree": "同意交易",
+  "picture_load_failed": "图片加载失败"
 }
