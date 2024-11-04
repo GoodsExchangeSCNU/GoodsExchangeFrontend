@@ -20,5 +20,21 @@
   "state_intro_title": "The State of the Order",
   "table_info_empty": "No transaction records",
   "navigator_to_sell": "Sell something?",
-  "navigator_to_buy": "Buy something?"
+  "navigator_to_buy": "Buy something?",
+  "name_col_table": "Name",
+  "id_col_table": "Trade ID",
+  "price_col_table": "Price",
+  "picture_col_table": "Picture",
+  "buyer_col_table": "Buyer",
+  "seller_col_table": "Seller",
+  "state_col_table": "State",
+  "operation_col_table": "Operation",
+  "event_operation_None": "No operation is available",
+  "event_operation_reject": "Reject Trade",
+  "event_operation_purchase": "Purchase",
+  "event_operation_withdrawn": "Withdrawn Trade",
+  "event_operation_shipped": "Shipped",
+  "event_operation_not_received": "Not Received",
+  "event_operation_received": "Confirm Received",
+    "event_operation_agree": "Agree Trade"
 }

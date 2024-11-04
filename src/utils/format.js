@@ -2,6 +2,7 @@ const FormatObject = {
   formattedTransactionRecord: (recordList) => {
     let formattedRecordList;
     formattedRecordList = recordList.map(entry => ({
+      id: entry.id,
       name: entry.item.name,
       picture: entry.item.img,
       price: entry.item.price,

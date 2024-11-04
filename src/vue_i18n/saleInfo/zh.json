@@ -20,5 +20,21 @@
   "state_intro_title": "交易状态介绍",
   "table_info_empty": "暂无交易记录",
   "navigator_to_sell": "去卖点东西？",
-  "navigator_to_buy": "去买点东西？"
+  "navigator_to_buy": "去买点东西？",
+  "name_col_table": "名称",
+  "id_col_table": "交易ID",
+  "price_col_table": "价格",
+  "picture_col_table": "图片",
+  "buyer_col_table": "买家",
+  "seller_col_table": "卖家",
+  "state_col_table": "状态",
+  "operation_col_table": "操作",
+  "event_operation_None": "暂无可选操作",
+  "event_operation_reject": "拒绝交易",
+  "event_operation_purchase": "购买商品",
+  "event_operation_withdrawn": "撤回交易",
+  "event_operation_shipped": "已发货",
+  "event_operation_not_received": "未收到",
+  "event_operation_received": "确认收货",
+  "event_operation_agree": "同意交易"
 }
