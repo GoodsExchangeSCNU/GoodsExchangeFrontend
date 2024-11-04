@@ -11,7 +11,6 @@ const FormatObject = {
       state: entry.state,
       picture_list: entry.item.img.map((img) => decodeURIComponent(img))
     }));
-    console.log(formattedRecordList)
     return formattedRecordList;
   }
 }
