@@ -8,6 +8,7 @@ import axios from "../../axios_client/index.js";
 import router from "@/router/index.js";
 
 import PatternCheck from "@/utils/pattern.js";
+import WebSocketService from "@/utils/socket.js";
 
 // 组件全局变量定义
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
@@ -51,6 +52,7 @@ const handleLoginClick = () => {
       ElMessage.success(t("login.login_success"))
       localStorage.setItem("token",res.data.access)
       localStorage.setItem("refresh",res.data.refresh)
+      WebSocketService.init(form.username)
       router.push("/home")
     }
     else{
