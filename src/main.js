@@ -8,11 +8,11 @@ import VueAxios from 'vue-axios'
 import axios from './axios_client/index.js'
 import i18n from './vue_i18n/index.js'
 import ElementPlus from 'element-plus';
-
 import { ElMessage } from 'element-plus';
 
-const app = createApp(App)
+import WebSocketService from "@/socket_client/socket.js";
 
+const app = createApp(App)
 app.use(VueAxios, axios)
 app.use(i18n)
 app.use(ElementPlus);
@@ -27,6 +27,11 @@ router.beforeEach((to, from, next) => {
     next();  // 否则继续访问目标页面
   }
 });
+
+// 初始化websocket
+if (localStorage.getItem('userId')) {
+  WebSocketService.init(localStorage.getItem('userId'));
+}
 
 app.use(router)
 

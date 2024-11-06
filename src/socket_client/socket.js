@@ -9,6 +9,7 @@ const WebSocketService = {
   },
 
   init(userId) {
+    console.log('WebSocketService init')
     this.userId = userId;
     this.socket = new WebSocket(`ws://8.138.167.80:6699/ws/chat/${this.userId}/`);
     this.socket.onopen = () => {
@@ -22,6 +23,11 @@ const WebSocketService = {
 
     this.socket.onclose = () => {
       console.log('WebSocket connection closed');
+      // setTimeout(() => {
+      //   if (this.userId) {
+      //     this.init(this.userId); // 重新初始化连接
+      //   }
+      // }, 3000); // 等待3秒后重连
     };
   },
 
@@ -59,6 +65,14 @@ const WebSocketService = {
   on(type, callback) {
     if (this.callbacks[type]) {
       this.callbacks[type].push(callback);
+    }
+  },
+
+  close() {
+    if (this.socket) {
+      this.socket.close();  // 关闭 WebSocket 连接
+      this.socket = null;   // 清空 socket 实例以便重新连接
+      console.log('WebSocket connection manually closed');
     }
   }
 };

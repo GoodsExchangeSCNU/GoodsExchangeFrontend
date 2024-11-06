@@ -105,6 +105,7 @@
           origin_form.contact = res.data.data.profile.contact
           origin_form.facauty = res.data.data.profile.facauty
           origin_form.dormitory = res.data.data.profile.dormitory
+          localStorage.setItem("username", res.data.data.username)
           emits("updateSuccess", {
             username: origin_form.username,
             email: origin_form.email,

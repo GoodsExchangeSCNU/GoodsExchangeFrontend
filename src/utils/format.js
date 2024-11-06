@@ -4,12 +4,14 @@ const FormatObject = {
     formattedRecordList = recordList.map(entry => ({
       id: entry.id,
       name: entry.item.name,
-      picture: decodeURIComponent(entry.item.img[0]),
+      picture: decodeURIComponent(entry.item.img[0].image),
+      // picture: decodeURIComponent(entry.item.img[0]),
       price: entry.item.price,
       buyer: entry.buyer.username,
       seller: entry.seller.username,
       state: entry.state,
-      picture_list: entry.item.img.map((img) => decodeURIComponent(img))
+      picture_list: entry.item.img.map((img) => decodeURIComponent(img.image))
+      // picture_list: entry.item.img.map((img) => decodeURIComponent(img))
     }));
     return formattedRecordList;
   }
