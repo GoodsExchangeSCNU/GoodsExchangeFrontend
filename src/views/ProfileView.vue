@@ -282,7 +282,7 @@ h4 {
   display: grid;
   grid-template-columns: 25% 2% 73%;
   width: 100%;
-  height: 100%;
+  height: 900px;
 }
 
 .left-container {
