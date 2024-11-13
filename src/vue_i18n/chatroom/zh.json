@@ -1,5 +1,9 @@
 {
   "chat_room_top_bar": "聊天室列表",
   "select_chatroom": "请选择一个聊天室",
-  "none_chat_room": "当前没有聊天室"
+  "none_chat_room": "当前没有聊天室",
+  "system_sender": "系统",
+  "no_chat_room_message": "暂无聊天记录，开始你们的聊天吧！",
+  "no_chatroom": "暂无聊天室",
+  "new_chatroom": "您收到了一个新聊天室"
 }

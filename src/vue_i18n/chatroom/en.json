@@ -1,5 +1,9 @@
 {
   "chat_room_top_bar": "Chat Room List",
   "select_chatroom": "Please Select a chat room",
-  "none_chat_room": "No chat room currently"
+  "none_chat_room": "No chat room currently",
+  "system_sender": "System",
+  "no_chat_room_message": "There is no chat record. Let's start your chat!",
+  "no_chatroom": "No chat room",
+  "new_chatroom": "You have received a new chat room"
 }

@@ -96,13 +96,18 @@ const select_contact = (room) => {
             </div>
             <div class="room-list">
               <el-scrollbar height="600px" class="room-list-scrollbar">
-                <div v-for="room in roomList" :key="room.room_id">
-                  <el-card @click="select_contact(room)">
-                    <div class="card-info-person">
-                      <el-avatar :size="40" shape="square" class="small_avatar">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
-                      <p>{{room.contact}}</p>
-                    </div>
-                  </el-card>
+                <div v-if="roomList.length === 0">
+                  <h1 class="select-notice">{{t('chatroom.no_chatroom')}}</h1>
+                </div>
+                <div v-else>
+                  <div v-for="room in roomList" :key="room.room_id">
+                    <el-card @click="select_contact(room)">
+                      <div class="card-info-person">
+                        <el-avatar :size="40" shape="square" class="small_avatar">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
+                        <p>{{room.contact}}</p>
+                      </div>
+                    </el-card>
+                  </div>
                 </div>
               </el-scrollbar>
             </div>
@@ -123,6 +128,7 @@ const select_contact = (room) => {
                     :key="componentKey"
                     :item_id="selected_room_item_id"
                     :room_id="selected_room_id"
+                    :username="username"
                 />
               </div>
               <div class="input-container">

@@ -1,6 +1,13 @@
+import { ElMessage } from "element-plus";
+import i18n from './../vue_i18n/index.js';
+
 const onErrorMessage = (data) => {
     console.error(`WebSocket error with code ${data.code} \n ${data.message}`);
 };
+
+const onReceiveNotice = () => {
+    ElMessage.info(i18n.global.t('chatroom.new_chatroom'))
+}
 
 const WebSocketService = {
     userId: null,
@@ -9,7 +16,7 @@ const WebSocketService = {
         FetchChatroomlist: [],
         ReceiveNotice: [],
         FetchMessage: [],
-        ReceiveMessage: [],
+        ReceiveMessage: [onReceiveNotice],
         ErrorMessage: [onErrorMessage]
     },
     messageQueue: [],  // 添加消息队列
