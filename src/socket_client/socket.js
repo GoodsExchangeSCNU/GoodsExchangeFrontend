@@ -109,6 +109,7 @@ const WebSocketService = {
 
     sendMessage(content, tradeId) {
         this.send('sendmessage', { content, tradeid: tradeId });
+        console.log("send message");
     },
 
     getState() {

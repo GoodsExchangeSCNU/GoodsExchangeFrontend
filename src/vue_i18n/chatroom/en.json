@@ -5,5 +5,8 @@
   "system_sender": "System",
   "no_chat_room_message": "There is no chat record. Let's start your chat!",
   "no_chatroom": "No chat room",
-  "new_chatroom": "You have received a new chat room"
+  "new_chatroom": "You have received a new chat room",
+  "picture_upload_not_allow": "The picture upload is not allowed",
+  "please_input_message": "Please input message",
+  "send_message": "Send"
 }

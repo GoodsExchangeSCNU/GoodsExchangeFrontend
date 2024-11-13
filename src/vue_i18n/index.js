@@ -15,6 +15,8 @@ import saleInfo_en from './saleInfo/en.json' assert {type: "json"}
 import saleInfo_zh from './saleInfo/zh.json' assert {type: "json"}
 import chatroom_en from './chatroom/en.json' assert {type: "json"}
 import chatroom_zh from './chatroom/zh.json' assert {type: "json"}
+import emoji_en from './emoji/en.json' assert {type: "json"}
+import emoji_zh from './emoji/zh.json' assert {type: "json"}
 
 const messages = {
     en: {
@@ -25,7 +27,8 @@ const messages = {
         axios_client: axios_client_en,
         profile: profile_en,
         saleInfo: saleInfo_en,
-        chatroom: chatroom_en
+        chatroom: chatroom_en,
+        emoji: emoji_en
     },
     zh: {
         home: home_zh,
@@ -35,7 +38,8 @@ const messages = {
         axios_client: axios_client_zh,
         profile: profile_zh,
         saleInfo: saleInfo_zh,
-        chatroom: chatroom_zh
+        chatroom: chatroom_zh,
+        emoji: emoji_zh
     }
 }
 
