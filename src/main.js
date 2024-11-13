@@ -31,6 +31,7 @@ router.beforeEach((to, from, next) => {
 // 初始化websocket
 if (localStorage.getItem('userId')) {
   WebSocketService.init(localStorage.getItem('userId'));
+
 }
 
 app.use(router)

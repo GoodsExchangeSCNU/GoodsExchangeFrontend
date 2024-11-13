@@ -1,34 +1,79 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import {onMounted, ref, computed, onUnmounted} from "vue";
 import { useI18n } from "vue-i18n";
-import { RefreshRight, Search } from "@element-plus/icons-vue";
+import { RefreshRight } from "@element-plus/icons-vue";
 import WebSocketService from "@/socket_client/socket.js";
+import FormatObject from "@/utils/format.js";
+import axios from "@/axios_client/index.js";
+import ChatMessage from "@/components/chatroom/ChatMessage.vue";
+import InputBlock from "@/components/chatroom/InputBlock.vue";
+import ItemInfoBlock from "@/components/chatroom/ItemInfoBlock.vue";
 
 // 组件全局变量定义
 const { t } = useI18n();
 let avatar_char = computed(() => localStorage.getItem("username").slice(0, 2).toUpperCase());
 let username = ref(localStorage.getItem("username"));
-let search_input = ref("");
+let isRoomSelected = ref(false);
 let roomList = ref([]);
+let top_title_contact_name = ref("");
+let selected_room_item_id = ref("");
+let selected_room_id = ref("");
+let componentKey = ref(0); // 用于强制刷新子组件
+let item_info = ref({
+  name: "",
+  img: [],
+  id: "",
+  price: Number,
+});
 
 // 组件全局函数定义
 const handleChatroomList = (data) => {
   if (data.chatroomlist) {
-    roomList.value = data.chatroomlist;
+    roomList.value = FormatObject.formattedChatroomList(data.chatroomlist);
   }
 };
-WebSocketService.on("FetchChatroomlist", handleChatroomList);
 
 onMounted(() => {
   WebSocketService.fetchAllChatrooms();
+  WebSocketService.on("FetchChatroomlist", handleChatroomList);
+});
+
+onUnmounted(() => {
+  WebSocketService.off("FetchChatroomlist", handleChatroomList);
 });
 
 const fetch_room_list = () => {
   WebSocketService.fetchAllChatrooms();
 };
 
-const search_click = () => {
-  console.log(search_input.value);
+const select_contact = (room) => {
+  isRoomSelected.value = true;
+  top_title_contact_name.value = room.contact;
+  selected_room_item_id.value = room.item_id;
+  selected_room_id.value = room.room_id;
+  axios.get('/item', {
+    params: {
+      id: room.item_id
+    }
+  }).then((res) => {
+    if (res.status === 200) {
+      if (res.data.code === 0) {
+        item_info.value.id = res.data.data.id;
+        item_info.value.name = res.data.data.name;
+        item_info.value.price = res.data.data.price;
+        item_info.value.img = res.data.data.img;
+      }
+      else {
+        console.warn('获取购买记录失败')
+      }
+    }
+    else {
+      console.warn('获取购买记录失败')
+    }
+  }).catch(res => {
+    console.warn('获取购买记录失败')
+    console.warn(res)
+  })
 };
 </script>
 
@@ -42,13 +87,6 @@ const search_click = () => {
               <el-avatar :size="80" shape="square" class="avatar">{{avatar_char}}</el-avatar>
               <h3>{{username}}</h3>
             </div>
-            <div class="contact-search">
-              <el-input v-model="search_input" style="width: 240px" :placeholder="t('chatroom.search_input_placeholder')">
-                <template #prepend>
-                  <el-button :icon="Search" @click="search_click"/>
-                </template>
-              </el-input>
-            </div>
           </div>
           <div class="chat-room-list-block">
             <div class="room-list-top-bar">
@@ -59,10 +97,11 @@ const search_click = () => {
             <div class="room-list">
               <el-scrollbar height="600px" class="room-list-scrollbar">
                 <div v-for="room in roomList" :key="room.room_id">
-                  <el-card>
-                    <el-avatar :size="40" shape="square" class="small_avatar">{{room.seller.slice(0, 2).toUpperCase()}}</el-avatar>
-                    <p>{{room.seller}}</p>
-                    <el-button type="primary">{{t('chatroom.enter_chatroom')}}</el-button>
+                  <el-card @click="select_contact(room)">
+                    <div class="card-info-person">
+                      <el-avatar :size="40" shape="square" class="small_avatar">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
+                      <p>{{room.contact}}</p>
+                    </div>
                   </el-card>
                 </div>
               </el-scrollbar>
@@ -70,15 +109,44 @@ const search_click = () => {
           </div>
         </div>
         <div class="gap-block"></div>
-        <div class="right-container">
+        <div class="right-container-selected" v-if="isRoomSelected">
           <div class="communicator-info-block">
-
+            <div class="top-info-contact">
+              <el-avatar :size="80" shape="square" class="top_contact_avatar">{{top_title_contact_name.slice(0, 2).toUpperCase()}}</el-avatar>
+              <p>{{top_title_contact_name}}</p>
+            </div>
           </div>
-          <div class="chat-message-display-block">
-
+          <div class="detail-container">
+            <div class="chat-container">
+              <div class="chat-message-block">
+                <ChatMessage
+                    :key="componentKey"
+                    :item_id="selected_room_item_id"
+                    :room_id="selected_room_id"
+                />
+              </div>
+              <div class="input-container">
+                <InputBlock
+                    :key="componentKey"
+                    :item_id="selected_room_item_id"
+                    :room_id="selected_room_id"
+                />
+              </div>
+            </div>
+            <div class="item-picture-container">
+              <ItemInfoBlock
+                  :key="componentKey"
+                  :item_info="item_info"
+              />
+            </div>
           </div>
-          <div class="input-block">
-
+        </div>
+        <div class="right-container-unselected" v-else>
+          <div v-if="roomList.length === 0">
+            <h1 class="select-notice">{{t('chatroom.select_chatroom')}}</h1>
+          </div>
+          <div v-else>
+            <h1 class="select-notice">{{t('chatroom.select_chatroom')}}</h1>
           </div>
         </div>
       </div>
@@ -123,12 +191,27 @@ const search_click = () => {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-.right-container {
+.right-container-selected {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.right-container-unselected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.select-notice {
+  font-size: 30px;
+  margin-top: 50px;
+  font-weight: bold;
 }
 
 .info-block {
@@ -157,24 +240,20 @@ const search_click = () => {
 
 .small_avatar {
   font-size: 20px;
-  background-color: #9c9ea1;
+  background-color: #79b7f8;
   color: #ffffff;
+}
 
+.top_contact_avatar {
+  font-size: 40px;
+  background-color: #79b7f8;
+  color: #ffffff;
 }
 
 h3 {
   font-size: 20px;
   font-weight: bold;
   margin-left: 5px;
-}
-
-.contact-search {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-left: 15px;
-  margin-bottom: 10px;
 }
 
 .room-list-top-bar {
@@ -209,8 +288,74 @@ h3 {
 }
 
 .room-list-scrollbar {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
   height: 600px;
+  width: 90%;
+}
+
+.card-info-person {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card-info-person p {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.communicator-info-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  width: 100%;
+  border-bottom: 1px solid #000000;
+}
+
+.top-info-contact {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.top-info-contact p {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.detail-container {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  height: 800px;
+}
+
+.chat-container {
+  border-right: 1px solid #000000;
+}
+
+.chat-message-block {
+  height: 500px;
+  width: 100%;
+  border-bottom: 1px solid #000000;
+}
+
+.input-container {
+  height: 300px;
+  width: 100%;
+}
+
+.item-picture-container {
+  height: 800px;
+  width: 100%;
 }
 </style>

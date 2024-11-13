@@ -1,4 +1,5 @@
 {
-  "search_input_placeholder": "搜索联系人",
-  "chat_room_top_bar": "聊天室列表"
+  "chat_room_top_bar": "聊天室列表",
+  "select_chatroom": "请选择一个聊天室",
+  "none_chat_room": "当前没有聊天室"
 }

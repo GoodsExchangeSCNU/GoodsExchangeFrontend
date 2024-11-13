@@ -14,7 +14,20 @@ const FormatObject = {
       // picture_list: entry.item.img.map((img) => decodeURIComponent(img))
     }));
     return formattedRecordList;
-  }
+  },
+
+  formattedChatroomList: (chatroomList) => {
+    let formattedChatroomList;
+    formattedChatroomList = chatroomList.map(entry => ({
+      seller: entry.seller,
+      buyer: entry.buyer,
+      room_id: entry.room_id,
+      type: entry.type,
+      item_id: entry.item_id,
+      contact: entry.type === "seller" ? entry.buyer : entry.seller
+    }));
+    return formattedChatroomList;
+  },
 }
 
 export default FormatObject;

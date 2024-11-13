@@ -1,3 +1,7 @@
+const onErrorMessage = (data) => {
+    console.error(`WebSocket error with code ${data.code} \n ${data.message}`);
+};
+
 const WebSocketService = {
     userId: null,
     socket: null,
@@ -5,7 +9,8 @@ const WebSocketService = {
         FetchChatroomlist: [],
         ReceiveNotice: [],
         FetchMessage: [],
-        ReceiveMessage: []
+        ReceiveMessage: [],
+        ErrorMessage: [onErrorMessage]
     },
     messageQueue: [],  // 添加消息队列
 
@@ -25,8 +30,9 @@ const WebSocketService = {
             this.handleMessage(data);
         };
 
-        this.socket.onclose = () => {
+        this.socket.onclose = (event) => {
             console.log('WebSocket connection closed');
+            console.log(`WebSocket connection Exit with the code ${event.code}`);
             setTimeout(() => {
                 if (this.userId) {
                     this.init(this.userId); // 重新初始化连接
@@ -105,6 +111,12 @@ const WebSocketService = {
     on(type, callback) {
         if (this.callbacks[type]) {
             this.callbacks[type].push(callback);
+        }
+    },
+
+    off(type, callback) {
+        if (this.callbacks[type]) {
+            this.callbacks[type] = this.callbacks[type].filter(cb => cb !== callback);
         }
     },
 

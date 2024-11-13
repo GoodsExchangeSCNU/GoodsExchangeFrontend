@@ -1,4 +1,5 @@
 {
-  "search_input_placeholder": "Search for a contact",
-  "chat_room_top_bar": "Chat Room List"
+  "chat_room_top_bar": "Chat Room List",
+  "select_chatroom": "Please Select a chat room",
+  "none_chat_room": "No chat room currently"
 }
