@@ -11,7 +11,9 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.7.7",
-    "element-plus": "^2.8.4",
+    "element-plus": "^2.8.7",
+    "emoji-mart-vue-fast": "^15.0.3",
+    "emoji-mart-vue3": "^1.0.1",
     "vue": "^3.4.29",
     "vue-axios": "^3.5.2",
     "vue-i18n": "^9.14.1",
