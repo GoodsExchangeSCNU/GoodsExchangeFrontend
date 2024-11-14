@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, computed, onUnmounted} from "vue";
+import { onMounted, ref, computed, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { RefreshRight } from "@element-plus/icons-vue";
 import WebSocketService from "@/socket_client/socket.js";
@@ -8,6 +8,7 @@ import axios from "@/axios_client/index.js";
 import ChatMessage from "@/components/chatroom/ChatMessage.vue";
 import InputBlock from "@/components/chatroom/InputBlock.vue";
 import ItemInfoBlock from "@/components/chatroom/ItemInfoBlock.vue";
+import router from "@/router/index.js";
 
 // 组件全局变量定义
 const { t } = useI18n();
@@ -75,6 +76,14 @@ const select_contact = (room) => {
     console.warn(res)
   })
 };
+
+const handleGoSell = () => {
+  router.push('/sell')
+}
+
+const handleGoBuy = () => {
+  router.push('/home')
+}
 </script>
 
 <template>
@@ -96,8 +105,12 @@ const select_contact = (room) => {
             </div>
             <div class="room-list">
               <el-scrollbar height="600px" class="room-list-scrollbar">
-                <div v-if="roomList.length === 0">
-                  <h1 class="select-notice">{{t('chatroom.no_chatroom')}}</h1>
+                <div v-if="roomList.length === 0" class="select-notice">
+                  <h1>{{t('chatroom.no_chatroom')}}</h1>
+                  <div class="empty-navigator">
+                    <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+                    <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+                  </div>
                 </div>
                 <div v-else>
                   <div v-for="room in roomList" :key="room.room_id">
@@ -107,6 +120,14 @@ const select_contact = (room) => {
                         <p>{{room.contact}}</p>
                       </div>
                     </el-card>
+                  </div>
+                  <div class="room-list-end">
+                    <div>{{t("chatroom.end_of_room_list_1")}}</div>
+                    <div>{{t("chatroom.end_of_room_list_2")}}</div>
+                    <div class="empty-navigator">
+                      <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+                      <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+                    </div>
                   </div>
                 </div>
               </el-scrollbar>
@@ -148,11 +169,19 @@ const select_contact = (room) => {
           </div>
         </div>
         <div class="right-container-unselected" v-else>
-          <div v-if="roomList.length === 0">
-            <h1 class="select-notice">{{t('chatroom.select_chatroom')}}</h1>
+          <div v-if="roomList.length === 0" class="select-notice">
+            <h1>{{t('chatroom.no_classrooms_available')}}</h1>
+            <div class="empty-navigator">
+              <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+              <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+            </div>
           </div>
-          <div v-else>
-            <h1 class="select-notice">{{t('chatroom.select_chatroom')}}</h1>
+          <div v-else class="select-notice">
+            <h1>{{t('chatroom.select_chatroom')}}</h1>
+            <div class="empty-navigator">
+              <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+              <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+            </div>
           </div>
         </div>
       </div>
@@ -215,9 +244,23 @@ const select_contact = (room) => {
 }
 
 .select-notice {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.select-notice h1{
   font-size: 30px;
-  margin-top: 50px;
   font-weight: bold;
+}
+
+.empty-navigator {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .info-block {
@@ -363,5 +406,22 @@ h3 {
 .item-picture-container {
   height: 800px;
   width: 100%;
+}
+
+.room-list-end::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #969494;
+  margin-top: 20px;
+}
+
+.room-list-end {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

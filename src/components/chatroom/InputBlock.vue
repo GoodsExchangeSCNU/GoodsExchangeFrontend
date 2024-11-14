@@ -81,6 +81,7 @@ const uploadMessage = () => {
   WebSocketService.sendMessage(inputText.value, props.room_id);
   inputText.value = '';
 }
+// Todo: 新增API接口，在记录上传成功后返回
 </script>
 
 <template>

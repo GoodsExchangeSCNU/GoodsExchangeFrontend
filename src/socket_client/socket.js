@@ -5,8 +5,9 @@ const onErrorMessage = (data) => {
     console.error(`WebSocket error with code ${data.code} \n ${data.message}`);
 };
 
-const onReceiveNotice = () => {
+const onReceiveNotice = (data) => {
     ElMessage.info(i18n.global.t('chatroom.new_chatroom'))
+    WebSocketService.fetchMessage(data.room_id)
 }
 
 const WebSocketService = {

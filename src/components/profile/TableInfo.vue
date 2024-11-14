@@ -329,6 +329,14 @@ onMounted(() => {
           </div>
         </template>
       </el-table>
+      <div class="room-list-end" v-if="tableData.length !== 0">
+        <div>{{t("chatroom.end_of_room_list_1")}}</div>
+        <div>{{t("chatroom.end_of_room_list_2")}}</div>
+        <div class="empty-navigator">
+          <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+          <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+        </div>
+      </div>
     </el-scrollbar>
     <el-image-viewer
         v-if="viewerVisible"
@@ -348,5 +356,23 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.room-list-end::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #969494;
+  margin-top: 20px;
+}
+
+.room-list-end {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
