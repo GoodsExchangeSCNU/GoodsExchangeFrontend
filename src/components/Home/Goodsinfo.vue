@@ -17,7 +17,7 @@ function goToItemPage() {
   >
     <template #header>
       <div class="card-header">
-        <span>good1</span>
+        <span>name of the item</span>
       </div>
     </template>
 
@@ -25,8 +25,8 @@ function goToItemPage() {
         src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
         style="width: 100%; height: auto;"
     />
-    <p class="text item">{{ 'List item 1' }}</p>
-    <template #footer>Footer content</template>
+    <p class="text item">{{ 'price of the item' }}</p>
+    <template #footer>description</template>
   </el-card>
 </template>
 
