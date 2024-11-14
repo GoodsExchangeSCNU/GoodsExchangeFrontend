@@ -40,6 +40,8 @@
           contact.value = res.data.data.profile.contact;
           facauty.value = res.data.data.profile.facauty;
           dormitory.value = res.data.data.profile.dormitory;
+          localStorage.setItem("username", res.data.data.username);
+          localStorage.setItem("userId", res.data.data.id);
         }
         else{
           console.warn("获取用户信息失败")
@@ -280,7 +282,7 @@ h4 {
   display: grid;
   grid-template-columns: 25% 2% 73%;
   width: 100%;
-  height: 100%;
+  height: 900px;
 }
 
 .left-container {
