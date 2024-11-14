@@ -8,6 +8,7 @@ import axios from "../../axios_client/index.js";
 import router from "@/router/index.js";
 
 import PatternCheck from "@/utils/pattern.js";
+import WebSocketService from "@/socket_client/socket.js";
 
 // 组件全局变量定义
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
@@ -51,7 +52,32 @@ const handleLoginClick = () => {
       ElMessage.success(t("login.login_success"))
       localStorage.setItem("token",res.data.access)
       localStorage.setItem("refresh",res.data.refresh)
-      router.push("/home")
+      try { // 请求用户id数据并保存，同时初始化WebSocket连接
+        axios.get('/user/info').then((res) => {
+          if (res.status === 200) {
+            if (res.data.code === 0){
+              localStorage.setItem('username', res.data.data.username);
+              localStorage.setItem('userId', res.data.data.id);
+              WebSocketService.init(localStorage.getItem('userId'));
+            }
+            else{
+              console.warn(res.data);
+              ElMessage.error(t('login.user_id_fetch_failed'));
+            }
+          } else {
+            console.warn(res.data);
+            ElMessage.error(t('login.user_id_fetch_failed'));
+          }
+        }).catch((error) => {
+          console.error(error);
+          ElMessage.error(t('login.user_id_fetch_failed'));
+        });
+      }
+      catch (error) {
+        console.error(error);
+        ElMessage.error(t('login.user_id_fetch_failed'));
+      }
+      router.push("/home");
     }
     else{
       // login登录API未自定义返回状态码，HTTP状态码非200时表示登录失败

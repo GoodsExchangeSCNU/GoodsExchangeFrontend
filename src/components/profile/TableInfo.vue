@@ -3,7 +3,6 @@ import {ref, defineProps, onMounted} from "vue";
 import {useI18n} from "vue-i18n";
 import router from "@/router/index.js";
 import axios from "@/axios_client/index.js";
-
 import FormatObject from "@/utils/format.js";
 import StateIcon from "@/components/profile/StateIcon.vue";
 import { Picture, Loading } from "@element-plus/icons-vue";
@@ -240,95 +239,105 @@ onMounted(() => {
 
 <template>
   <div class="tableInfo-pictureViewer">
-    <el-table :data="tableData" stripe border style="width: 100%" scrollbar-always-on>
-      <el-table-column fixed prop="name" :label="t('saleInfo.name_col_table')" width="100" sortable/>
-      <el-table-column prop="picture" :label="t('saleInfo.picture_col_table')" width="200" sortable>
-        <template #default="scope">
-          <div class="image-preview">
-            <el-image
-                style="width: 150px; height: 100px"
-                :src="scope.row.picture"
-                :zoom-rate="1.2"
-                :max-scale="7"
-                :min-scale="0.2"
-                fit="cover"
-                @click="imageViewerVisible(scope.$index)"
-            >
-              <template #error>
-                <div class="image-slot">
-                  <el-icon><Picture /></el-icon>
-                  <div>{{t("saleInfo.picture_load_failed")}}</div>
-                </div>
-              </template>
-              <template #placeholder>
-                <div class="image-slot">
-                  <el-icon><Loading /></el-icon>
-                  <div>{{t("saleInfo.picture_on_loading")}}</div>
-                </div>
-              </template>
-            </el-image>
+    <el-scrollbar height="500">
+      <el-table :data="tableData" stripe border style="width: 100%" scrollbar-always-on>
+        <el-table-column fixed prop="name" :label="t('saleInfo.name_col_table')" width="100" sortable/>
+        <el-table-column prop="picture" :label="t('saleInfo.picture_col_table')" width="200" sortable>
+          <template #default="scope">
+            <div class="image-preview">
+              <el-image
+                  style="width: 150px; height: 100px"
+                  :src="scope.row.picture"
+                  :zoom-rate="1.2"
+                  :max-scale="7"
+                  :min-scale="0.2"
+                  fit="cover"
+                  @click="imageViewerVisible(scope.$index)"
+              >
+                <template #error>
+                  <div class="image-slot">
+                    <el-icon><Picture /></el-icon>
+                    <div>{{t("saleInfo.picture_load_failed")}}</div>
+                  </div>
+                </template>
+                <template #placeholder>
+                  <div class="image-slot">
+                    <el-icon><Loading /></el-icon>
+                    <div>{{t("saleInfo.picture_on_loading")}}</div>
+                  </div>
+                </template>
+              </el-image>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="price" :label="t('saleInfo.price_col_table')" width="100" sortable/>
+        <el-table-column prop="buyer" :label="t('saleInfo.buyer_col_table')" width="100" sortable/>
+        <el-table-column prop="seller" :label="t('saleInfo.seller_col_table')" width="100" sortable/>
+        <el-table-column prop="id" :label="t('saleInfo.id_col_table')" width="100" sortable/>
+        <el-table-column fixed="right" prop="state" :label="t('saleInfo.state_col_table')" width="150" sortable>
+          <template #default="scope">
+            <StateIcon :state="scope.row.state" />
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" prop="operation" :label="t('saleInfo.operation_col_table')" width="300" sortable>
+          <template #default="scope">
+            <template v-if="scope.row.state === 0">
+              <div>{{t("sellInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="(scope.row.state === 1) && (props.isSell)">
+              <el-button @click="event_change_reject(scope.row.id)" type="danger">{{t("saleInfo.event_operation_reject")}}</el-button>
+            </template>
+            <template v-if="(scope.row.state === 1) && (!props.isSell)">
+              <el-button @click="event_change_purchase(scope.row.id)" type="success">{{t("saleInfo.event_operation_purchase")}}</el-button>
+              <el-button @click="event_change_withdrawn(scope.row.id)" type="info">{{t("saleInfo.event_operation_withdrawn")}}</el-button>
+            </template>
+            <template v-if="(scope.row.state === 2) && (props.isSell)">
+              <el-button @click="event_change_reject(scope.row.id)" type="danger">{{t("saleInfo.event_operation_reject")}}</el-button>
+              <el-button @click="event_change_agree(scope.row.id)" type="success">{{t("saleInfo.event_operation_agree")}}</el-button>
+            </template>
+            <template v-if="(scope.row.state === 2) && (!props.isSell)">
+              <el-button @click="event_change_withdrawn(scope.row.id)" type="info">{{t("saleInfo.event_operation_withdrawn")}}</el-button>
+            </template>
+            <template v-if="(scope.row.state === 3) && (props.isSell)">
+              <el-button @click="event_change_shipped(scope.row.id)" type="primary">{{t("saleInfo.event_operation_shipped")}}</el-button>
+            </template>
+            <template v-if="(scope.row.state === 3) && (!props.isSell)">
+              <div>{{t("saleInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="scope.row.state === 4">
+              <div>{{t("saleInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="scope.row.state === 5">
+              <div>{{t("saleInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="(scope.row.state === 6) && (props.isSell)">
+              <div>{{t("saleInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="(scope.row.state === 6) && (!props.isSell)">
+              <el-button @click="event_change_not_received(scope.row.id)" type="danger">{{t("saleInfo.event_operation_not_received")}}</el-button>
+              <el-button @click="event_change_completed(scope.row.id)" type="success">{{t("saleInfo.event_operation_received")}}</el-button>
+            </template>
+          </template>
+        </el-table-column>
+        <template v-slot:empty>
+          <div style="text-align: center; padding: 20px; color: #999;">
+            <p>{{t('saleInfo.table_info_empty')}}</p>
+          </div>
+          <div class="empty-navigator">
+            <el-button type="primary" @click="handleGoSell">{{t('saleInfo.navigator_to_sell')}}</el-button>
+            <el-button type="primary" @click="handleGoBuy">{{t('saleInfo.navigator_to_buy')}}</el-button>
           </div>
         </template>
-      </el-table-column>
-      <el-table-column prop="price" :label="t('saleInfo.price_col_table')" width="100" sortable/>
-      <el-table-column prop="buyer" :label="t('saleInfo.buyer_col_table')" width="100" sortable/>
-      <el-table-column prop="seller" :label="t('saleInfo.seller_col_table')" width="100" sortable/>
-      <el-table-column prop="id" :label="t('saleInfo.id_col_table')" width="100" sortable/>
-      <el-table-column fixed="right" prop="state" :label="t('saleInfo.state_col_table')" width="150" sortable>
-        <template #default="scope">
-          <StateIcon :state="scope.row.state" />
-        </template>
-      </el-table-column>
-      <el-table-column fixed="right" prop="operation" :label="t('saleInfo.operation_col_table')" width="300" sortable>
-        <template #default="scope">
-          <template v-if="scope.row.state === 0">
-            <div>{{t("sellInfo.event_operation_None")}}</div>
-          </template>
-          <template v-if="(scope.row.state === 1) && (props.isSell)">
-            <el-button @click="event_change_reject(scope.row.id)" type="danger">{{t("saleInfo.event_operation_reject")}}</el-button>
-          </template>
-          <template v-if="(scope.row.state === 1) && (!props.isSell)">
-            <el-button @click="event_change_purchase(scope.row.id)" type="success">{{t("saleInfo.event_operation_purchase")}}</el-button>
-            <el-button @click="event_change_withdrawn(scope.row.id)" type="info">{{t("saleInfo.event_operation_withdrawn")}}</el-button>
-          </template>
-          <template v-if="(scope.row.state === 2) && (props.isSell)">
-            <el-button @click="event_change_reject(scope.row.id)" type="danger">{{t("saleInfo.event_operation_reject")}}</el-button>
-            <el-button @click="event_change_agree(scope.row.id)" type="success">{{t("saleInfo.event_operation_agree")}}</el-button>
-          </template>
-          <template v-if="(scope.row.state === 2) && (!props.isSell)">
-            <el-button @click="event_change_withdrawn(scope.row.id)" type="info">{{t("saleInfo.event_operation_withdrawn")}}</el-button>
-          </template>
-          <template v-if="(scope.row.state === 3) && (props.isSell)">
-            <el-button @click="event_change_shipped(scope.row.id)" type="primary">{{t("saleInfo.event_operation_shipped")}}</el-button>
-          </template>
-          <template v-if="(scope.row.state === 3) && (!props.isSell)">
-            <div>{{t("saleInfo.event_operation_None")}}</div>
-          </template>
-          <template v-if="scope.row.state === 4">
-            <div>{{t("saleInfo.event_operation_None")}}</div>
-          </template>
-          <template v-if="scope.row.state === 5">
-            <div>{{t("saleInfo.event_operation_None")}}</div>
-          </template>
-          <template v-if="(scope.row.state === 6) && (props.isSell)">
-            <div>{{t("saleInfo.event_operation_None")}}</div>
-          </template>
-          <template v-if="(scope.row.state === 6) && (!props.isSell)">
-            <el-button @click="event_change_not_received(scope.row.id)" type="danger">{{t("saleInfo.event_operation_not_received")}}</el-button>
-            <el-button @click="event_change_completed(scope.row.id)" type="success">{{t("saleInfo.event_operation_received")}}</el-button>
-          </template>
-        </template>
-      </el-table-column>
-      <template v-slot:empty>
-        <div style="text-align: center; padding: 20px; color: #999;">
-          <p>{{t('saleInfo.table_info_empty')}}</p>
-        </div>
+      </el-table>
+      <div class="room-list-end" v-if="tableData.length !== 0">
+        <div>{{t("chatroom.end_of_room_list_1")}}</div>
+        <div>{{t("chatroom.end_of_room_list_2")}}</div>
         <div class="empty-navigator">
-          <el-button type="primary" @click="handleGoSell">{{t('saleInfo.navigator_to_sell')}}</el-button>
-          <el-button type="primary" @click="handleGoBuy">{{t('saleInfo.navigator_to_buy')}}</el-button>
+          <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+          <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
         </div>
-      </template>
-    </el-table>
+      </div>
+    </el-scrollbar>
     <el-image-viewer
         v-if="viewerVisible"
         :close-on-press-escape="true"
@@ -347,5 +356,23 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.room-list-end::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #969494;
+  margin-top: 20px;
+}
+
+.room-list-end {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
