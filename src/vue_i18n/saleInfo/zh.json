@@ -21,6 +21,7 @@
   "table_info_empty": "暂无交易记录",
   "navigator_to_sell": "去卖点东西？",
   "navigator_to_buy": "去买点东西？",
+  "transaction_evaluation": "交易评价",
   "name_col_table": "名称",
   "id_col_table": "交易ID",
   "price_col_table": "价格",

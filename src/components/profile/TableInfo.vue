@@ -227,6 +227,10 @@ const event_change_completed = (trade_id) => {
   })
 }
 
+const create_comment = (trade_id) => {
+
+}
+
 const imageViewerVisible = (data_index) => {
   picture_list_data.value = tableData.value[data_index].picture_list
   viewerVisible.value = true
@@ -307,8 +311,11 @@ onMounted(() => {
             <template v-if="scope.row.state === 4">
               <div>{{t("saleInfo.event_operation_None")}}</div>
             </template>
-            <template v-if="scope.row.state === 5">
+            <template v-if="scope.row.state === 5 && (props.isSell)" >
               <div>{{t("saleInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="scope.row.state === 5 && (!props.isSell)" >
+              <el-button @click="create_comment(scope.row.id)" type="success">{{t("saleInfo.transaction_evaluation")}}</el-button>
             </template>
             <template v-if="(scope.row.state === 6) && (props.isSell)">
               <div>{{t("saleInfo.event_operation_None")}}</div>

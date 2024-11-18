@@ -84,6 +84,10 @@ const handleGoSell = () => {
 const handleGoBuy = () => {
   router.push('/home')
 }
+
+const handleOtherAvatarClick = (username) => {
+  router.push(`/profile/${username}`)
+}
 </script>
 
 <template>
@@ -116,7 +120,7 @@ const handleGoBuy = () => {
                   <div v-for="room in roomList" :key="room.room_id">
                     <el-card @click="select_contact(room)">
                       <div class="card-info-person">
-                        <el-avatar :size="40" shape="square" class="small_avatar">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
+                        <el-avatar :size="40" shape="square" class="small_avatar" @click="handleOtherAvatarClick(room.contact)">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
                         <p>{{room.contact}}</p>
                       </div>
                     </el-card>
@@ -138,7 +142,7 @@ const handleGoBuy = () => {
         <div class="right-container-selected" v-if="isRoomSelected">
           <div class="communicator-info-block">
             <div class="top-info-contact">
-              <el-avatar :size="80" shape="square" class="top_contact_avatar">{{top_title_contact_name.slice(0, 2).toUpperCase()}}</el-avatar>
+              <el-avatar :size="80" shape="square" class="top_contact_avatar" @click=handleOtherAvatarClick(top_title_contact_name)>{{top_title_contact_name.slice(0, 2).toUpperCase()}}</el-avatar>
               <p>{{top_title_contact_name}}</p>
             </div>
           </div>

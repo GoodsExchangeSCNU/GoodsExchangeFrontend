@@ -15,6 +15,7 @@
     facauty: String, // 院系
     dormitory: String,
     componentKey: Number,
+    isSearching: Boolean
   });
 
   const emits = defineEmits([
@@ -24,6 +25,7 @@
   // 组件全局变量定义
   const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
   let isEdit = ref(false); // 是否进入个人信息编辑状态
+  let type_radio = ref("Calendar")
 
   const origin_form = reactive({
     username: "",
@@ -141,12 +143,17 @@
     isEdit.value = false
     clearModifyInfo()
   }
+
+  onMounted(() => {
+
+  })
 </script>
 
 <template>
   <div class="personal-data-container">
     <div class="personal-data-title">
-      <h2>{{ t("profile.personal_data_title") }}</h2>
+      <h2 v-if="!isSearching">{{ t("profile.personal_data_title") }}</h2>
+      <h2 v-else>{{t("profile.personal_data_title_searching")}}</h2>
     </div>
     <div class="profile-data-functional-block">
       <div v-if="isEdit">
@@ -154,8 +161,7 @@
         <el-button @click="handleCancel">{{ t("profile.cancel_button") }}</el-button>
       </div>
       <div v-else>
-
-        <el-button type="primary" @click="handleEdit">
+        <el-button type="primary" @click="handleEdit" v-if="!isSearching">
           <el-icon><EditPen /></el-icon>
            {{ t("profile.edit_button") }}
         </el-button>
@@ -217,11 +223,24 @@
         </div>
       </div>
       <div class="other-info-block">
-        <el-calendar ref="calendar">
-          <template #header="{ date }">
-            <span class="date-string">{{ date }}</span>
-          </template>
-        </el-calendar>
+        <div class="other-type-radio">
+          <el-radio-group v-model="type_radio" size="large">
+            <el-radio-button label="Calendar" value="Calendar" />
+            <el-radio-button label="Comments Area" value="Comments Area" />
+          </el-radio-group>
+        </div>
+        <div v-if="type_radio === 'Calendar'" class="calendar-block">
+          <el-calendar ref="calendar">
+            <template #header="{ date }">
+              <span class="date-string">{{ date }}</span>
+            </template>
+          </el-calendar>
+        </div>
+        <div v-else class="comment-block">
+          <el-scrollbar height="550">
+            <!-- todo: comment接口完成后做好评论展示页-->
+          </el-scrollbar>
+        </div>
       </div>
     </div>
     <div class="rest-container" />

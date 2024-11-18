@@ -21,6 +21,7 @@
   "table_info_empty": "No transaction records",
   "navigator_to_sell": "Sell something?",
   "navigator_to_buy": "Buy something?",
+  "transaction_evaluation": "Transaction Evaluation",
   "name_col_table": "Name",
   "id_col_table": "Trade ID",
   "price_col_table": "Price",
