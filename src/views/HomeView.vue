@@ -17,7 +17,7 @@ const searchQuery = ref('');
 // 标签数组
 const tags = ref(['Vue', 'React', 'JavaScript', 'CSS', 'HTML']);
 // 定义一个响应式变量控制卡片数量
-const cardCount = ref(18); // 渲染18章卡片
+const cardCount = ref(20); // 渲染18章卡片
 
 // 生成一个数组，用于渲染卡片
 const cards = ref(Array.from({ length: cardCount.value }, (_, index) => index + 1));
@@ -120,11 +120,9 @@ const handleTagClick = (tag) => {
   border-radius: 12px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
   gap: 10px;
   width: 50%;
-  position: relative;
-  left: 0;
+  align-self:flex-start ;
 }
 
 .tag {
