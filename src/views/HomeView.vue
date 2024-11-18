@@ -2,8 +2,17 @@
 import Goodsinfo from "@/components/Home/Goodsinfo.vue";
 import { ref } from "vue";
 import { Search } from "@element-plus/icons-vue";
+import { useI18n } from "vue-i18n";
 
-
+//access to vue-i18n
+const { t , locale } = useI18n();
+const change = () => {
+  if (locale.value === "en") {
+    locale.value = "zh";
+  } else {
+    locale.value = "en";
+  }
+}
 
 // 点击搜索按钮事件
 const handleSearch = () => {
@@ -15,7 +24,7 @@ const handleSearch = () => {
 const searchQuery = ref('');
 
 // 标签数组
-const tags = ref(['Vue', 'React', 'JavaScript', 'CSS', 'HTML']);
+const tags = ref([t("home.tag1"),t("home.tag2"),t("home.tag3"),t("home.tag4"),t("home.tag4"),t("home.tag5"),t("home.tag6"),t("home.tag7"),t("home.tag8"),t("home.tag9"),t("home.tag10"),t("home.tag11"),t("home.tag12"),t("home.tag13"),t("home.tag14"),t("home.tag15"),t("home.tag16"),t("home.tag17"),t("home.tag18"),t("home.tag19"),t("home.tag20")]);
 // 定义一个响应式变量控制卡片数量
 const cardCount = ref(20); // 渲染18章卡片
 
@@ -122,7 +131,7 @@ const handleTagClick = (tag) => {
   flex-wrap: wrap;
   gap: 10px;
   width: 50%;
-  align-self:flex-start ;
+  align-self:flex-start;
 }
 
 .tag {
