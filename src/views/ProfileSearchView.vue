@@ -19,6 +19,7 @@
   let student_id = ref("");
   let contact = ref("");
   let facauty = ref(""); // 院系
+  let database_id = ref(0);
   let dormitory = ref("");
   let avatar_char = computed(() => username.value.slice(0, 2).toUpperCase());
   let email_shown = computed(
@@ -50,6 +51,7 @@
     }).then(res => {
       if(res.status === 200){
         if (res.data.code === 0) {
+          database_id.value = res.data.data.id;
           username.value = res.data.data.username;
           email.value = res.data.data.email;
           student_id.value = res.data.data.profile.student_id;
@@ -147,6 +149,7 @@
         <div class="right-container">
           <div v-if="activeIndex === '1'" class="active-block">
             <PersonalData
+                :database_id="database_id"
                 :username="username"
                 :contact="contact"
                 :student_id="student_id"

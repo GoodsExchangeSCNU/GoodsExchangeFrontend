@@ -36,5 +36,6 @@
   "select_language": "Please select the language",
   "language_setting": "Language Setting",
   "account_setting": "Account Setting",
-  "logout": "Logout"
+  "logout": "Logout",
+  "no_comment": "No comment yet"
 }

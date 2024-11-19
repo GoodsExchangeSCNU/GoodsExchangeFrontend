@@ -97,7 +97,7 @@ const handleOtherAvatarClick = (username) => {
         <div class="left-container">
           <div class="info-block">
             <div class="avatar-info">
-              <el-avatar :size="80" shape="square" class="avatar">{{avatar_char}}</el-avatar>
+              <el-avatar :size="80" shape="square" class="avatar" @click="handleOtherAvatarClick(username)">{{avatar_char}}</el-avatar>
               <h3>{{username}}</h3>
             </div>
           </div>

@@ -64,7 +64,7 @@ onUnmounted(() => {
   <el-scrollbar height="500px">
     <el-main style="overflow-y: auto; padding: 20px;">
       <div v-for="(message, index) in chatMessage" :key="index" :class="['message', message.sender === props.username ? 'myself' : 'itself']">
-        <el-avatar :size="40" class="message-avatar" @click="handleOtherAvatarClick(props.username)">
+        <el-avatar :size="40" class="message-avatar" @click="handleOtherAvatarClick(message.sender)">
           {{ message.sender.slice(0, 2).toUpperCase() }}
         </el-avatar>
         <div class="message-box">

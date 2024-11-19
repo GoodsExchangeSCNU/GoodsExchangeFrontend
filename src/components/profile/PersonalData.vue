@@ -5,9 +5,11 @@
   import axios from "@/axios_client/index.js";
   import { ElMessage } from "element-plus";
   import PatternCheck from "@/utils/pattern.js";
+  import router from "@/router/index.js";
 
   // 组件事件与属性定义
   const props = defineProps({
+    database_id: String,
     username: String,
     email: String,
     student_id: Number,
@@ -26,6 +28,7 @@
   const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
   let isEdit = ref(false); // 是否进入个人信息编辑状态
   let type_radio = ref("Calendar")
+  let comment_info = ref([]); // 评论信息
 
   const origin_form = reactive({
     username: "",
@@ -62,22 +65,6 @@
     modify_form.facauty = origin_form.facauty
     modify_form.dormitory = origin_form.dormitory
   }
-
-  onMounted(() => {
-    origin_form.username = props.username
-    origin_form.email = props.email
-    origin_form.student_id = props.student_id
-    origin_form.contact = props.contact
-    origin_form.facauty = props.facauty
-    origin_form.dormitory = props.dormitory
-
-    modify_form.username = props.username
-    modify_form.email = props.email
-    modify_form.student_id = props.student_id
-    modify_form.contact = props.contact
-    modify_form.facauty = props.facauty
-    modify_form.dormitory = props.dormitory
-  });
 
   const handleEdit = () => {
     isEdit.value = true
@@ -144,8 +131,57 @@
     clearModifyInfo()
   }
 
-  onMounted(() => {
+  function getAvatar (owner) {
+    return owner ? owner.slice(0, 2).toUpperCase() : "NA";
+  }
 
+  // 格式化时间
+  function formatTime (time) {
+    const date = new Date(time);
+    return date.toLocaleString();
+  }
+
+  const handleOtherAvatarClick = (username) => {
+    router.push(`/profile/${username}`)
+  }
+
+  onMounted(() => {
+    origin_form.username = props.username
+    origin_form.email = props.email
+    origin_form.student_id = props.student_id
+    origin_form.contact = props.contact
+    origin_form.facauty = props.facauty
+    origin_form.dormitory = props.dormitory
+
+    modify_form.username = props.username
+    modify_form.email = props.email
+    modify_form.student_id = props.student_id
+    modify_form.contact = props.contact
+    modify_form.facauty = props.facauty
+    modify_form.dormitory = props.dormitory
+
+    if (props.database_id){
+      axios("/user/comment", {
+        params: {
+          id: props.database_id
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          if (res.data.code === 0) {
+            comment_info.value = res.data.data;
+          }
+          else {
+            console.warn("获取评论失败")
+          }
+        }
+        else {
+          console.warn("获取评论失败")
+        }
+      }).catch((res) => {
+        console.warn("获取评论失败")
+        console.warn(res)
+      })
+    }
   })
 </script>
 
@@ -224,7 +260,7 @@
       </div>
       <div class="other-info-block">
         <div class="other-type-radio">
-          <el-radio-group v-model="type_radio" size="large">
+          <el-radio-group v-model="type_radio" size="large" class="radio-group">
             <el-radio-button label="Calendar" value="Calendar" />
             <el-radio-button label="Comments Area" value="Comments Area" />
           </el-radio-group>
@@ -237,8 +273,34 @@
           </el-calendar>
         </div>
         <div v-else class="comment-block">
-          <el-scrollbar height="550">
-            <!-- todo: comment接口完成后做好评论展示页-->
+          <el-scrollbar height="550" v-if="comment_info.length !== 0">
+            <el-card
+                v-for="item in comment_info"
+                :key="item.id"
+                class="comment-card"
+                shadow="always"
+                style="margin-bottom: 10px; padding: 10px;"
+            >
+              <div class="comment-item">
+                <el-avatar
+                    :size="35"
+                    shape="square"
+                    class="avatar_small"
+                    @click="handleOtherAvatarClick(item.owner)">
+                  {{getAvatar(item.owner)}}
+                </el-avatar>
+                <div class="content">
+                  <div class="header">
+                    <div class="owner">{{ item.owner }}</div>
+                    <div class="time">{{ formatTime(item.time) }}</div>
+                  </div>
+                  <div class="body">{{ item.comment_body }}</div>
+                </div>
+              </div>
+            </el-card>
+          </el-scrollbar>
+          <el-scrollbar height="550" v-else>
+            <el-empty :description="t('profile.no_comment')"/>
           </el-scrollbar>
         </div>
       </div>
@@ -268,6 +330,12 @@
   color: #ffffff;
 }
 
+
+.avatar_small {
+  font-size: 20px;
+  background-color: #79b7f8;
+  color: #ffffff;
+}
 .edit-selector h3 {
   margin-left: 10px;
   font-size: 32px;
@@ -340,5 +408,36 @@
   align-items: flex-start;
   border-top: 1px solid #dcdcdc;
   padding-top: 20px;
+}
+
+.comment-card {
+  border-radius: 10px;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.content {
+  flex: 1;
+}
+
+.header {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 14px;
+  color: #888;
+}
+
+.body {
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.radio-group {
+  margin-bottom: 20px;
 }
 </style>
