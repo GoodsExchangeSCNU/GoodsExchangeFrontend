@@ -5,9 +5,11 @@
   import axios from "@/axios_client/index.js";
   import { ElMessage } from "element-plus";
   import PatternCheck from "@/utils/pattern.js";
+  import router from "@/router/index.js";
 
   // 组件事件与属性定义
   const props = defineProps({
+    database_id: String,
     username: String,
     email: String,
     student_id: Number,
@@ -15,6 +17,7 @@
     facauty: String, // 院系
     dormitory: String,
     componentKey: Number,
+    isSearching: Boolean
   });
 
   const emits = defineEmits([
@@ -24,6 +27,8 @@
   // 组件全局变量定义
   const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
   let isEdit = ref(false); // 是否进入个人信息编辑状态
+  let type_radio = ref("Calendar")
+  let comment_info = ref([]); // 评论信息
 
   const origin_form = reactive({
     username: "",
@@ -61,22 +66,6 @@
     modify_form.dormitory = origin_form.dormitory
   }
 
-  onMounted(() => {
-    origin_form.username = props.username
-    origin_form.email = props.email
-    origin_form.student_id = props.student_id
-    origin_form.contact = props.contact
-    origin_form.facauty = props.facauty
-    origin_form.dormitory = props.dormitory
-
-    modify_form.username = props.username
-    modify_form.email = props.email
-    modify_form.student_id = props.student_id
-    modify_form.contact = props.contact
-    modify_form.facauty = props.facauty
-    modify_form.dormitory = props.dormitory
-  });
-
   const handleEdit = () => {
     isEdit.value = true
   }
@@ -105,6 +94,7 @@
           origin_form.contact = res.data.data.profile.contact
           origin_form.facauty = res.data.data.profile.facauty
           origin_form.dormitory = res.data.data.profile.dormitory
+          localStorage.setItem("username", res.data.data.username)
           emits("updateSuccess", {
             username: origin_form.username,
             email: origin_form.email,
@@ -140,12 +130,66 @@
     isEdit.value = false
     clearModifyInfo()
   }
+
+  function getAvatar (owner) {
+    return owner ? owner.slice(0, 2).toUpperCase() : "NA";
+  }
+
+  // 格式化时间
+  function formatTime (time) {
+    const date = new Date(time);
+    return date.toLocaleString();
+  }
+
+  const handleOtherAvatarClick = (username) => {
+    router.push(`/profile/${username}`)
+  }
+
+  onMounted(() => {
+    origin_form.username = props.username
+    origin_form.email = props.email
+    origin_form.student_id = props.student_id
+    origin_form.contact = props.contact
+    origin_form.facauty = props.facauty
+    origin_form.dormitory = props.dormitory
+
+    modify_form.username = props.username
+    modify_form.email = props.email
+    modify_form.student_id = props.student_id
+    modify_form.contact = props.contact
+    modify_form.facauty = props.facauty
+    modify_form.dormitory = props.dormitory
+
+    if (props.database_id){
+      axios.get("/user/comment", {
+        params: {
+          id: props.database_id
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          if (res.data.code === 0) {
+            comment_info.value = res.data.data;
+          }
+          else {
+            console.warn("获取评论失败")
+          }
+        }
+        else {
+          console.warn("获取评论失败")
+        }
+      }).catch((res) => {
+        console.warn("获取评论失败")
+        console.warn(res)
+      })
+    }
+  })
 </script>
 
 <template>
   <div class="personal-data-container">
     <div class="personal-data-title">
-      <h2>{{ t("profile.personal_data_title") }}</h2>
+      <h2 v-if="!isSearching">{{ t("profile.personal_data_title") }}</h2>
+      <h2 v-else>{{t("profile.personal_data_title_searching")}}</h2>
     </div>
     <div class="profile-data-functional-block">
       <div v-if="isEdit">
@@ -153,8 +197,7 @@
         <el-button @click="handleCancel">{{ t("profile.cancel_button") }}</el-button>
       </div>
       <div v-else>
-
-        <el-button type="primary" @click="handleEdit">
+        <el-button type="primary" @click="handleEdit" v-if="!isSearching">
           <el-icon><EditPen /></el-icon>
            {{ t("profile.edit_button") }}
         </el-button>
@@ -216,11 +259,50 @@
         </div>
       </div>
       <div class="other-info-block">
-        <el-calendar ref="calendar">
-          <template #header="{ date }">
-            <span class="date-string">{{ date }}</span>
-          </template>
-        </el-calendar>
+        <div class="other-type-radio">
+          <el-radio-group v-model="type_radio" size="large" class="radio-group">
+            <el-radio-button label="Calendar" value="Calendar" />
+            <el-radio-button label="Comments Area" value="Comments Area" />
+          </el-radio-group>
+        </div>
+        <div v-if="type_radio === 'Calendar'" class="calendar-block">
+          <el-calendar ref="calendar">
+            <template #header="{ date }">
+              <span class="date-string">{{ date }}</span>
+            </template>
+          </el-calendar>
+        </div>
+        <div v-else class="comment-block">
+          <el-scrollbar height="550" v-if="comment_info.length !== 0">
+            <el-card
+                v-for="item in comment_info"
+                :key="item.id"
+                class="comment-card"
+                shadow="always"
+                style="margin-bottom: 10px; padding: 10px;"
+            >
+              <div class="comment-item">
+                <el-avatar
+                    :size="35"
+                    shape="square"
+                    class="avatar_small"
+                    @click="handleOtherAvatarClick(item.owner)">
+                  {{getAvatar(item.owner)}}
+                </el-avatar>
+                <div class="content">
+                  <div class="header">
+                    <div class="owner">{{ item.owner }}</div>
+                    <div class="time">{{ formatTime(item.time) }}</div>
+                  </div>
+                  <div class="body">{{ item.comment_body }}</div>
+                </div>
+              </div>
+            </el-card>
+          </el-scrollbar>
+          <el-scrollbar height="550" v-else>
+            <el-empty :description="t('profile.no_comment')"/>
+          </el-scrollbar>
+        </div>
       </div>
     </div>
     <div class="rest-container" />
@@ -248,6 +330,12 @@
   color: #ffffff;
 }
 
+
+.avatar_small {
+  font-size: 20px;
+  background-color: #79b7f8;
+  color: #ffffff;
+}
 .edit-selector h3 {
   margin-left: 10px;
   font-size: 32px;
@@ -320,5 +408,36 @@
   align-items: flex-start;
   border-top: 1px solid #dcdcdc;
   padding-top: 20px;
+}
+
+.comment-card {
+  border-radius: 10px;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.content {
+  flex: 1;
+}
+
+.header {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 14px;
+  color: #888;
+}
+
+.body {
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.radio-group {
+  margin-bottom: 20px;
 }
 </style>

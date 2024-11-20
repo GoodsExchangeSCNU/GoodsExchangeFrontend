@@ -3,6 +3,7 @@ import { useI18n } from "vue-i18n";
 import {defineEmits, defineProps, onMounted, reactive, ref} from "vue";
 import {Delete} from "@element-plus/icons-vue";
 import router from "@/router/index.js";
+import WebSocketService from "@/socket_client/socket.js";
 
 // 组件事件与属性定义
 const props = defineProps({
@@ -50,6 +51,9 @@ const cancelChangeSettings = () => {
 const handleLogout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('refresh');
+  localStorage.removeItem('username');
+  localStorage.removeItem('userId');
+  WebSocketService.close();
   isVisiable.value = false;
   emits("updateCancel");
   router.push('/login');
