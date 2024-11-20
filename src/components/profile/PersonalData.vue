@@ -161,7 +161,7 @@
     modify_form.dormitory = props.dormitory
 
     if (props.database_id){
-      axios("/user/comment", {
+      axios.get("/user/comment", {
         params: {
           id: props.database_id
         }
