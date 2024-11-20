@@ -3,6 +3,8 @@ import Goodsinfo from "@/components/Home/Goodsinfo.vue";
 import {onMounted, ref, watch} from "vue";
 import { Search } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
+import axios from "@/axios_client/index.js";
+import PersonalData from "@/components/profile/PersonalData.vue";
 
 //access to vue-i18n
 const { t , locale } = useI18n();
@@ -25,7 +27,10 @@ const language_flag = ref("en"); // 语言标志
 // 生成一个数组，用于渲染卡片
 const cards = ref(Array.from({ length: cardCount.value }, (_, index) => index + 1));
 
-
+let itemname = ref("");
+let price = ref("");
+let description = ref("");
+let img = ref("");
 // 处理标签点击
 const handleTagClick = (tag) => {
   searchQuery.value = tag;
@@ -51,6 +56,31 @@ watch(
       }
     }
 )
+
+onMounted(() => {
+  axios.get("/item/list").then(res => {
+    if(res.status === 200){
+      if(res.data.code === 0){
+        itemname.value = res.data.data.name;
+        img.value = res.data.data.img;
+        description.value = res.data.data.description;
+        price.value = res.data.price;
+
+
+      }
+      else{
+        console.warn("failed to get item info")
+      }
+    }
+    else{
+      console.warn("failed to get item info")
+    }
+    // compoentKey.value += 1;
+  }).catch(res => {
+    console.warn("failed to get item info")
+    console.warn(res)
+  })
+});
 </script>
 
 <template>
@@ -59,7 +89,7 @@ watch(
       <!-- 搜索框 -->
       <el-input
           v-model="searchQuery"
-          placeholder="请输入搜索内容"
+          :placeholder="t('')"
           class="searching-bar">
         <template #append>
           <!-- 放大镜按钮 -->
@@ -86,7 +116,13 @@ watch(
       <!-- 内容区域 -->
       <div class="content">
         <div v-for="card in cards" :key="card" class="card">
-          <Goodsinfo />
+          <Goodsinfo
+              :img = "img"
+              :itemname = "itemname"
+              :description = "description"
+              :price = "price"
+
+          />
         </div>
       </div>
     </div>
@@ -102,19 +138,19 @@ watch(
   align-items: center;
   height: 100%;
   background-color: #CAD9F1;
-
 }
 
 .center-container{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 100%;
   max-width: 1200px;
   min-width: 1200px;
   margin-top: 50px;
 }
+
 .searching-bar {
   background-color: #f8f8f8; /* 搜索栏背景颜色 */
   padding: 6px;

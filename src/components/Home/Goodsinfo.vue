@@ -1,8 +1,16 @@
 <script setup>
 import { useRouter } from 'vue-router';
-
+import axios from "@/axios_client/index.js";
+import {onMounted, ref, reactive, computed} from "vue";
+import { useI18n } from "vue-i18n";
 const router = useRouter();
+const props = defineProps({
+  img: String,
+  itemname: String,
+  price: Number,
+  description: String,
 
+})
 function goToItemPage() {
   router.push('/item-page'); // 跳转到目标页面的路径
 }
@@ -17,16 +25,16 @@ function goToItemPage() {
   >
     <template #header>
       <div class="card-header">
-        <span>name of the item</span>
+        <span>{{itemname}}</span>
       </div>
     </template>
 
     <img
-        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+        :src="img"
         style="width: 100%; height: auto;"
     />
-    <p class="text item">{{ 'price of the item' }}</p>
-    <template #footer>description</template>
+    <p class="text item">{{price}}</p>
+    <template #footer>{{description}}</template>
   </el-card>
 </template>
 

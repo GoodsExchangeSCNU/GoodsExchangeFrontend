@@ -40,6 +40,9 @@ const router = createRouter({
       name: 'message',
       component: MessageView
     },
+    {
+      path: ''
+    }
   ]
 })
 
