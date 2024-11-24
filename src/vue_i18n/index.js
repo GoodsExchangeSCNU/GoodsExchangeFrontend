@@ -13,6 +13,15 @@ import profile_en from './profile/en.json' assert {type: "json"}
 import profile_zh from './profile/zh.json' assert {type: "json"}
 import saleInfo_en from './saleInfo/en.json' assert {type: "json"}
 import saleInfo_zh from './saleInfo/zh.json' assert {type: "json"}
+<<<<<<< Updated upstream
+=======
+import chatroom_en from './chatroom/en.json' assert {type: "json"}
+import chatroom_zh from './chatroom/zh.json' assert {type: "json"}
+import emoji_en from './emoji/en.json' assert {type: "json"}
+import emoji_zh from './emoji/zh.json' assert {type: "json"}
+import sell_en from './sell/en.json' assert {type: "json"}
+import sell_zh from './sell/zh.json' assert {type: "json"}
+>>>>>>> Stashed changes
 
 const messages = {
     en: {
@@ -22,7 +31,14 @@ const messages = {
         navigator: navigator_en,
         axios_client: axios_client_en,
         profile: profile_en,
+<<<<<<< Updated upstream
         saleInfo: saleInfo_en
+=======
+        saleInfo: saleInfo_en,
+        chatroom: chatroom_en,
+        emoji: emoji_en,
+        sell: sell_en
+>>>>>>> Stashed changes
     },
     zh: {
         home: home_zh,
@@ -31,7 +47,14 @@ const messages = {
         navigator: navigator_zh,
         axios_client: axios_client_zh,
         profile: profile_zh,
+<<<<<<< Updated upstream
         saleInfo: saleInfo_zh
+=======
+        saleInfo: saleInfo_zh,
+        chatroom: chatroom_zh,
+        emoji: emoji_zh,
+        sell: sell_zh
+>>>>>>> Stashed changes
     }
 }
 

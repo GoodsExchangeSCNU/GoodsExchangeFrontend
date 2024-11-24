@@ -61,10 +61,16 @@ onMounted(() => {
   axios.get("/item/list").then(res => {
     if(res.status === 200){
       if(res.data.code === 0){
-        itemname.value = res.data.data.name;
-        img.value = res.data.data.img;
-        description.value = res.data.data.description;
-        price.value = res.data.price;
+        cards.value = res.data.data
+
+        if(cards.value.length < cardCount.value){
+          cards.value = [...cards.value,...Array.from({ length: cardCount.value-cards.value.length }, (_, index) => index + 1)]
+        }
+
+        // itemname.value = res.data.data.name;
+        // img.value = res.data.data.img;
+        // description.value = res.data.data.description;
+        // price.value = res.data.price;
 
 
       }
@@ -103,6 +109,7 @@ onMounted(() => {
 
       <!-- 标签区域 -->
       <!-- 标签容器 -->
+    <div class = "block-for-tags">
       <div class="tag-container">
         <div
             v-for="tag in tags"
@@ -112,17 +119,19 @@ onMounted(() => {
         >
           {{ tag }}
         </div>
+        </div>
       </div>
       <!-- 内容区域 -->
       <div class="content">
-        <div v-for="card in cards" :key="card" class="card">
-          <Goodsinfo
-              :img = "img"
-              :itemname = "itemname"
-              :description = "description"
-              :price = "price"
-
-          />
+        <div class = "block-for-content">
+          <div v-for="(card,index) in cards" :key="card" class="card">
+            <Goodsinfo
+                :img = "card.img"
+                :itemname = "card.name"
+                :description = "card.description"
+                :price = "card.price"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -159,18 +168,25 @@ onMounted(() => {
   width: 100%; /* 占满整个容器宽度 */
   z-index: 10; /* 确保搜索栏在最上层 */
   height:60px;
-
-
 }
+
 .content {
-  display: flex; /* 使用 Flexbox 布局 */
-  flex-wrap: wrap; /* 允许换行 */
-  justify-content: flex-start; /* 从左到右排列 */
-  align-items: center; /* 垂直方向居中对齐 */
-  gap: 20px; /* 卡片之间的间距 */
+  display: flex;
+  flex-wrap: wrap; /* 自动换行 */
+  justify-content: flex-start; /* 左对齐 */
+  gap: 20px; /* 卡片之间的水平和垂直间距 */
   width: 100%; /* 占满父容器宽度 */
-
 }
+
+.card {
+  background-color: #eef1f6; /* 卡片背景色 */
+  border-radius: 8px; /* 卡片圆角 */
+  padding: 10px; /* 卡片内边距 */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 卡片阴影 */
+  box-sizing: border-box; /* 确保宽度计算包含内边距 */
+  width: 100%;
+}
+
 .tag-container {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -201,6 +217,27 @@ onMounted(() => {
 
 .tag:active {
   background-color: #a5c8f8; /* 点击时颜色 */
+}
+.block-for-tags {
+  background-color: #fff; /* 背景颜色 */
+  padding: 10px; /* 内边距 */
+  box-sizing: border-box; /* 确保边框和内边距包含在宽度内 */
+  width: 100%; /* 与搜索框同宽 */
+  margin: 20px 0;
+  border-radius: 12px; /* 设置圆角 */
+}
+
+.block-for-content {
+  background-color: #fff; /* 背景颜色 */
+  padding: 20px; /* 内边距 */
+  box-sizing: border-box; /* 包含边框和内边距 */
+  width: 100%; /* 与搜索框宽度一致 */
+  border-radius: 12px; /* 四个角平滑 */
+  margin: 20px 0; /* 上下间距 */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* 添加轻微阴影效果 */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 每行四个 */
+  gap: 25px; /* 卡片间的间距，可调整 */
 }
 </style>
 
