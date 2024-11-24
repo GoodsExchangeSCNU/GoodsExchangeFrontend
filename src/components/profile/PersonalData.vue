@@ -81,7 +81,7 @@
     isEdit.value = true
   }
 
-<<<<<<< Updated upstream
+
   const handleSave = () => {
     let username_res = PatternCheck.username_check(modify_form.username)
     if (!username_res.valid){
@@ -123,57 +123,6 @@
           clearModifyInfo()
         }
       }
-      else{
-        console.warn("更新用户信息失败")
-=======
- const handleSave = () => {
-   let username_res = PatternCheck.username_check(modify_form.username)
-   if (!username_res.valid){
-     ElMessage.error(t(username_res.error))
-     return;
-   }
-   axios.put("/user/update", {
-       username: modify_form.username,
-     email: modify_form.email,
-     profile: {
-       student_id: modify_form.student_id,
-       contact: modify_form.contact,
-       facauty: modify_form.facauty,
-       dormitory: modify_form.dormitory
-     }
-   }).then(res => {
-     if(res.status === 200){
-       if (res.data.code === 0) {
-         origin_form.username = res.data.data.username
-         origin_form.email = res.data.data.email
-         origin_form.student_id = res.data.data.profile.student_id
-         origin_form.contact = res.data.data.profile.contact
-         origin_form.facauty = res.data.data.profile.facauty
-         origin_form.dormitory = res.data.data.profile.dormitory
-         localStorage.setItem("username", res.data.data.username)
-         emits("updateSuccess", {
-           username: origin_form.username,
-           email: origin_form.email,
-           student_id: origin_form.student_id,
-           contact: origin_form.contact,
-           facauty: origin_form.facauty,
-           dormitory: origin_form.dormitory,
-        })
-         ElMessage.success(t("profile.info_updated_success"))
-         clearModifyInfo()
-       }
-       else{
-         console.warn("更新用户信息失败")
->>>>>>> Stashed changes
-        ElMessage.error(t("profile.info_updated_fail"))
-        clearModifyInfo()
-       }
-     }
-     else{
-       console.warn("更新用户信息失败")
-       ElMessage.error(t("profile.info_updated_fail"))
-       clearModifyInfo()
-     }
    }).catch(res => {
    console.warn("更新用户信息失败")
     ElMessage.error(t("profile.info_updated_fail"))
