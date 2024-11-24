@@ -21,6 +21,7 @@
   "table_info_empty": "No transaction records",
   "navigator_to_sell": "Sell something?",
   "navigator_to_buy": "Buy something?",
+  "transaction_evaluation": "Transaction Evaluation",
   "name_col_table": "Name",
   "id_col_table": "Trade ID",
   "price_col_table": "Price",
@@ -38,5 +39,15 @@
   "event_operation_received": "Confirm Received",
   "event_operation_agree": "Agree Trade",
   "picture_load_failed": "Failed to load picture",
-  "picture_on_loading": "Picture on loading..."
+  "picture_on_loading": "Picture on loading...",
+  "title_give_comment": "Please comment on this transaction",
+  "comment_body": "Comment",
+  "comment_placeholder": "Please enter your comment",
+  "rating_body": "Rating",
+  "cancel_comment": "Cancel",
+  "submit_comment": "Submit",
+  "rating_placeholder": "Please rate this transaction",
+  "empty_comment": "You have not yet entered a comment or made a review",
+  "comment_fail": "Failed to comment",
+  "comment_success": "Commented successfully"
 }

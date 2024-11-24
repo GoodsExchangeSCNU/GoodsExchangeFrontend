@@ -5,6 +5,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { ChatLineRound, House, Sell, Switch, User } from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import axios from '../axios_client/index.js';
+import WebSocketService from "@/socket_client/socket.js";
 
 // 组件全局变量定义
 const { t, locale } = useI18n();
@@ -14,12 +15,14 @@ let username = ref('');
 let avatar_char = computed(() => username.value.slice(0, 2).toUpperCase());
 
 // 获取用户名的函数
-const fetchUsername = async () => {
+const fetchUsernameAndId = async () => {
   try {
     axios.get('/user/info').then((res) => {
       if (res.status === 200) {
         if (res.data.code === 0){
           username.value = res.data.data.username;
+          localStorage.setItem('username', res.data.data.username);
+          localStorage.setItem('userId', res.data.data.id);
         }
         else{
           console.warn(res.data);
@@ -48,7 +51,7 @@ const fetchUsername = async () => {
 const handleStorageChange = (event) => {
   if (event.key === 'token') {
     if (event.oldValue !== event.newValue) {
-      fetchUsername(); // token 变更时请求最新用户名
+      fetchUsernameAndId(); // token 变更时请求最新用户名
     }
   }
 };
@@ -66,6 +69,9 @@ const handleSelect = (key, keyPath) => {
   } else if (keyPath[1] === '6-1') {
     localStorage.removeItem('token');
     localStorage.removeItem('refresh');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
+    WebSocketService.close();
     router.push('/login');
   } else if (keyPath[1] === '6-2') {
     router.push('/profile');
@@ -80,7 +86,7 @@ const change_language = () => {
 // 组件挂载和卸载
 onMounted(() => {
   if (localStorage.getItem('token')) {
-    fetchUsername(); // 初始挂载时请求用户名
+    fetchUsernameAndId(); // 初始挂载时请求用户名
   } else {
     username.value = '??';
   }
@@ -95,7 +101,7 @@ watch(
         username.value = '??';
       } else if (newPath === '/home' && localStorage.getItem('token')) {
         // 如果用户从 login 路由到 home 路由，发起请求获取 username
-        fetchUsername();
+        fetchUsernameAndId();
       }
     }
 );
