@@ -261,8 +261,8 @@
       <div class="other-info-block">
         <div class="other-type-radio">
           <el-radio-group v-model="type_radio" size="large" class="radio-group">
-            <el-radio-button label="Calendar" value="Calendar" />
-            <el-radio-button label="Comments Area" value="Comments Area" />
+            <el-radio-button :label="t('profile.calendar_area')" value="Calendar" />
+            <el-radio-button :label="t('profile.comments_area')" value="Comments Area" />
           </el-radio-group>
         </div>
         <div v-if="type_radio === 'Calendar'" class="calendar-block">

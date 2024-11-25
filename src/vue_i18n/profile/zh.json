@@ -37,5 +37,7 @@
   "language_setting": "语言设置",
   "account_setting": "账号管理",
   "logout": "退出登录",
-  "no_comment": "暂无评论"
+  "no_comment": "暂无评论",
+  "calendar_area": "日历",
+  "comments_area": "评论"
 }

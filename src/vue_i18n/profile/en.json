@@ -37,5 +37,7 @@
   "language_setting": "Language Setting",
   "account_setting": "Account Setting",
   "logout": "Logout",
-  "no_comment": "No comment yet"
+  "no_comment": "No comment yet",
+  "calendar_area": "Calendar",
+  "comments_area": "Comments"
 }
