@@ -80,7 +80,7 @@ const handleRegisterSuccess = () => {
             <div><span>{{ t("login.website_name") }}</span></div>
           </h2>
           <p> </p>
-          <img src="@\assets\website_icon.png" alt="Website icon" height="150" width="200">
+          <img src="@\assets\login.png" alt="Login Pic" height="150" width="200">
           <p>{{ t("login.has_account") }}</p>
           <button id="login" @click="change_style">{{ t("login.go_login") }}</button>
         </div>
@@ -90,7 +90,7 @@ const handleRegisterSuccess = () => {
             <div><span>{{ t("login.website_name") }}</span></div>
           </h2>
           <p> </p>
-          <img src="@\assets\website_icon.png" alt="Website icon" height="150" width="200">
+          <img src="@\assets\login.png" alt="Login Pic" height="150" width="200">
           <p>{{ t("login.no_account") }}</p>
           <button id="register" @click="change_style">{{ t("login.go_register") }}</button>
         </div>
