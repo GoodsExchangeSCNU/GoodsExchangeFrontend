@@ -109,18 +109,26 @@ onMounted(() => {
 
       <!-- 标签区域 -->
       <!-- 标签容器 -->
-    <div class = "block-for-tags">
-      <div class="tag-container">
-        <div
-            v-for="tag in tags"
-            :key="tag"
-            class="tag"
-            @click="handleTagClick(tag)"
-        >
-          {{ tag }}
+      <div class="block-for-tags">
+        <div class="tag-container">
+          <div
+              v-for="tag in tags"
+              :key="tag"
+              class="tag"
+              @click="handleTagClick(tag)"
+          >
+            {{ tag }}
+          </div>
         </div>
+        <div class="block">
+          <img
+              src="@/assets/homeview.jpg"
+              alt="icon"
+              class="block-img"
+          >
         </div>
       </div>
+
       <!-- 内容区域 -->
       <div class="content">
         <div class = "block-for-content">
@@ -197,8 +205,32 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  width: 50%;
+  width: 75%;
   align-self:flex-start;
+  height: 95%;
+}
+
+.block {
+  width: 100%;
+  background-color: #eef1f6; /* 背景色 */
+  border-radius: 12px; /* 圆角 */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 确保内容不超出 */
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+  height: 95%;
+}
+
+.block-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px; /* 图片圆角与 block 保持一致 */
 }
 
 .tag {
@@ -225,6 +257,11 @@ onMounted(() => {
   width: 100%; /* 与搜索框同宽 */
   margin: 20px 0;
   border-radius: 12px; /* 设置圆角 */
+  display: flex;
+  flex-direction: row;
+  height: 400px;
+  align-items: center;
+  justify-content: center;
 }
 
 .block-for-content {
