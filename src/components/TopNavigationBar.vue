@@ -119,7 +119,8 @@ watch(
       @select="handleSelect"
   >
     <el-menu-item index="0" disabled>
-      <span class="logo_word">GoodsExchange</span>
+      <!--<span class="logo_word">GoodsExchange</span> -->
+      <img src="/src/assets/icon_deep.png" alt="logo" class="logo-img">
     </el-menu-item>
     <el-menu-item index="1">
       <el-icon><House /></el-icon>
@@ -164,5 +165,10 @@ watch(
 .logo_word {
   font-size: 20px;
   font-weight: bold;
+}
+
+.logo-img {
+  width: 150px;
+  height: 50px;
 }
 </style>
