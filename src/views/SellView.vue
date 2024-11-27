@@ -1,6 +1,6 @@
 <script setup>
 
-  import {ref} from "vue";
+  import { ref, reactive } from "vue";
   import { ElMessageBox, ElMessage } from "element-plus";
   import axios from "@/axios_client/index.js";
   import { useI18n } from "vue-i18n";  // 控制弹窗显示
@@ -28,13 +28,13 @@
   const showDialog = ref(false);
   const { t , locale } = useI18n();
   // 商品信息绑定变量
-  const form = ref({
+  const form = reactive({
   itemname: "",
-  price: "",
+  price: 0,
   description: "",
-  image: null,
-  count:""
+  count: 0
 });
+  let formData  = new FormData()
 
   // 打开弹窗
   const handleAddClick = () => {
@@ -43,28 +43,34 @@
 
   // 处理图片上传
   const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-  form.value.image = file;
-}
+    console.log(event.target.files)
+    let file = event.target.files
+    for(let i=0;i<file.length;i++) {
+      formData.append('img', file[i])
+    }
 };
 
   // 提交商品信息
   const handleSubmit = () => {
-  console.log("提交商品信息:", form.value);
-  ElMessage({
-  message: "商品信息提交成功！",
-  type: "success",
-});
-  showDialog.value = false;
+  console.log("提交商品信息:", form);
+  submit()
+  form.price = 0
+  form.itemname = ""
+  form.count = 0
+  form.description = ""
+  formData = new FormData()
+  showDialog.value = false
 };
+
 const submit = () => {
-  axios.post("/item", {
-    name: form.value.itemname,
-    description:form.value.description ,
-    count: form.value.count,
-    img: form.value.image, // multiple
-    price: form.value.price
+  formData.append('name', form.itemname)
+  formData.append('description', form.description)
+  formData.append('count', form.count)
+  formData.append('price', form.price)
+  axios.post("/item/", formData,{
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
   }).then((res) => {
     if (res.status === 200) {
       if (res.data.code === 0) {
@@ -81,6 +87,15 @@ const submit = () => {
     ElMessage.warning(t('sell.item_info_upload_failed'))
     console.warn('请求出现异常')
   })
+}
+
+const handleCloseDialog = () => {
+  form.price = 0
+  form.itemname = ""
+  form.count = 0
+  form.description = ""
+  formData = new FormData()
+  showDialog.value = false
 }
 </script>
 
@@ -101,34 +116,57 @@ const submit = () => {
           </div>
         </div>
       </div>
+      <!-- 右侧内容-->
+      <div class="block-for-calendar">
+        <h3>日历</h3>
+        <div class="calendar" v-tooltip="calendarTooltip">
+          <div class="calendar-header">
+            <span>2024年 11月</span>
+          </div>
+          <div class="calendar-grid">
+            <div class="day" v-for="(day, index) in daysInMonth" :key="index">{{ day }}</div>
+          </div>
+        </div>
+      </div>
       <!-- 其他内容 -->
       <button class="add-button" @click="handleAddClick">+</button>
-      <el-dialog v-model="showDialog" title="新增商品" width="400px">
+      <el-dialog
+          v-model="showDialog"
+          title="新增商品"
+          width="400px"
+          @close="handleCloseDialog"
+          @closed="handleCloseDialog"
+      >
         <div class="form-container">
+          <span>Name</span>
           <el-input v-model="form.itemname" placeholder="请输入商品名称" />
+          <span>Price</span>
           <el-input v-model="form.price" placeholder="请输入商品价格" />
+          <span>Number</span>
+          <el-input v-model="form.count" placeholder="请输入物品数量" />
+          <span>Description</span>
           <el-input
               v-model="form.description"
               type="textarea"
               placeholder="请输入商品描述"
           />
+          <span>Image</span>
           <input
               type="file"
-              accept="image/*"
+              multiple
+              name = "img"
               @change="handleImageUpload"
               class="upload-input"
           />
         </div>
         <template #footer>
-          <el-button @click="showDialog = false">取消</el-button>
+          <el-button @click="handleCloseDialog">取消</el-button>
           <el-button type="primary" @click="handleSubmit">确认</el-button>
         </template>
       </el-dialog>
     </div>
   </div>
 </template>
-
-
 
 <style scoped>
 .basic-container {
@@ -148,7 +186,63 @@ const submit = () => {
   height: 100vh;
   background-color: #CAD9F1;
 }
+.block-for-calendar {
+  width:800px;
+  margin-left: 20px;
+  background-color: #eef1f6;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  height: 90%; /* 保持与左侧一致 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
+
+.calendar {
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  height: 80%;
+}
+
+.calendar-header {
+  padding: 10px;
+  background-color: #f5f5f5;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  padding: 10px;
+}
+
+.day {
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.day:hover {
+  background-color: #d0e4fc;
+  cursor: pointer;
+}
+
+/* 鼠标悬停时日历的浮动效果 */
+.calendar:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
  .add-button {
    position: fixed;
    bottom: 20px; /* 距离页面底部 20px */
@@ -184,11 +278,11 @@ const submit = () => {
   gap: 10px;
 }
 .block-for-item {
-  position: absolute;
+  margin-right: auto;
   top: 80px; /* 与 navigator-bar 的高度对齐 */
   left: 20px; /* 与页面左侧间距 */
   width: 300px; /* 固定宽度 */
-  bottom: 20px; /* 与页面底部间距 */
+  height:90%;
   background-color: #fff; /* 背景色 */
   padding: 20px; /* 内部内容的边距 */
   border-radius: 12px; /* 边框圆角 */

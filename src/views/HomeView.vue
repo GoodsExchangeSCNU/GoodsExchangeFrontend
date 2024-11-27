@@ -8,15 +8,35 @@ import PersonalData from "@/components/profile/PersonalData.vue";
 
 //access to vue-i18n
 const { t , locale } = useI18n();
+// 搜索框绑定的变量
+const searchQuery = ref('');
 
 // 点击搜索按钮事件
 const handleSearch = () => {
-  console.log("搜索内容为:", searchQuery.value);
+  let search_result = []
+  // 根据搜索内容筛选卡片
+  if (searchQuery.value.trim() !== "") {
+    cards.value = cards.value.filter((card) => {
+      // 假设卡片的 `name` 字searchQuery段包含搜索关键字
+      if (card.name.includes(searchQuery.value)) {
+        search_result.push(card)
+      }
+    });
+    return search_result
+  } else {
+    // 如果搜索框为空，加载所有卡片
+    axios.get("/item/list").then((res) => {
+      if (res.status === 200 && res.data.code === 0) {
+        cards.value = res.data.data;
+      } else {
+        console.warn("Failed to fetch items");
+      }
+    });
+  }
 };
 
 
-// 搜索框绑定的变量
-const searchQuery = ref('');
+
 
 // 标签数组
 const tags = ref([t("home.tag1"),t("home.tag2"),t("home.tag3"),t("home.tag4"),t("home.tag4"),t("home.tag5"),t("home.tag6"),t("home.tag7"),t("home.tag8"),t("home.tag9"),t("home.tag10"),t("home.tag11"),t("home.tag12"),t("home.tag13"),t("home.tag14"),t("home.tag15"),t("home.tag16"),t("home.tag17"),t("home.tag18"),t("home.tag19"),t("home.tag20")]);
