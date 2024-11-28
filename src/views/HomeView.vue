@@ -15,26 +15,16 @@ let compoentKey = ref(0);
 // 点击搜索按钮事件
 const handleSearch = () => {
   compoentKey.value += 1;
-  let search_result = []
-  // 根据搜索内容筛选卡片
-  if (searchQuery.value.trim() !== "") {
-    cards.value = cards.value.filter((card) => {
-      // 假设卡片的 `name` 字searchQuery段包含搜索关键字
-      if (card.name.includes(searchQuery.value)) {
-        search_result.push(card)
-      }
-    });
-    return search_result
-  } else {
-    // 如果搜索框为空，加载所有卡片
-    axios.get("/item/list").then((res) => {
+
+    axios.post("/search").then((res) => {
       if (res.status === 200 && res.data.code === 0) {
         cards.value = res.data.data;
-      } else {
+      }
+      else {
         console.warn("Failed to fetch items");
       }
     });
-  }
+
 };
 
 // 标签数组

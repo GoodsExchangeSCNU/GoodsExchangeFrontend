@@ -24,20 +24,20 @@ function goToItemPage() {
   <el-card
       class="clickable-card"
       @click="goToItemPage"
-      style="cursor: pointer; max-width: 200px;"
+      style="cursor: pointer;"
   >
-    <template #header>
-      <div class="card-header">
-        <span>{{itemname}}</span>
-      </div>
-    </template>
+
 
     <img
         :src="decodeURIComponent(img?img.length>0?img[0]:null:null)"
         style="width: 100%; height: auto;"
     />
-    <p class="text item">{{price}}</p>
-    <template #footer>{{description}}</template>
+    <div class="price">
+    <p >￥{{price}}</p>
+    </div>
+    <div class = "description">
+    <p >{{description}}</p>
+    </div>
   </el-card>
 </template>
 
@@ -60,7 +60,9 @@ function goToItemPage() {
   text-align: center; /* 内容居中 */
 }
 
-
+.description{
+  text-align: left;
+}
 .center-container{
   max-width: 1200px;
   min-width: 1200px;
@@ -69,5 +71,19 @@ function goToItemPage() {
   align-items: center;
   height: 100vh;
   background-color: #CAD9F1;
+}
+.price{
+  padding-bottom: 30px;
+  padding-top: 30px;
+  text-align: left;
+  font-size: 24px;
+  height: 24px;
+  line-height: 24px;
+  color: #ff4f24;
+
+
+}
+.price p {
+  font-weight: 700;
 }
 </style>

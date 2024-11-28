@@ -1,4 +1,10 @@
 {
   "item_info_upload_success": "商品信息上传成功",
-  "item_info_upload_failed": "商品信息上传失败"
+  "item_info_upload_failed": "商品信息上传失败",
+  "Itemdetail": "商品详情",
+  "name": "商品名称",
+  "price":"商品价格",
+  "number": "商品数量",
+  "description": "描述",
+  "img": "图片"
 }

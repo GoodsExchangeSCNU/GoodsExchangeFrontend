@@ -1,4 +1,10 @@
 {
   "item_info_upload_success": "Item information upload success",
-  "item_info_upload_failed": "Item information upload failed"
+  "item_info_upload_failed": "Item information upload failed",
+  "Itemdetail": "Info",
+  "name": "name",
+  "price":"price",
+  "number": "number",
+  "description": "description",
+  "img": "picture"
 }

@@ -118,7 +118,8 @@ const handleCloseDialog = () => {
       </div>
       <!-- 右侧内容-->
       <div class="block-for-calendar">
-        <h3>日历</h3>
+        <div class = "Text-for-item">
+        <h3>{{t('sell.Itemdetail')}}</h3>
         <div class="calendar" v-tooltip="calendarTooltip">
           <div class="calendar-header">
             <span>2024年 11月</span>
@@ -127,6 +128,7 @@ const handleCloseDialog = () => {
             <div class="day" v-for="(day, index) in daysInMonth" :key="index">{{ day }}</div>
           </div>
         </div>
+          </div>
       </div>
       <!-- 其他内容 -->
       <button class="add-button" @click="handleAddClick">+</button>
@@ -138,19 +140,19 @@ const handleCloseDialog = () => {
           @closed="handleCloseDialog"
       >
         <div class="form-container">
-          <span>Name</span>
+          <span>{{t('sell.name')}}</span>
           <el-input v-model="form.itemname" placeholder="请输入商品名称" />
-          <span>Price</span>
+          <span>{{t('sell.price')}}</span>
           <el-input v-model="form.price" placeholder="请输入商品价格" />
-          <span>Number</span>
+          <span>{{t('sell.number')}}</span>
           <el-input v-model="form.count" placeholder="请输入物品数量" />
-          <span>Description</span>
+          <span>{{t('sell.description')}}</span>
           <el-input
               v-model="form.description"
               type="textarea"
               placeholder="请输入商品描述"
           />
-          <span>Image</span>
+          <span>{{t('sell.img')}}</span>
           <input
               type="file"
               multiple
@@ -198,7 +200,11 @@ const handleCloseDialog = () => {
   flex-direction: column;
   justify-content: space-between;
 }
+.Text-for-item{
+  text-align: center;
+  font-size: 30px;
 
+}
 
 .calendar {
   position: relative;
