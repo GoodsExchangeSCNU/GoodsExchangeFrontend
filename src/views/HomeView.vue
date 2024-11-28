@@ -82,17 +82,13 @@ onMounted(() => {
     if(res.status === 200){
       if(res.data.code === 0){
         cards.value = res.data.data
-
         if(cards.value.length < cardCount.value){
           cards.value = [...cards.value,...Array.from({ length: cardCount.value-cards.value.length }, (_, index) => index + 1)]
         }
-
         // itemname.value = res.data.data.name;
         // img.value = res.data.data.img;
         // description.value = res.data.data.description;
         // price.value = res.data.price;
-
-
       }
       else{
         console.warn("failed to get item info")
@@ -158,6 +154,7 @@ onMounted(() => {
                 :itemname = "card.name"
                 :description = "card.description"
                 :price = "card.price"
+                :itemid="card.id"
             />
           </div>
         </div>

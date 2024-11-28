@@ -5,6 +5,7 @@ import ProfileView from '../views/ProfileView.vue'
 import SellView from "../views/SellView.vue";
 import MessageView from "../views/MessageView.vue";
 import ProfileSearchView from "@/views/ProfileSearchView.vue";
+import ItemInfoView from "@/views/ItemInfoView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,7 +48,7 @@ const router = createRouter({
       component: ProfileSearchView
     },
     { // 物品详情页面
-      path: 'iteminfo/:itemid',
+      path: '/iteminfo/:itemid',
       name: "iteminfo",
       component: ItemInfoView
     }

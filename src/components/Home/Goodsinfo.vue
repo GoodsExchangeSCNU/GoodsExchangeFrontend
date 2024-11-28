@@ -3,18 +3,19 @@ import { useRouter } from 'vue-router';
 import axios from "@/axios_client/index.js";
 import {onMounted, ref, reactive, computed} from "vue";
 import { useI18n } from "vue-i18n";
-const router = useRouter();
+import router from "@/router/index.js";
+
 const props = defineProps({
   img: String,
   itemname: String,
   price: Number,
   description: String,
-
+  itemid: String
 })
 
 console.log(props.itemname)
 function goToItemPage() {
-  router.push('/item-page'); // 跳转到目标页面的路径
+  router.push(`/iteminfo/${props.itemid}`)
 }
 </script>
 
@@ -43,8 +44,6 @@ function goToItemPage() {
 
 <style scoped>
 .el-card {
-  //margin: 10px auto; /* 卡片之间留间距 */
-  //padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
   transition: transform 0.2s, box-shadow 0.2s; /* 点击时有轻微放大效果 */
   width: 100%;

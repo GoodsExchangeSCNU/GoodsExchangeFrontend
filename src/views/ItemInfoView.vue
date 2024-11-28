@@ -6,7 +6,7 @@ const route = useRoute();
 let search_item_id = ref(""); // 被用户点击的商品id
 
 onMounted(() => {
-  search_item.value = route.params.itemid;
+  search_item_id.value = route.params.itemid;
 });
 </script>
 
