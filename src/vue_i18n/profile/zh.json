@@ -36,8 +36,13 @@
   "select_language": "请选择语言",
   "language_setting": "语言设置",
   "account_setting": "账号管理",
-  "logout": "退出登录",
+  "logout": "退出登录 >",
   "no_comment": "暂无评论",
   "calendar_area": "日历",
-  "comments_area": "评论"
+  "comments_area": "评论",
+  "change_language": "Switch to English >",
+  "download_desktop_app": "下载桌面应用 >",
+  "public_net_app": "使用网页端应用",
+  "public_net_app_next": "（公网环境下）",
+  "download_error": "下载失败，请检查是否已经在桌面端应用下"
 }

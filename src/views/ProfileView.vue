@@ -2,12 +2,25 @@
   import {computed, onMounted, ref} from "vue";
   import axios from "@/axios_client/index.js";
   import { useI18n } from "vue-i18n";
-  import { Sell, ShoppingTrolley, User, Lock, Setting } from "@element-plus/icons-vue";
+  import {
+    Sell,
+    ShoppingTrolley,
+    User,
+    Lock,
+    Setting,
+    Delete,
+    Refresh,
+    Download,
+    ChromeFilled, School
+  } from "@element-plus/icons-vue";
   import PersonalData from "@/components/profile/PersonalData.vue";
   import PurchaseInfo from "@/components/profile/PurchaseInfo.vue";
   import SaleInfo from "@/components/profile/SaleInfo.vue";
   import PasswordDialog from "@/components/profile/PasswordDialog.vue";
   import SettingsDialog from "@/components/profile/SettingsDialog.vue";
+  import WebSocketService from "@/socket_client/socket.js";
+  import router from "@/router/index.js";
+  import {ElMessage} from "element-plus";
 
   // 组件全局变量定义
   let username = ref("");
@@ -24,7 +37,7 @@
   let dormitory_shown = computed(
       () => ((dormitory.value === "") || (dormitory.value === null)) ? t("profile.detail_none_shown") : dormitory.value
   );
-  const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
+  const { t, locale } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
   let activeIndex = ref("1"); // 控制显示的内容，初始化为个人数据页面
   let componentKey = ref(0); // 用于强制刷新子组件
   let passwordDialogVisible = ref(false); // 控制修改密码对话框的显示
@@ -73,12 +86,44 @@
     componentKey.value += 1;
   }
 
+  const checkFileAvailable = async (fileURL) => {
+    try {
+      const res = await fetch(fileURL, {
+        method: 'HEAD'
+      });
+      if (res.ok) {
+        window.location.href = fileURL;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   const handleOtherSelect = (key) => {
     if (key[0] === "1") {
       passwordDialogVisible.value = true;
     }
     else if (key[0] === "2") {
-      settingsDialogVisible.value = true;
+      // 退出登录
+      localStorage.removeItem('token');
+      localStorage.removeItem('refresh');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userId');
+      WebSocketService.close();
+      router.push('/login');
+    }
+    else if (key[0] === "3") {
+      const fileURL = "/app/Goods_Exchange_Setup_0.0.0.exe";
+      if (!checkFileAvailable(fileURL)) {
+        ElMessage.warning(t("profile.download_error"));
+      }
+    }
+    else if (key[0] === "9") {
+      locale.value = (locale.value === "zh") ? "en" : "zh";
     }
     componentKey.value += 1;
   }
@@ -135,8 +180,16 @@
                 <span>{{t("profile.change_password")}}</span>
               </el-menu-item>
               <el-menu-item index="2">
-                <el-icon><Setting /></el-icon>
-                <span>{{t("profile.settings")}}</span>
+                <el-icon><Delete /></el-icon>
+                <span>{{t("profile.logout")}}</span>
+              </el-menu-item>
+              <el-menu-item index="3">
+                <el-icon><Download /></el-icon>
+                <span>{{t("profile.download_desktop_app")}}</span>
+              </el-menu-item>
+              <el-menu-item index="9">
+                <el-icon><Refresh /></el-icon>
+                <span>{{t("profile.change_language")}}</span>
               </el-menu-item>
             </el-menu>
           </div>
@@ -169,12 +222,6 @@
               @updateCancel="passwordDialogVisible = false"
               @updateSuccess="passwordDialogVisible = false"
           />
-          <SettingsDialog
-              :isSettingsDialogVisiable="settingsDialogVisible"
-              :key="componentKey"
-              @updateCancel="settingsDialogVisible = false"
-              @updateSuccess="settingsDialogVisible = false"
-          />
         </div>
       </div>
     </div>
@@ -186,7 +233,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 1000px;
   background-color: #CAD9F1;
 }
 

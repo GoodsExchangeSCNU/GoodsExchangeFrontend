@@ -198,7 +198,7 @@ const handleOtherAvatarClick = (username) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   background-color: #CAD9F1;
 }
 
