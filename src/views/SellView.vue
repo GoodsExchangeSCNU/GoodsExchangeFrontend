@@ -1,30 +1,19 @@
 <script setup>
 
-  import { ref, reactive } from "vue";
+  import { ref, reactive,onMounted,  watch } from "vue";
   import { ElMessageBox, ElMessage } from "element-plus";
+  import { useI18n } from "vue-i18n";
+  import itemcard from "@/components/Sell/itemcard.vue";
+  import { Search } from "@element-plus/icons-vue";
   import axios from "@/axios_client/index.js";
-  import { useI18n } from "vue-i18n";  // 控制弹窗显示
+  import Goodsinfo from "@/components/Home/Goodsinfo.vue";
+  let compoentKey = ref(0);
+  let itemname = ref("");
+  let price = ref("");
+  let description = ref("");
+  let img = ref("");
+  const soldItems = ref([]);
 
-  const soldItems = ref([
-    {
-      name: "二手书籍",
-      price: "¥20",
-      description: "几乎全新，适合备考使用。",
-      image: "https://via.placeholder.com/100x100.png?text=Book",
-    },
-    {
-      name: "运动鞋",
-      price: "¥150",
-      description: "轻微磨损，尺码42。",
-      image: "https://via.placeholder.com/100x100.png?text=Shoes",
-    },
-    {
-      name: "电子产品",
-      price: "¥800",
-      description: "二手手机，功能完好。",
-      image: "https://via.placeholder.com/100x100.png?text=Phone",
-    },
-  ]);
   const showDialog = ref(false);
   const { t , locale } = useI18n();
   // 商品信息绑定变量
@@ -41,6 +30,9 @@
   showDialog.value = true;
 };
 
+  const TransferCard = (item) => {
+    selectedCard.value = { ...item }; // 将点击的卡片数据传递给 selectedCard
+  };
   // 处理图片上传
   const handleImageUpload = (event) => {
     console.log(event.target.files)
@@ -106,7 +98,10 @@ const handleCloseDialog = () => {
       <div class="block-for-item">
         <h3>我卖过的商品</h3>
         <div class="item-list">
-          <div v-for="(item, index) in soldItems" :key="index" class="item-card">
+          <div v-for="(item, index) in soldItems"
+               :key="index"
+               class="item-card"
+               @click="TransferCard(item)" >
             <img :src="item.image" alt="商品图片" class="item-image" />
             <div class="item-info">
               <h4 class="item-name">{{ item.name }}</h4>
@@ -120,15 +115,21 @@ const handleCloseDialog = () => {
       <div class="block-for-calendar">
         <div class = "Text-for-item">
         <h3>{{t('sell.Itemdetail')}}</h3>
-        <div class="calendar" v-tooltip="calendarTooltip">
-          <div class="calendar-header">
-            <span>2024年 11月</span>
-          </div>
-          <div class="calendar-grid">
-            <div class="day" v-for="(day, index) in daysInMonth" :key="index">{{ day }}</div>
-          </div>
-        </div>
-          </div>
+<!--          <div v-if="soldItems.length !== 0 " class = "block-for-detail">-->
+<!--            <itemcard-->
+<!--                :img = "card.img"-->
+<!--                :itemname = "card.name"-->
+<!--                :description = "card.description"-->
+<!--                :price = "card.price"-->
+<!--                :itemid="card.id"-->
+<!--                :key="compoentKey"-->
+<!--                :message = "message"-->
+<!--            />-->
+<!--            <div v-else>-->
+<!--              <p>no item selected</p>-->
+<!--          </div>-->
+<!--          </div>-->
+      </div>
       </div>
       <!-- 其他内容 -->
       <button class="add-button" @click="handleAddClick">+</button>

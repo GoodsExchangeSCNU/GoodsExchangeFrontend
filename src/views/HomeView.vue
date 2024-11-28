@@ -10,7 +10,7 @@ import PersonalData from "@/components/profile/PersonalData.vue";
 const { t , locale } = useI18n();
 // 搜索框绑定的变量
 const searchQuery = ref('');
-let compoentKey = ref(0);
+
 
 // 点击搜索按钮事件
 const handleSearch = () => {
