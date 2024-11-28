@@ -45,6 +45,11 @@ const router = createRouter({
       path: '/profile/:username',
       name: 'profileSearch',
       component: ProfileSearchView
+    },
+    { // 物品详情页面
+      path: 'iteminfo/:itemid',
+      name: "iteminfo",
+      component: ItemInfoView
     }
   ]
 })
