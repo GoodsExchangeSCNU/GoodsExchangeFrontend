@@ -12,9 +12,11 @@
   let price = ref("");
   let description = ref("");
   let img = ref("");
-  const soldItems = ref([]);
+  let soldItems = ref([]);
+  let transferId = ref("");
+  let componentKey = ref(0);
+  let showDialog = ref(false);
 
-  const showDialog = ref(false);
   const { t , locale } = useI18n();
   // 商品信息绑定变量
   const form = reactive({
@@ -22,16 +24,12 @@
   price: 0,
   description: "",
   count: 0
-});
+  });
   let formData  = new FormData()
 
-  // 打开弹窗
-  const handleAddClick = () => {
-  showDialog.value = true;
-};
-
   const TransferCard = (item) => {
-    selectedCard.value = { ...item }; // 将点击的卡片数据传递给 selectedCard
+    transferId.value = item.item.id;
+    componentKey.value += 1;
   };
   // 处理图片上传
   const handleImageUpload = (event) => {
@@ -53,6 +51,11 @@
   formData = new FormData()
   showDialog.value = false
 };
+
+const AddSellItem = () => {
+  console.log("click")
+  showDialog.value = true;
+}
 
 const submit = () => {
   formData.append('name', form.itemname)
@@ -89,6 +92,24 @@ const handleCloseDialog = () => {
   formData = new FormData()
   showDialog.value = false
 }
+
+onMounted(() => {
+  axios.get("user/record/sell").then(res => {
+    if (res.status === 200) {
+      if (res.data.code === 0) {
+        soldItems.value = res.data
+      }
+      else {
+
+      }
+    }
+    else {
+
+    }
+  }).catch(err => {
+
+  })
+})
 </script>
 
 <template>
@@ -102,11 +123,11 @@ const handleCloseDialog = () => {
                :key="index"
                class="item-card"
                @click="TransferCard(item)" >
-            <img :src="item.image" alt="商品图片" class="item-image" />
+            <img :src="item.item.img[0]" alt="商品图片" class="item-image" />
             <div class="item-info">
-              <h4 class="item-name">{{ item.name }}</h4>
-              <p class="item-price">价格: {{ item.price }}</p>
-              <p class="item-description">{{ item.description }}</p>
+              <h4 class="item-name">{{ item.item.name }}</h4>
+              <p class="item-price">价格: {{ item.item.price }}</p>
+              <p class="item-description">{{ item.item.description }}</p>
             </div>
           </div>
         </div>
@@ -115,24 +136,20 @@ const handleCloseDialog = () => {
       <div class="block-for-calendar">
         <div class = "Text-for-item">
         <h3>{{t('sell.Itemdetail')}}</h3>
-<!--          <div v-if="soldItems.length !== 0 " class = "block-for-detail">-->
-<!--            <itemcard-->
-<!--                :img = "card.img"-->
-<!--                :itemname = "card.name"-->
-<!--                :description = "card.description"-->
-<!--                :price = "card.price"-->
-<!--                :itemid="card.id"-->
-<!--                :key="compoentKey"-->
-<!--                :message = "message"-->
-<!--            />-->
-<!--            <div v-else>-->
-<!--              <p>no item selected</p>-->
-<!--          </div>-->
-<!--          </div>-->
+          <div v-if="soldItems.length !== 0 " class = "block-for-detail">
+            <itemcard
+                :id="transferId"
+                :key="componentKey"
+            />
+          </div>
+          <div v-else>
+            <p>no item selected</p>
+          </div>
       </div>
       </div>
       <!-- 其他内容 -->
-      <button class="add-button" @click="handleAddClick">+</button>
+      <button class="add-button" @click="AddSellItem">+</button>
+      <div>{{showDialog}}</div>
       <el-dialog
           v-model="showDialog"
           title="新增商品"

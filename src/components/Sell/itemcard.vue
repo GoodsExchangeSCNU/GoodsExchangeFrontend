@@ -5,12 +5,19 @@ import {onMounted, ref, reactive, computed} from "vue";
 import { useI18n } from "vue-i18n";
 import router from "@/router/index.js";
 const props = defineProps({
-  img: String,
-  itemname: String,
-  price: Number,
-  description: String,
-  itemid: String,
-  message:String,
+  id: String
+})
+
+onMounted(() => {
+  axios.get('/item', {
+    params: {
+      id: props.id
+    }
+  }).then(res => {
+
+  }).catch(err => {
+
+  })
 })
 </script>
 

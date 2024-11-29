@@ -10,6 +10,7 @@ import PersonalData from "@/components/profile/PersonalData.vue";
 const { t , locale } = useI18n();
 // 搜索框绑定的变量
 const searchQuery = ref('');
+let componentKey = ref(0);
 
 
 // 点击搜索按钮事件
@@ -64,7 +65,7 @@ onMounted(() => {
   } else {
     language_flag.value = "en";
   }
-  compoentKey.value += 1;
+  componentKey.value += 1;
   axios.get("/item/list").then(res => {
     if(res.status === 200){
       if(res.data.code === 0){
