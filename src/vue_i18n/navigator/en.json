@@ -6,5 +6,6 @@
   "change_language": "Change into Chinese",
   "logout": "Logout",
   "personal_info": "Personal Information",
-  "username_error": "failed to get avatar"
+  "username_error": "failed to get avatar",
+  "download_desktop_app": "Download Desktop App"
 }

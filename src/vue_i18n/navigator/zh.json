@@ -6,5 +6,6 @@
   "change_language": "切换为英语",
   "logout": "退出登录",
   "personal_info": "个人信息",
-  "username_error": "头像信息获取失败"
+  "username_error": "头像信息获取失败",
+  "download_desktop_app": "下载桌面端应用"
 }

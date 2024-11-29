@@ -5,6 +5,7 @@ import ProfileView from '../views/ProfileView.vue'
 import SellView from "../views/SellView.vue";
 import MessageView from "../views/MessageView.vue";
 import ProfileSearchView from "@/views/ProfileSearchView.vue";
+import ItemInfoView from "@/views/ItemInfoView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,11 @@ const router = createRouter({
       path: '/profile/:username',
       name: 'profileSearch',
       component: ProfileSearchView
+    },
+    {
+      path: '/item/:itemId',
+      name: 'item',
+      component: ItemInfoView
     }
   ]
 })

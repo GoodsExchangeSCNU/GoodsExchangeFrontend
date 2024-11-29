@@ -17,6 +17,10 @@ import chatroom_en from './chatroom/en.json' assert {type: "json"}
 import chatroom_zh from './chatroom/zh.json' assert {type: "json"}
 import emoji_en from './emoji/en.json' assert {type: "json"}
 import emoji_zh from './emoji/zh.json' assert {type: "json"}
+import sell_en from './sell/en.json' assert {type: "json"}
+import sell_zh from './sell/zh.json' assert {type: "json"}
+import itemInfo_en from '@/vue_i18n/itemInfo/en.json' assert {type: "json"}
+import itemInfo_zh from '@/vue_i18n/itemInfo/zh.json' assert {type: "json"}
 
 const messages = {
     en: {
@@ -28,7 +32,9 @@ const messages = {
         profile: profile_en,
         saleInfo: saleInfo_en,
         chatroom: chatroom_en,
-        emoji: emoji_en
+        emoji: emoji_en,
+        sell: sell_en,
+        itemInfo: itemInfo_en
     },
     zh: {
         home: home_zh,
@@ -39,7 +45,9 @@ const messages = {
         profile: profile_zh,
         saleInfo: saleInfo_zh,
         chatroom: chatroom_zh,
-        emoji: emoji_zh
+        emoji: emoji_zh,
+        sell: sell_zh,
+        itemInfo: itemInfo_zh
     }
 }
 
