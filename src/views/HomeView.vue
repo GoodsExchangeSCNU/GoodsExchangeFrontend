@@ -46,7 +46,7 @@ const handleSearch = () => {
     return;
   }
   axios.post("/search", {
-    key: searchQuery
+    key: searchQuery.value
   }).then(res => {
     if (res.status === 200) {
       if (res.data.code === 0) {
@@ -123,7 +123,7 @@ onMounted(() => {
         <div class="block-container">
         </div>
       </div>
-      <div class="item-info-block">
+      <div class="item-info-block" v-if="cardList.length !== 0">
         <div class="button-block">
           <div class="title-font">{{t('home.item_list_title')}}</div>
           <el-button @click="recommendCall" type="primary">
@@ -131,10 +131,7 @@ onMounted(() => {
              {{ t('home.refresh') }}
           </el-button>
         </div>
-        <div v-if="cardList.length === 0" class="block-for-content">
-          <el-empty :description="t('home.empty_hint')"/>
-        </div>
-        <div v-else class="block-for-content">
+        <div class="block-for-content">
           <div v-for="(card, index) in cardList" :key="card" class="card">
             <PurchaseGoodsCard
                 :img="card.img"
@@ -147,6 +144,13 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <div v-else class="empty-block">
+        <el-empty :description="t('home.empty_hint')"/>
+        <el-button @click="recommendCall" type="primary" style="margin-bottom: 20px">
+          <el-icon><Refresh /></el-icon>
+          {{ t('home.bad_request_refresh') }}
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -156,7 +160,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   background-color: #CAD9F1;
 }
 
@@ -286,6 +290,19 @@ onMounted(() => {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box; /* 确保宽度计算包含内边距 */
   width: 100%;
+}
+
+.empty-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  background-color:  #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 </style>
 

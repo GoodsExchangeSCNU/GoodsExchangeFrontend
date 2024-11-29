@@ -1,3 +1,18 @@
 {
-
+  "no_item_hint": "No items for sale",
+  "api_failure": "Failed to get Goods in sale",
+  "sell_item_top_bar": "Goods for sale",
+  "add_item": "Add Item",
+  "form_item_name": "Item Name",
+  "form_item_description": "Item Description",
+  "form_item_price": "Item Price",
+  "form_item_count": "Item Count",
+  "form_item_img": "Item Images",
+  "form_item_name_placeholder": "Enter Item Name",
+  "form_item_description_placeholder": "Enter Item Description",
+  "api_failure_upload_fail": "Failed to upload items",
+  "api_failure_upload_fail_1": "111",
+  "api_success_upload_success": "Successfully uploaded items",
+  "upload": "Upload",
+  "cancel": "Cancel"
 }

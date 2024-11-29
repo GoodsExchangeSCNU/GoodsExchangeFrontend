@@ -36,5 +36,6 @@
   "search_empty": "请输入搜索信息",
   "empty_hint": "似乎没有搜索到商品",
   "refresh": "换一换",
-  "item_list_title": "商品列表 （猜你喜欢）"
+  "item_list_title": "商品列表 （猜你喜欢）",
+  "bad_request_refresh": "刷新页面"
 }

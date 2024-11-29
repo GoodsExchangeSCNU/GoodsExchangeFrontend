@@ -36,6 +36,7 @@
   "search_empty": "Please enter the search content",
   "empty_hint": "No product appears to have been searched",
   "refresh": "Refresh",
-  "item_list_title": "Item List (Guess what you like)"
+  "item_list_title": "Item List (Guess what you like)",
+  "bad_request_refresh": "Refresh the page"
 }
 

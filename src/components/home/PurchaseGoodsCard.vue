@@ -26,10 +26,11 @@ const goItemPage = () => {
       style="width: 100%; height: auto;"
       :alt="props.itemName"/>
     <div class="price">
-      <p >￥{{price}}</p>
+      <p>￥{{props.price}}</p>
     </div>
     <div class="description">
-      <p >{{description}}</p>
+      <p style="font-weight: bold">{{props.itemName}}</p>
+      <p>{{props.description}}</p>
     </div>
   </el-card>
 </template>

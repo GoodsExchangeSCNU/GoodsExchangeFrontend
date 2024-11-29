@@ -110,7 +110,7 @@ const handleOtherAvatarClick = (username) => {
             <div class="room-list">
               <el-scrollbar height="600px" class="room-list-scrollbar">
                 <div v-if="roomList.length === 0" class="select-notice">
-                  <h1>{{t('chatroom.no_chatroom')}}</h1>
+                  <el-empty :description="t('chatroom.no_chatroom')"></el-empty>
                   <div class="empty-navigator">
                     <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
                     <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
@@ -174,7 +174,8 @@ const handleOtherAvatarClick = (username) => {
         </div>
         <div class="right-container-unselected" v-else>
           <div v-if="roomList.length === 0" class="select-notice">
-            <h1>{{t('chatroom.no_classrooms_available')}}</h1>
+<!--            <h1>{{t('chatroom.no_classrooms_available')}}</h1>-->
+            <el-empty :description="t('chatroom.no_classrooms_available')"/>
             <div class="empty-navigator">
               <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
               <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
