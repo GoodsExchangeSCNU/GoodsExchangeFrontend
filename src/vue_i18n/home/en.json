@@ -29,6 +29,13 @@
   "tag17": "car accessories",
   "tag18": "kids' items",
   "tag19": "collection",
-  "tag20": "pet supplies"
+  "tag20": "pet supplies",
+  "recommend_api_failure": "Failed to get items",
+  "search_api_failure": "Failed to get items",
+  "search_get_none": "No Goods found",
+  "search_empty": "Please enter the search content",
+  "empty_hint": "No product appears to have been searched",
+  "refresh": "Refresh",
+  "item_list_title": "Item List (Guess what you like)"
 }
 
