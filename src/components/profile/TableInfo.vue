@@ -1,11 +1,12 @@
 <script setup>
-import {ref, defineProps, onMounted} from "vue";
+import {ref, defineProps, onMounted, reactive} from "vue";
 import {useI18n} from "vue-i18n";
 import router from "@/router/index.js";
 import axios from "@/axios_client/index.js";
 import FormatObject from "@/utils/format.js";
 import StateIcon from "@/components/profile/StateIcon.vue";
 import { Picture, Loading } from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 
 // 组件全局属性事件定义
 const props = defineProps({
@@ -18,6 +19,12 @@ const { t } = useI18n();
 let tableData = ref([]);
 let viewerVisible = ref(false);
 let picture_list_data = ref([]);
+let commentDialogVisible = ref(false);
+const commentForm = reactive({
+  trade_id: 0,
+  content: "",
+  rating: 0,
+})
 
 // 组件全局函数定义
 const handleGoSell = () => {
@@ -227,6 +234,45 @@ const event_change_completed = (trade_id) => {
   })
 }
 
+const create_comment = (trade_id) => {
+  commentForm.trade_id = trade_id
+  commentDialogVisible.value = true
+}
+
+const resetCommentForm = () => {
+  commentForm.trade_id = 0
+  commentForm.content = ""
+  commentForm.rating = 0
+  commentDialogVisible.value = false
+}
+
+const submitComment = () => {
+  if (commentForm.content === "" || commentForm.rating === 0 || commentForm.trade_id === 0) {
+    ElMessage.error(t("saleInfo.empty_comment"))
+    return
+  }
+  axios.put("/trade/comment", {
+    trade_id: commentForm.trade_id,
+    body: commentForm.content,
+    // rating: commentForm.rating
+  }).then(res => {
+    if (res.status === 200) {
+      if (res.data.code === 0) {
+        ElMessage.success(t("saleInfo.comment_success"))
+        resetCommentForm()
+        tableInfoRefresh()
+      } else {
+        ElMessage.error(t("saleInfo.comment_fail"))
+      }
+    } else {
+      ElMessage.error(t("saleInfo.comment_fail"))
+    }
+  }).catch(res => {
+    ElMessage.error(t("saleInfo.comment_fail"))
+    console.warn(res)
+  })
+  commentDialogVisible.value = false
+}
 const imageViewerVisible = (data_index) => {
   picture_list_data.value = tableData.value[data_index].picture_list
   viewerVisible.value = true
@@ -307,8 +353,11 @@ onMounted(() => {
             <template v-if="scope.row.state === 4">
               <div>{{t("saleInfo.event_operation_None")}}</div>
             </template>
-            <template v-if="scope.row.state === 5">
+            <template v-if="scope.row.state === 5 && (props.isSell)" >
               <div>{{t("saleInfo.event_operation_None")}}</div>
+            </template>
+            <template v-if="scope.row.state === 5 && (!props.isSell)" >
+              <el-button @click="create_comment(scope.row.id)" type="success">{{t("saleInfo.transaction_evaluation")}}</el-button>
             </template>
             <template v-if="(scope.row.state === 6) && (props.isSell)">
               <div>{{t("saleInfo.event_operation_None")}}</div>
@@ -346,6 +395,31 @@ onMounted(() => {
         :z-index="2000"
         :url-list="picture_list_data"
         @close="viewerVisible = false" />
+    <el-dialog
+        v-model="commentDialogVisible"
+        :title="t('saleInfo.title_give_comment')"
+        width="30%"
+        draggable
+        @close="resetCommentForm"
+        @closed="resetCommentForm"
+    >
+      <el-form :model="commentForm">
+        <el-form-item :label="t('saleInfo.comment_body')" prop="content">
+          <el-input
+              type="textarea"
+              v-model="commentForm.content"
+              :placeholder="t('saleInfo.comment_placeholder')"
+          ></el-input>
+        </el-form-item>
+        <el-form-item :label="t('saleInfo.rating_body')" prop="rating">
+          <el-rate v-model="commentForm.rating"></el-rate>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="commentDialogVisible = false">{{t("saleInfo.cancel_comment")}}</el-button>
+        <el-button type="success" @click="submitComment">{{t("saleInfo.submit_comment")}}</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 

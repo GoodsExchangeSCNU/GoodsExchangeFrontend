@@ -2,6 +2,7 @@
 import { defineProps, onMounted, onUnmounted, ref } from 'vue';
 import WebSocketService from "@/socket_client/socket.js";
 import { useI18n } from "vue-i18n";
+import router from "@/router/index.js";
 
 // 组件全局属性事件定义
 const props = defineProps({
@@ -43,6 +44,10 @@ const handleReceiveMessage = (data) => {
   }
 };
 
+const handleOtherAvatarClick = (username) => {
+  router.push(`/profile/${username}`)
+}
+
 onMounted(() => {
   WebSocketService.fetchMessage(props.room_id);
   WebSocketService.on("FetchMessage", handleChatMessage);
@@ -59,7 +64,7 @@ onUnmounted(() => {
   <el-scrollbar height="500px">
     <el-main style="overflow-y: auto; padding: 20px;">
       <div v-for="(message, index) in chatMessage" :key="index" :class="['message', message.sender === props.username ? 'myself' : 'itself']">
-        <el-avatar :size="40" class="message-avatar">
+        <el-avatar :size="40" class="message-avatar" @click="handleOtherAvatarClick(message.sender)">
           {{ message.sender.slice(0, 2).toUpperCase() }}
         </el-avatar>
         <div class="message-box">

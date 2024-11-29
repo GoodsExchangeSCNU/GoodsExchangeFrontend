@@ -9,5 +9,26 @@
   "ban_date": "Date",
   "ban_time": "Time Period",
   "ban_time_upload": "Upload",
-  "ban_time_cancel": "Cancel"
+  "ban_time_cancel": "Cancel",
+  "tag1": "men's wear",
+  "tag2": "women's wear",
+  "tag3": "electronics",
+  "tag4": "mobile phones",
+  "tag5": "Ipad",
+  "tag6": "laptops",
+  "tag7": "home appliances",
+  "tag8": "furniture",
+  "tag9": "clothing",
+  "tag10": "shoes",
+  "tag11": "bags",
+  "tag12": "make-up items",
+  "tag13": "books",
+  "tag14": "sports equipment",
+  "tag15": "gaming devices",
+  "tag16": "musical instruments",
+  "tag17": "car accessories",
+  "tag18": "kids' items",
+  "tag19": "collection",
+  "tag20": "pet supplies"
 }
+

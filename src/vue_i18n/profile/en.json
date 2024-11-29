@@ -14,6 +14,7 @@
   "settings": "Settings >",
   "more_info_title": "More Information",
   "personal_data_title": "Your Profile",
+  "personal_data_title_searching": "The Profile",
   "edit_button": "Edit your profile",
   "save_button": "Save",
   "cancel_button": "Cancel",
@@ -35,5 +36,15 @@
   "select_language": "Please select the language",
   "language_setting": "Language Setting",
   "account_setting": "Account Setting",
-  "logout": "Logout"
+  "logout": "Logout >",
+  "no_comment": "No comment yet",
+  "calendar_area": "Calendar",
+  "comments_area": "Comments",
+  "change_language": "切换为中文 >",
+  "download_desktop_app": "Download Desktop App >",
+  "public_net_app": "Using Web Applications",
+  "public_net_app_next": "(Public Network)",
+  "public_net_app_inter": "Using Web Applications",
+  "public_net_app_next_inter": "(SCNU Network)",
+  "download_error": "The download failed. Please check whether it is already in the desktop application"
 }
