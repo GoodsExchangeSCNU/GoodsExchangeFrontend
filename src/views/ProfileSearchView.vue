@@ -60,8 +60,6 @@
           contact.value = res.data.data.profile.contact;
           facauty.value = res.data.data.profile.facauty;
           dormitory.value = res.data.data.profile.dormitory;
-          localStorage.setItem("username", res.data.data.username);
-          localStorage.setItem("userId", res.data.data.id);
         }
         else{
           console.warn("获取用户信息失败")

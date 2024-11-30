@@ -149,9 +149,8 @@ const uploadMessage = () => {
 .emoji-picker {
   position: absolute;
   bottom: 60px;
-  left: 0;
-  right: 0;
   z-index: 100;
+  max-width: 250px;
 }
 
 .op-button-block {

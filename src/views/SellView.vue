@@ -84,7 +84,7 @@ onMounted(() => {
                   <el-empty :description="t('sell.no_item_hint')"></el-empty>
                 </div>
                 <div v-else>
-                  <div v-for="item in itemList" :key="item.id">
+                  <div v-for="item in itemList" :key="item.id" class="single-card-container">
                     <el-card @click="openSellComponent(item)">
                       <div class="card-info">
                         <img class="img-block" :src="item.img[0]" alt="item.name" />
@@ -311,5 +311,9 @@ h3 {
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s; /* 背景色变换过渡 */
+}
+
+.single-card-container {
+  margin-top: 10px;
 }
 </style>
