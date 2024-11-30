@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "build:desktop": "cross-env NODE_ENV=desktop vite build",
     "preview": "vite preview --host 0.0.0.0",
     "electron": "wait-on tcp:3301 && electron .",
     "electron:serve": "concurrently \"npm run dev\" \"npm run electron\"",
+    "build:desktop": "cross-env NODE_ENV=desktop vite build",
     "electron:build": "electron-builder"
   },
   "main": "electron/main.js",
@@ -42,12 +42,12 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "E:/Projects/GoodsExchangeFrontend/src/assets/icon_light.ico",
-      "uninstallerIcon": "E:/Projects/GoodsExchangeFrontend/src/assets/icon_deep.ico",
+      "installerIcon": "./src/assets/icon_light.ico",
+      "uninstallerIcon": "./src/assets/icon_deep.ico",
       "shortcutName": "Goods Exchange"
     },
     "win": {
-      "icon": "E:/Projects/GoodsExchangeFrontend/src/assets/icon_light.ico"
+      "icon": "./src/assets/icon_light.ico"
     },
     "files": [
       "dist/**/*",
@@ -63,7 +63,7 @@
     "publish": [
       {
         "provider": "generic",
-        "url": "file:///E:/projects/GoodsExchange/cache/"
+        "url": "file:///D:\\Programming\\GithubProject\\GoodsExchangeFrontend\\cache"
       }
     ]
   }

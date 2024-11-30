@@ -29,3 +29,5 @@ coverage
 
 *.tsbuildinfo
 *.exe
+/release
+/cache

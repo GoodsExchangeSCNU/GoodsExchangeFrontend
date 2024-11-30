@@ -53,7 +53,6 @@ function buildElectron(callback){
     });
 }
 
-
 exec('npm run build:desktop', (err, stdout, stderr) => {
     if (err) {
         console.error(err);
