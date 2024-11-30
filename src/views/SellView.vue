@@ -45,8 +45,8 @@ const fetch_room_list = () => {
     if (res.status === 200) {
       if (res.data.code === 0) {
         itemList.value = res.data.data;
-      } else {
-        ElMessage.error(t('sell.api_failure'));
+      } else if (res.data.code === 101){
+        console.log("商品列表为空");
         itemList.value = [];
       }
     } else {

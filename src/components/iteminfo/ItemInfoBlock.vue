@@ -2,11 +2,12 @@
 import {ref, onMounted, computed} from 'vue';
 import axios from '../../axios_client/index.js';
 import {ElMessage} from "element-plus";
-import {Loading, Picture} from "@element-plus/icons-vue";
+import {ChatLineRound, Loading, Message, Picture, ShoppingCart} from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
 import router from "@/router/index.js";
 import AddItemDialog from "@/components/sell/AddItemDialog.vue";
 import FormatObject from "@/utils/format.js";
+import WebSocketService from "@/socket_client/socket";
 
 // 组件基本事件属性定义
 const props = defineProps({
@@ -113,8 +114,21 @@ const updateSuccessGetItemInfo = (responseData) => {
   componentKey.value += 1;
 }
 
+const handleWant = () => {
+  WebSocketService.sendNotice(itemInfo.value.user.id)
+}
+
+const handleWantResponse = (data) => {
+  if (data.data.code === 0) {
+    ElMessage.success(t("itemInfo.want_success"));
+  } else {
+    ElMessage.error(t("itemInfo.want_failure"));
+  }
+}
+
 onMounted(() => {
   getItemInfo()
+  WebSocketService.on("SendNoticeResponse", handleWantResponse)
 })
 </script>
 
@@ -152,12 +166,14 @@ onMounted(() => {
           <div id="item-description">{{itemInfo.description}}</div>
           <div id="shadow-block">
             <div id="left-header">
-              <div id="item-owner-header">{{t("itemInfo.owner")}}</div>
-              <div id="item-count-header">{{t("itemInfo.count")}}</div>
-              <div id="item-price-header">{{t("itemInfo.price")}}</div>
+              <div id="item-owner-header" class="left-header-font">{{t("itemInfo.owner")}}</div>
+              <div id="item-owner-email" class="left-header-font">{{t("itemInfo.email")}}</div>
+              <div id="item-count-header" class="left-header-font">{{t("itemInfo.count")}}</div>
+              <div id="item-price-header" class="left-header-font">{{t("itemInfo.price")}}</div>
             </div>
             <div id="right-info">
               <div id="item_owner">{{itemInfo.user.username}}</div>
+              <div id="item-owner-email">{{itemInfo.user.email}}</div>
               <div id="item-count">{{itemInfo.count}}</div>
               <div id="item-price">￥{{itemInfo.price}}</div>
             </div>
@@ -168,6 +184,16 @@ onMounted(() => {
         <div v-if="isSeller" class="seller-functional-block">
           <el-button type="primary" @click="handleEdit">{{t("itemInfo.edit")}}</el-button>
           <el-button type="danger" @click="handleDelete">{{t("itemInfo.delete")}}</el-button>
+        </div>
+        <div v-else class="buyer-functional-block">
+          <el-button type="primary" @click="handleWant">
+            <el-icon><ChatLineRound /></el-icon>
+            {{t("itemInfo.want")}}
+          </el-button>
+          <el-button type="success" @click="handleWant">
+            <el-icon><ShoppingCart /></el-icon>
+            {{t("itemInfo.buy")}}
+          </el-button>
         </div>
       </div>
     </div>
@@ -240,6 +266,21 @@ onMounted(() => {
   width: 200px;
 }
 
+.buyer-functional-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  gap: 20%;
+}
+
+.buyer-functional-block .el-button {
+  width: 200px;
+}
+
 #shadow-block {
   display: flex;
   flex-direction: row;
@@ -258,6 +299,19 @@ onMounted(() => {
   justify-content: flex-start;
   align-items: flex-start;
   margin-left: 20px;
+  gap: 10px;
+}
+
+#left-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.left-header-font {
+  font-weight: bold;
 }
 
 #item-name {

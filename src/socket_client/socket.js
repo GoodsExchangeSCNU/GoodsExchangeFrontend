@@ -18,7 +18,8 @@ const WebSocketService = {
         ReceiveNotice: [],
         FetchMessage: [],
         ReceiveMessage: [onReceiveNotice],
-        ErrorMessage: [onErrorMessage]
+        ErrorMessage: [onErrorMessage],
+        SendNoticeResponse: [],
     },
     messageQueue: [],  // 添加消息队列
 
@@ -98,6 +99,7 @@ const WebSocketService = {
     },
 
     sendNotice(anotherUserId) {
+        console.log("send notice");
         this.send('sendnotice', {
             userid: this.userId,
             another_userid: anotherUserId

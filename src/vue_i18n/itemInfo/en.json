@@ -3,10 +3,15 @@
   "picture_load_failed": "Failed to load picture",
   "picture_on_loading": "Picture is loading",
   "owner": "Owner: ",
+  "email": "Email: ",
   "count": "Surplus quantity: ",
   "price": "Price: ",
   "delete": "Delete Item",
   "edit": "Edit Item Info",
+  "want": "I Want It!",
+  "buy": "Buy It!",
   "delete_success": "Successfully deleted item",
-  "delete_failure": "Failed to delete item"
+  "delete_failure": "Failed to delete item",
+  "want_success": "Add success and create chat room",
+  "want_failure": "Failed to Add"
 }
