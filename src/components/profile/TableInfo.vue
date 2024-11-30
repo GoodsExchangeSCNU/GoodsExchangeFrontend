@@ -293,7 +293,7 @@ onMounted(() => {
             <div class="image-preview">
               <el-image
                   style="width: 150px; height: 100px"
-                  :src="scope.row.picture"
+                  :src="FormatObject.formattedImgUrl(scope.row.picture)"
                   :zoom-rate="1.2"
                   :max-scale="7"
                   :min-scale="0.2"
@@ -393,7 +393,7 @@ onMounted(() => {
         :initial-index="0"
         :infinite="true"
         :z-index="2000"
-        :url-list="picture_list_data"
+        :url-list="FormatObject.formattedImgUrlList(picture_list_data)"
         @close="viewerVisible = false" />
     <el-dialog
         v-model="commentDialogVisible"

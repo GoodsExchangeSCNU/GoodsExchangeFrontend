@@ -2,7 +2,7 @@
 import { onMounted, ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
-import {ChatLineRound, Download, House, Sell, Switch, User} from "@element-plus/icons-vue";
+import {ChatLineRound, Download, House, Phone, Sell, Switch, User} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import axios from '../axios_client/index.js';
 import WebSocketService from "@/socket_client/socket.js";
@@ -99,6 +99,16 @@ const handleSelect = (key, keyPath) => {
       ElMessage.warning(t("profile.download_error"));
     }
   }
+  else if (key[0] === "8") {
+    const emailURL = "hongyu.yan@163.com";
+    window.location.href = `mailto:${emailURL}`;
+    navigator.clipboard.writeText(emailURL).then(() => {
+      ElMessage.success(t("navigator.email_address_1"));
+      ElMessage.success(t("navigator.email_address_2"));
+    }).catch(err => {
+      ElMessage.warning(t("navigator.email_address_fail"));
+    });
+  }
 };
 
 // 语言切换
@@ -164,6 +174,10 @@ watch(
     <el-menu-item index="5" @click="change_language">
       <el-icon><Switch /></el-icon>
       <span>{{ t("navigator.change_language") }}</span>
+    </el-menu-item>
+    <el-menu-item index="8">
+      <el-icon><Phone /></el-icon>
+      <span>{{t("navigator.contact_us")}}</span>
     </el-menu-item>
     <el-menu-item index="7">
       <el-icon><Download /></el-icon>

@@ -7,5 +7,9 @@
   "logout": "Logout",
   "personal_info": "Personal Information",
   "username_error": "failed to get avatar",
-  "download_desktop_app": "Download Desktop App"
+  "download_desktop_app": "Download Desktop App",
+  "contact_us": "Contact Us",
+  "email_address_1": "The email address has been copied to the paste board.",
+  "email_address_2": "If the email client does not open automatically, please paste it to the recipient manually.",
+  "email_address_fail": "Failed to copy email address"
 }

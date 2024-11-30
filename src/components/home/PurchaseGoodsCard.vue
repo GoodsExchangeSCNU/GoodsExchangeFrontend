@@ -1,5 +1,6 @@
 <script setup>
 import { useRouter} from "vue-router";
+import FormatObject from "@/utils/format.js";
 
 // 组件事件属性设置
 const props = defineProps({
@@ -22,7 +23,7 @@ const goItemPage = () => {
 <template>
   <el-card class="clickable-card" @click="goItemPage">
     <img
-      :src="decodeURIComponent(img?img.length>0?img[0]:null:null)"
+      :src="FormatObject.formattedImgUrl(decodeURIComponent(img?img.length>0?img[0]:null:null))"
       style="width: 100%; height: auto;"
       :alt="props.itemName"/>
     <div class="price">

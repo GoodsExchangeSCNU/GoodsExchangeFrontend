@@ -28,6 +28,14 @@ const FormatObject = {
     }));
     return formattedChatroomList;
   },
+
+  formattedImgUrl: (res_img_url) => {
+    return "http://8.138.167.80:6699/media/" + res_img_url;
+  },
+
+  formattedImgUrlList: (res_img_url_list) => {
+    return res_img_url_list.map((img_url) => "http://8.138.167.80:6699/media/" + img_url);
+  }
 }
 
 export default FormatObject;

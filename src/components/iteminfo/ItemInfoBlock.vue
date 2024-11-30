@@ -1,11 +1,281 @@
 <script setup>
+import {ref, onMounted, computed} from 'vue';
+import axios from '../../axios_client/index.js';
+import {ElMessage} from "element-plus";
+import {Loading, Picture} from "@element-plus/icons-vue";
+import { useI18n } from "vue-i18n";
+import router from "@/router/index.js";
+import AddItemDialog from "@/components/sell/AddItemDialog.vue";
+import FormatObject from "@/utils/format.js";
 
+// 组件基本事件属性定义
+const props = defineProps({
+  itemID: String
+})
+
+// 组件基本变量定义
+const { t } = useI18n();
+const init_item_info = {
+  name: "",
+  description: "",
+  count: 0,
+  img: [],
+  price: 0,
+  id: "",
+  user: {
+    id: "",
+    username: "",
+    email: "",
+    profile: {
+      student_id: 0,
+      student_class: "",
+      contact: 0,
+      facauty: "",
+      dormitory: ""
+    }
+  },
+  wanted_person: [],
+  comment_area: []
+}
+let isSeller = computed(() => itemInfo.value.user.username === localStorage.getItem('username'));
+let itemInfo = ref(init_item_info);
+let username = ref(localStorage.getItem('username'));
+let isItemAddDialogVisible = ref(false);
+let componentKey = ref(0);
+
+// 组件基本函数定义
+const getAvatarChar = (username) => {
+  console.log("username: ", username);
+  return username.slice(0, 2).toUpperCase();
+}
+
+const handleOtherAvatarClick = (username) => {
+  router.push(`/profile/${username}`)
+}
+
+const dialogClose = () => {
+  isItemAddDialogVisible.value = false;
+  componentKey.value += 1
+}
+
+const handleEdit = () => {
+  isItemAddDialogVisible.value = true;
+}
+
+const handleDelete = () => {
+  axios.delete('/item/', {
+    params: {
+      id: itemInfo.value.id
+    }
+  }).then(res => {
+    if (res.status === 200) {
+      if (res.data.code === 0) {
+        ElMessage.success(t("itemInfo.delete_success"));
+      } else {
+        ElMessage.error(t("itemInfo.delete_failure"));
+      }
+    } else {
+      ElMessage.error(t("itemInfo.delete_failure"));
+    }
+  }).catch(err => {
+    ElMessage.error(t("itemInfo.delete_failure"));
+  })
+}
+
+const getItemInfo = () => {
+  if (props.itemID === "") {
+    console.log("itemID is empty for once");
+    return;
+  }
+  axios.get('/item/', {
+    params: {
+      id: props.itemID
+    }
+  }).then(res => {
+    if (res.status === 200) {
+      if (res.data.code === 0) {
+        itemInfo.value = res.data.data;
+      } else {
+        ElMessage.error(t("itemInfo.item_info_get_failure"));
+      }
+    } else {
+      ElMessage.error(t("itemInfo.item_info_get_failure"));
+    }
+  }).catch(err => {
+    ElMessage.error(t("itemInfo.item_info_get_failure"));
+  })
+}
+
+const updateSuccessGetItemInfo = (responseData) => {
+  console.log("updateSuccessGetItemInfo: ", responseData);
+  getItemInfo()
+  isItemAddDialogVisible.value = false;
+  componentKey.value += 1;
+}
+
+onMounted(() => {
+  getItemInfo()
+})
 </script>
 
 <template>
+  <div class="whole-item-info-block">
+    <div class="top-block">
+      <div class="up-block">
+        <div class="picture-block">
+          <el-image
+              :src="FormatObject.formattedImgUrl(itemInfo.img[0])"
+              :zoom-rate="1.2"
+              :max-scale="7"
+              :min-scale="0.2"
+              :preview-src-list="FormatObject.formattedImgUrlList(itemInfo.img)"
+              :initial-index="0"
+              fit="cover"
+          >
+            <template #error>
+              <div class="image-slot">
+                <el-icon><Picture /></el-icon>
+                <div>{{t("saleInfo.picture_load_failed")}}</div>
+              </div>
+            </template>
+            <template #placeholder>
+              <div class="image-slot">
+                <el-icon><Loading /></el-icon>
+                <div>{{t("saleInfo.picture_on_loading")}}</div>
+              </div>
+            </template>
+          </el-image>
+        </div>
+        <div class="empty-gap" />
+        <div class="basic-info-block">
+          <div id="item-name">{{itemInfo.name}}</div>
+          <div id="item-description">{{itemInfo.description}}</div>
+          <div id="shadow-block">
+            <div id="left-header">
+              <div id="item-owner-header">{{t("itemInfo.owner")}}</div>
+              <div id="item-count-header">{{t("itemInfo.count")}}</div>
+              <div id="item-price-header">{{t("itemInfo.price")}}</div>
+            </div>
+            <div id="right-info">
+              <div id="item_owner">{{itemInfo.user.username}}</div>
+              <div id="item-count">{{itemInfo.count}}</div>
+              <div id="item-price">￥{{itemInfo.price}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="functional-block">
+        <div v-if="isSeller" class="seller-functional-block">
+          <el-button type="primary" @click="handleEdit">{{t("itemInfo.edit")}}</el-button>
+          <el-button type="danger" @click="handleDelete">{{t("itemInfo.delete")}}</el-button>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-block">
+      <div class="comment-message-block">
 
+      </div>
+      <div class="message-input-block">
+
+      </div>
+    </div>
+    <AddItemDialog
+      :isDialogVisiable="isItemAddDialogVisible"
+      :isPutRequest="true"
+      :itemID="props.itemID"
+      :key="componentKey"
+      @updateCancel="isItemAddDialogVisible = false"
+      @updateSuccess="updateSuccessGetItemInfo"
+    />
+  </div>
 </template>
 
 <style scoped>
+.whole-item-info-block {
+  width: 95%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+}
 
+.up-block {
+  display: grid;
+  grid-template-columns: 40% 2% 58%;
+  gap: 10px;
+
+}
+
+.picture-block {
+  padding: 10px;
+}
+
+.top-block {
+  background-color: #fcfafa;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  font-size: 40px;
+  background-color: #9c9ea1;
+  color: #ffffff;
+}
+
+.seller-functional-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  gap: 20%;
+}
+
+.seller-functional-block .el-button {
+  width: 200px;
+}
+
+#shadow-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  width: 80%;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+#right-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+#item-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#item-price {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ff4f24;
+}
+
+#item-description {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
 </style>

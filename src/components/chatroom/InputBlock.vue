@@ -106,6 +106,7 @@ const uploadMessage = () => {
           style="width: 100%"
           :rows="7"
           type="textarea"
+          resize="none"
           :placeholder="t('chatroom.please_input_message')"
       />
     </div>

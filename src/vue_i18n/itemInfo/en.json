@@ -1,3 +1,12 @@
 {
-
+  "item_info_get_failure": "Failed to get item information",
+  "picture_load_failed": "Failed to load picture",
+  "picture_on_loading": "Picture is loading",
+  "owner": "Owner: ",
+  "count": "Surplus quantity: ",
+  "price": "Price: ",
+  "delete": "Delete Item",
+  "edit": "Edit Item Info",
+  "delete_success": "Successfully deleted item",
+  "delete_failure": "Failed to delete item"
 }

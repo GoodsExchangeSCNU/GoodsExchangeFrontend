@@ -2,6 +2,7 @@
 import {defineProps, ref} from 'vue'
 import { useI18n } from "vue-i18n";
 import {Loading, Picture} from "@element-plus/icons-vue";
+import FormatObject from "@/utils/format.js";
 
 // 组件全局属性事件定义
 const props = defineProps({
@@ -34,7 +35,7 @@ const imageViewerVisible = (data_index) => {
         <div v-for="(img_url, index) in props.item_info.img" :key="index" class="single-item-img">
           <el-image
               style="width: 200px; height: 150px"
-              :src="img_url"
+              :src="FormatObject.formattedImgUrl(img_url)"
               :zoom-rate="1.2"
               :max-scale="7"
               :min-scale="0.2"
@@ -65,7 +66,7 @@ const imageViewerVisible = (data_index) => {
       :initial-index="current_img_index"
       :infinite="true"
       :z-index="2000"
-      :url-list="props.item_info.img"
+      :url-list="FormatObject.formattedImgUrlList(props.item_info.img)"
       @close="viewerVisible = false" />
 </template>
 

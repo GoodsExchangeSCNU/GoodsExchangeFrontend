@@ -7,6 +7,11 @@ import {ElMessage} from "element-plus";
 // 组件事件与属性定义
 const props = defineProps({
   isDialogVisiable: Boolean,
+  isPutRequest: Boolean,
+  itemID: {
+    type: String,
+    default: "None"
+  }
 });
 
 const emits = defineEmits([
@@ -26,18 +31,36 @@ const formData = ref({
 const fileList = ref([]);
 
 // 组件全局函数定义
-// 处理上传文件变化
 const handleFileChange = (file, fileList) => {
   formData.value.img = fileList;
 };
 
-// 处理文件删除
 const handleFileRemove = (file, fileList) => {
   formData.value.img = fileList;
 };
 
+const handlePutRequestSuccess = (responseData) => {
+  emits("updateSuccess", responseData)
+}
+
 const handleSubmit = () => {
   const fd = new FormData();
+  if (formData.value.name === "") {
+    ElMessage.error(t("sell.upload_error_no_name"));
+    return;
+  }
+  if (formData.value.description === "") {
+    ElMessage.error(t("sell.upload_error_no_description"));
+    return;
+  }
+  if (formData.value.count === 0) {
+    ElMessage.error(t("sell.upload_error_no_count"));
+    return;
+  }
+  if (formData.value.price < 0) {
+    ElMessage.error(t("sell.upload_error_no_price"));
+    return;
+  }
   fd.append("name", formData.value.name);
   fd.append("description", formData.value.description);
   fd.append("count", formData.value.count);
@@ -47,32 +70,56 @@ const handleSubmit = () => {
     console.log(file.raw)
     fd.append('img', file.raw);
   });
-
-  axios.post("/item/", fd, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  }).then(res => {
-    if(res.status === 200){
-      if (res.data.code === 0) {
-        emits("updateSuccess")
-        ElMessage.success(t("sell.api_success_upload_success"))
+  if (props.isPutRequest) {
+    fd.append("id", props.itemID);
+    axios.put("/item/", fd, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      if(res.status === 200){
+        if (res.data.code === 0) {
+          ElMessage.success(t("sell.api_success_upload_success"))
+          handlePutRequestSuccess(res.data.data)
+        }
+        else{
+          ElMessage.error(t("sell.api_failure_upload_fail"))
+        }
       }
       else{
         ElMessage.error(t("sell.api_failure_upload_fail"))
       }
-    }
-    else{
+    }).catch(err => {
       ElMessage.error(t("sell.api_failure_upload_fail"))
-    }
-  }).catch(err => {
-    ElMessage.error(t("sell.api_failure_upload_fail_1"))
-    console.log(err)
-  })
+      console.log(err)
+    })
+  }
+  else {
+    axios.post("/item/", fd, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      if(res.status === 200){
+        if (res.data.code === 0) {
+          emits("updateSuccess")
+          ElMessage.success(t("sell.api_success_upload_success"))
+          emits("updateSuccess")
+        }
+        else{
+          ElMessage.error(t("sell.api_failure_upload_fail"))
+        }
+      }
+      else{
+        ElMessage.error(t("sell.api_failure_upload_fail"))
+      }
+    }).catch(err => {
+      ElMessage.error(t("sell.api_failure_upload_fail"))
+      console.log(err)
+    })
+  }
+
 }
-/*
-* "AxiosError: Network Error\n    at XMLHttpRequest.handleError (http://localhost:3301/node_modules/.vite/deps/axios.js?v=0fa56272:1623:14)\n    at Axios.request (http://localhost:3301/node_modules/.vite/deps/axios.js?v=0fa56272:2145:41)"
-* */
 </script>
 
 <template>

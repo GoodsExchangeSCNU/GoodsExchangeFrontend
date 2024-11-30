@@ -7,7 +7,7 @@ import FormatObject from "@/utils/format.js";
 import axios from "@/axios_client/index.js";
 import ChatMessage from "@/components/chatroom/ChatMessage.vue";
 import InputBlock from "@/components/chatroom/InputBlock.vue";
-import ItemInfoBlock from "@/components/chatroom/ItemInfoBlock.vue";
+import ItemInfoBlock from "@/components/chatroom/ItemInfoBar.vue";
 import router from "@/router/index.js";
 
 // 组件全局变量定义
@@ -75,6 +75,7 @@ const select_contact = (room) => {
     console.warn('获取购买记录失败')
     console.warn(res)
   })
+  componentKey.value += 1;
 };
 
 const handleGoSell = () => {
@@ -174,7 +175,6 @@ const handleOtherAvatarClick = (username) => {
         </div>
         <div class="right-container-unselected" v-else>
           <div v-if="roomList.length === 0" class="select-notice">
-<!--            <h1>{{t('chatroom.no_classrooms_available')}}</h1>-->
             <el-empty :description="t('chatroom.no_classrooms_available')"/>
             <div class="empty-navigator">
               <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
@@ -182,7 +182,7 @@ const handleOtherAvatarClick = (username) => {
             </div>
           </div>
           <div v-else class="select-notice">
-            <h1>{{t('chatroom.select_chatroom')}}</h1>
+            <el-empty :description="t('chatroom.select_chatroom')"/>
             <div class="empty-navigator">
               <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
               <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
@@ -220,7 +220,6 @@ const handleOtherAvatarClick = (username) => {
   display: grid;
   grid-template-columns: 28% 2% 70%;
   border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .left-container {
