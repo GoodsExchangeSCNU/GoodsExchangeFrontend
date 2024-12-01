@@ -80,6 +80,7 @@ const handleSubmit = () => {
       if(res.status === 200){
         if (res.data.code === 0) {
           ElMessage.success(t("sell.api_success_upload_success"))
+          windows.href
           handlePutRequestSuccess(res.data.data)
         }
         else{

@@ -18,6 +18,11 @@ const emits = defineEmits([
 // 组件全局变量定义
 let isVisiable = ref(false); // 控制修改密码对话框的显示
 const { t } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
+let form = reactive({
+  origin_password: "",
+  password: "",
+  confirm_password: "",
+})
 
 
 // 组件全局函数定义

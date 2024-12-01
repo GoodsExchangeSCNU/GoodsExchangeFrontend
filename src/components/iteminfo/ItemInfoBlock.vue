@@ -61,6 +61,7 @@ const dialogClose = () => {
 
 const handleEdit = () => {
   isItemAddDialogVisible.value = true;
+  window.location.reload();
 }
 
 const handleDelete = () => {
@@ -72,6 +73,7 @@ const handleDelete = () => {
     if (res.status === 200) {
       if (res.data.code === 0) {
         ElMessage.success(t("itemInfo.delete_success"));
+        window.location.reload();
       } else {
         ElMessage.error(t("itemInfo.delete_failure"));
       }
@@ -441,5 +443,12 @@ onMounted(() => {
   font-size: 20px;
   margin-top: 10px;
   margin-left: 10px;
+}
+
+.el-image {
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 300px;
+  max-height: 300px;
 }
 </style>

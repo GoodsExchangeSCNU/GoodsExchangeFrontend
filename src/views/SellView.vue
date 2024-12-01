@@ -91,7 +91,7 @@ onMounted(() => {
                   <div v-for="item in itemList" :key="item.id" class="single-card-container">
                     <el-card @click="openSellComponent(item)">
                       <div class="card-info">
-                        <img class="img-block" :src="FormatObject.formattedImgUrl(item.img[0])" :alt="item.name" />
+                        <img class="img-block" :src="FormatObject.formattedImgUrl(item.img[0])" :alt="item.name"/>
                         <div class="card-info-block">
                           <p id="card-info-name">{{item.name}}</p>
                           <p id="card-info-description">{{item.description}}</p>
@@ -267,8 +267,10 @@ h3 {
 }
 
 .img-block {
-  width: 75px;
-  height: 75px;
+  min-width: 75px;
+  max-width: 75px;
+  min-height: 75px;
+  max-height: 75px;
 }
 
 .card-info-block {

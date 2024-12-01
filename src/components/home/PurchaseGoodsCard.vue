@@ -24,14 +24,13 @@ const goItemPage = () => {
   <el-card class="clickable-card" @click="goItemPage">
     <img
       :src="FormatObject.formattedImgUrl(decodeURIComponent(img?img.length>0?img[0]:null:null))"
-      style="width: 100%; height: auto;"
       :alt="props.itemName"/>
     <div class="price">
       <p>￥{{props.price}}</p>
     </div>
     <div class="description">
-      <p style="font-weight: bold">{{props.itemName}}</p>
-      <p>{{props.description}}</p>
+      <p class="item-name">{{props.itemName}}</p>
+      <p class="item-description">{{props.description}}</p>
     </div>
   </el-card>
 </template>
@@ -39,6 +38,8 @@ const goItemPage = () => {
 <style scoped>
 .clickable-card {
   cursor: pointer;
+  max-width: 250px;
+  min-width: 250px
 }
 
 .clickable-card:hover {
@@ -78,5 +79,22 @@ const goItemPage = () => {
 
 .price p {
   font-weight: 700;
+}
+
+img {
+  min-width: 200px;
+  max-width: 200px;
+  min-height: 200px;
+  max-height: 200px;
+}
+
+.item-name, .item-description {
+  white-space: nowrap;    /* 不换行 */
+  overflow: hidden;     /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 溢出部分显示省略号 */
+}
+
+.item-name {
+  font-weight: bold;
 }
 </style>
