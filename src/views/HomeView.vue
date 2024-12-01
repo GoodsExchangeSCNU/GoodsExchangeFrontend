@@ -8,7 +8,7 @@ import PurchaseGoodsCard from "@/components/home/PurchaseGoodsCard.vue";
 
 // 组件基本变量设置
 const { t, locale } = useI18n();
-const colors = ['#A8D8B9', '#D6D8A3'] // 色块的颜色
+const colors = ['#ffffff', '#ffffff'] // 色块的颜色
 const cardCount = 20; // 每页显示的卡片数量
 const tags = ref([t("home.tag1"),
   t("home.tag2"), t("home.tag3"),
@@ -150,13 +150,13 @@ onMounted(() => {
               class="grid-item"
               :style="{ backgroundColor: colors[0] }"
           >
-            <p>{{ colors[0] }}</p>
+            <h4></h4>
           </div>
           <div
               class="grid-item"
               :style="{ backgroundColor: colors[1] }"
           >
-            <p>{{ colors[1] }}</p>
+
           </div>
           <img src="@/assets/icon_deep.png" class="grid-item" alt="GoodsExchange_2"/>
         </div>
@@ -198,7 +198,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1000px;
   background-color: #CAD9F1;
 }
 

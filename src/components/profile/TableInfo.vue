@@ -332,7 +332,7 @@ onMounted(() => {
         <el-table-column fixed="right" prop="operation" :label="t('saleInfo.operation_col_table')" width="300" sortable>
           <template #default="scope">
             <template v-if="scope.row.state === 0">
-              <div>{{t("sellInfo.event_operation_None")}}</div>
+              <div>{{t("saleInfo.event_operation_None")}}</div>
             </template>
             <template v-if="(scope.row.state === 1) && (props.isSell)">
               <el-button @click="event_change_reject(scope.row.id)" type="danger">{{t("saleInfo.event_operation_reject")}}</el-button>

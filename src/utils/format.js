@@ -30,7 +30,7 @@ const FormatObject = {
   },
 
   formattedImgUrl: (res_img_url) => {
-    return "http://8.138.167.80:6699/media/" + res_img_url;
+    return "http://8.138.167.80:6699/media" + res_img_url;
   },
 
   formattedImgUrlList: (res_img_url_list) => {

@@ -51,7 +51,7 @@ const goItemPage = () => {
   text-align: center; /* 内容居中 */
 }
 
-.description{
+.description {
   text-align: left;
   overflow: hidden;
 }

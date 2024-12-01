@@ -152,6 +152,7 @@ onMounted(() => {
 
 .whole-sell-container {
   width: 100%;
+  height: 900px;
   display: grid;
   grid-template-columns: 28% 2% 70%;
   border-radius: 5px;
