@@ -336,6 +336,7 @@
   background-color: #79b7f8;
   color: #ffffff;
 }
+
 .edit-selector h3 {
   margin-left: 10px;
   font-size: 32px;

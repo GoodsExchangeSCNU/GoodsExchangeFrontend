@@ -94,7 +94,7 @@ const handleSelect = (key, keyPath) => {
     router.push('/profile');
   }
   else if (key[0] === "7") {
-    const fileURL = "/app/Goods_Exchange_Setup_0.0.0.exe";
+    const fileURL = "/app/Goods Exchange Setup 0.0.0.exe";
     if (!checkFileAvailable(fileURL)) {
       ElMessage.warning(t("profile.download_error"));
     }

@@ -1,5 +1,5 @@
 <script setup>
-import {onBeforeUnmount, onMounted, ref} from 'vue';
+import {computed, onBeforeUnmount, onMounted, ref} from 'vue';
 import data from 'emoji-mart-vue-fast/data/all.json';
 import 'emoji-mart-vue-fast/css/emoji-mart.css';
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src';
@@ -7,13 +7,21 @@ import { useI18n } from "vue-i18n";
 import { PictureRounded, Plus } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 import WebSocketService from "@/socket_client/socket.js";
+import axios from "@/axios_client/index.js";
 
 // 全局基本事件属性定义
 const props = defineProps({
-  key: Number,
+  isChatroom: Boolean,
   item_id: String,
-  room_id: String
+  room_id: {
+    type: String,
+    default: '0'
+  }
 })
+
+const emits = defineEmits([
+  "updateSuccess"
+])
 
 // 全局变量定义
 const { t } = useI18n();
@@ -38,6 +46,9 @@ const emojiI18n = {
 const emojiIndex = new EmojiIndex(data);
 const showEmojiPicker = ref(false); // 控制表情选择器的显示状态
 let inputText = ref(''); // 绑定文本输入框的内容
+const computedRow = computed(() => {
+  return props.isChatroom ? 7 : 1;
+});
 
 // 全局函数定义
 const handleEmoji = (emoji) => {
@@ -77,9 +88,35 @@ const pictureSelect = () => {
   ElMessage.error(t("chatroom.picture_upload_not_allow"))
 }
 
-const uploadMessage = () => {
-  WebSocketService.sendMessage(inputText.value, props.room_id);
+const clearMessage = () => {
   inputText.value = '';
+}
+
+const uploadMessage = () => {
+  if (props.isChatroom) {
+    WebSocketService.sendMessage(inputText.value, props.room_id);
+    inputText.value = '';
+  }
+  else {
+    axios.post('/item/comment', {
+      item_id: props.item_id,
+      body: inputText.value
+    }).then(res => {
+      if (res.status === 200) {
+        if (res.data.code === 0) {
+          ElMessage.success(t("itemInfo.comment_success"));
+          inputText.value = '';
+          emits("updateSuccess");
+        } else {
+          ElMessage.error(t("itemInfo.comment_failure"));
+        }
+      } else {
+        ElMessage.error(t("itemInfo.comment_failure"));
+      }
+    }).catch(err => {
+      ElMessage.error(t("itemInfo.comment_failure"));
+    })
+  }
 }
 </script>
 
@@ -104,13 +141,14 @@ const uploadMessage = () => {
       <el-input
           v-model="inputText"
           style="width: 100%"
-          :rows="7"
+          :rows="computedRow"
           type="textarea"
           resize="none"
           :placeholder="t('chatroom.please_input_message')"
       />
     </div>
     <div class="op-button-block">
+      <el-button @click="clearMessage">{{t("chatroom.clear_message")}}</el-button>
       <el-button type="primary" @click="uploadMessage">{{t("chatroom.send_message")}}</el-button>
     </div>
   </div>
@@ -144,7 +182,6 @@ const uploadMessage = () => {
 
 .text-area {
   margin-top: 10px;
-  min-height: 160px;
 }
 
 .emoji-picker {

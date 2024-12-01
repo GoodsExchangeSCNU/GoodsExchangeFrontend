@@ -8,10 +8,11 @@ import PurchaseGoodsCard from "@/components/home/PurchaseGoodsCard.vue";
 
 // 组件基本变量设置
 const { t, locale } = useI18n();
+const colors = ['#A8D8B9', '#D6D8A3'] // 色块的颜色
 const cardCount = 20; // 每页显示的卡片数量
 const tags = ref([t("home.tag1"),
   t("home.tag2"), t("home.tag3"),
-  t("home.tag4"), t("home.tag4"),
+  t("home.tag4"), t("home.tag5"),
   t("home.tag5"), t("home.tag6"),
   t("home.tag7"), t("home.tag8"),
   t("home.tag9"), t("home.tag10"),
@@ -19,12 +20,14 @@ const tags = ref([t("home.tag1"),
   t("home.tag13"),t("home.tag14"),
   t("home.tag15"),t("home.tag16"),
   t("home.tag17"),t("home.tag18"),
-  t("home.tag19"),
-  t("home.tag20")]);
+  t("home.tag19"),t("home.tag20")]);
 const language_flag = ref("en"); // 语言标志
 let searchQuery = ref("");
 let componentKey = ref(0);
 let cardList = ref([]);
+let top_item_1 = ref({});
+let top_item_2 = ref({});
+let top_item_3 = ref({});
 
 // 组件基本函数设置
 watch(
@@ -32,10 +35,28 @@ watch(
     (newVal) => {
       if (newVal === "zh") {
         language_flag.value = "zh";
-        tags.value = [t("home.tag1"),t("home.tag2"),t("home.tag3"),t("home.tag4"),t("home.tag4"),t("home.tag5"),t("home.tag6"),t("home.tag7"),t("home.tag8"),t("home.tag9"),t("home.tag10"),t("home.tag11"),t("home.tag12"),t("home.tag13"),t("home.tag14"),t("home.tag15"),t("home.tag16"),t("home.tag17"),t("home.tag18"),t("home.tag19"),t("home.tag20")];
+        tags.value = [t("home.tag1"),t("home.tag2"),
+          t("home.tag3"), t("home.tag4"),
+          t("home.tag5"), t("home.tag6"),
+          t("home.tag7"), t("home.tag8"),
+          t("home.tag9"), t("home.tag10"),
+          t("home.tag11"),t("home.tag12"),
+          t("home.tag13"),t("home.tag14"),
+          t("home.tag15"),t("home.tag16"),
+          t("home.tag17"),t("home.tag18"),
+          t("home.tag19"),t("home.tag20")];
       } else {
         language_flag.value = "en";
-        tags.value = [t("home.tag1"),t("home.tag2"),t("home.tag3"),t("home.tag4"),t("home.tag4"),t("home.tag5"),t("home.tag6"),t("home.tag7"),t("home.tag8"),t("home.tag9"),t("home.tag10"),t("home.tag11"),t("home.tag12"),t("home.tag13"),t("home.tag14"),t("home.tag15"),t("home.tag16"),t("home.tag17"),t("home.tag18"),t("home.tag19"),t("home.tag20")]
+        tags.value = [t("home.tag1"),t("home.tag2"),
+          t("home.tag3"), t("home.tag4"),
+          t("home.tag5"), t("home.tag6"),
+          t("home.tag7"), t("home.tag8"),
+          t("home.tag9"), t("home.tag10"),
+          t("home.tag11"),t("home.tag12"),
+          t("home.tag13"),t("home.tag14"),
+          t("home.tag15"),t("home.tag16"),
+          t("home.tag17"),t("home.tag18"),
+          t("home.tag19"),t("home.tag20")]
       }
     }
 )
@@ -84,6 +105,9 @@ const recommendCall = () => {
     }
   })
   componentKey.value += 1;
+  top_item_1.value = cardList.value[0];
+  top_item_2.value = cardList.value[1];
+  top_item_3.value = cardList.value[2];
 };
 
 const handleTagClick = (tag) => {
@@ -121,6 +145,20 @@ onMounted(() => {
           </div>
         </div>
         <div class="block-container">
+          <img src="@/assets/icon_light.png" class="grid-item" alt="GoodsExchange_1"/>
+          <div
+              class="grid-item"
+              :style="{ backgroundColor: colors[0] }"
+          >
+            <p>{{ colors[0] }}</p>
+          </div>
+          <div
+              class="grid-item"
+              :style="{ backgroundColor: colors[1] }"
+          >
+            <p>{{ colors[1] }}</p>
+          </div>
+          <img src="@/assets/icon_deep.png" class="grid-item" alt="GoodsExchange_2"/>
         </div>
       </div>
       <div class="item-info-block" v-if="cardList.length !== 0">
@@ -160,7 +198,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 1000px;
   background-color: #CAD9F1;
 }
 
@@ -182,7 +220,21 @@ onMounted(() => {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   z-index: 10;
-  height:60px;
+  height: 60px;
+}
+
+.grid-item {
+  display: flex;
+  height: 90%;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .block-for-tags {
@@ -246,15 +298,16 @@ onMounted(() => {
 }
 
 .block-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2列，每列宽度均分 */
+  grid-template-rows: repeat(2, 1fr);    /* 2行，每行高度均分 */
+  gap: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: #fff;
   padding: 10px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
   width: 60%;
   align-self:flex-start;
   height: 95%;

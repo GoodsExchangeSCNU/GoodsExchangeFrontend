@@ -160,6 +160,7 @@ const handleOtherAvatarClick = (username) => {
               <div class="input-container">
                 <InputBlock
                     :key="componentKey"
+                    :isChatroom="true"
                     :item_id="selected_room_item_id"
                     :room_id="selected_room_id"
                 />
@@ -199,7 +200,7 @@ const handleOtherAvatarClick = (username) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 1000px;
   background-color: #CAD9F1;
 }
 
@@ -236,6 +237,12 @@ const handleOtherAvatarClick = (username) => {
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.el-card {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .right-container-unselected {

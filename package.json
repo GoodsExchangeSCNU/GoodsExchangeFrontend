@@ -39,6 +39,7 @@
   "build": {
     "appId": "io.github.goodsexchange",
     "productName": "Goods Exchange",
+
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,

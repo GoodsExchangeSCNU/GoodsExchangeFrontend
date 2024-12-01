@@ -112,7 +112,11 @@ const event_change_purchase = (trade_id) => {
       if (res.data.code === 0) {
         console.log('购买请求成功')
         tableInfoRefresh()
-      } else {
+      }
+      else if (res.data.code === 101) {
+        ElMessage.error(t("saleInfo.purchase_already_buy"))
+      }
+      else {
         console.warn('购买请求失败')
       }
     } else {

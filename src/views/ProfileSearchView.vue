@@ -212,7 +212,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 1000px;
   background-color: #CAD9F1;
 }
 

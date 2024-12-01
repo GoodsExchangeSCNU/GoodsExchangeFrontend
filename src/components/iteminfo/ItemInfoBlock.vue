@@ -8,6 +8,7 @@ import router from "@/router/index.js";
 import AddItemDialog from "@/components/sell/AddItemDialog.vue";
 import FormatObject from "@/utils/format.js";
 import WebSocketService from "@/socket_client/socket";
+import InputBlock from "@/components/chatroom/InputBlock.vue";
 
 // 组件基本事件属性定义
 const props = defineProps({
@@ -35,8 +36,7 @@ const init_item_info = {
       dormitory: ""
     }
   },
-  wanted_person: [],
-  comment_area: []
+  review: []
 }
 let isSeller = computed(() => itemInfo.value.user.username === localStorage.getItem('username'));
 let itemInfo = ref(init_item_info);
@@ -81,6 +81,7 @@ const handleDelete = () => {
   }).catch(err => {
     ElMessage.error(t("itemInfo.delete_failure"));
   })
+  componentKey.value += 1;
 }
 
 const getItemInfo = () => {
@@ -105,6 +106,7 @@ const getItemInfo = () => {
   }).catch(err => {
     ElMessage.error(t("itemInfo.item_info_get_failure"));
   })
+  componentKey.value += 1;
 }
 
 const updateSuccessGetItemInfo = (responseData) => {
@@ -115,15 +117,35 @@ const updateSuccessGetItemInfo = (responseData) => {
 }
 
 const handleWant = () => {
-  WebSocketService.sendNotice(itemInfo.value.user.id)
+  axios.post('/trade/new', {
+    item_id: itemInfo.value.id
+  }).then(res => {
+    if (res.status === 200) {
+      if (res.data.code === 0) {
+        ElMessage.success(t("itemInfo.want_success"));
+        WebSocketService.sendNotice(itemInfo.value.user.id)
+      } else {
+        ElMessage.error(t("itemInfo.want_failure"));
+      }
+    } else {
+      ElMessage.error(t("itemInfo.want_failure"));
+    }
+  }).catch(err => {
+    ElMessage.error(t("itemInfo.want_failure"));
+  })
 }
 
 const handleWantResponse = (data) => {
-  if (data.data.code === 0) {
-    ElMessage.success(t("itemInfo.want_success"));
-  } else {
-    ElMessage.error(t("itemInfo.want_failure"));
-  }
+
+}
+
+function getAvatar (owner) {
+  return owner ? owner.slice(0, 2).toUpperCase() : "NA";
+}
+
+function formatTime (time) {
+  const date = new Date(time);
+  return date.toLocaleString();
 }
 
 onMounted(() => {
@@ -198,11 +220,34 @@ onMounted(() => {
       </div>
     </div>
     <div class="bottom-block">
-      <div class="comment-message-block">
-
-      </div>
       <div class="message-input-block">
-
+        <InputBlock
+          :item_id="props.itemID"
+          :key="componentKey"
+          @updateSuccess="getItemInfo"
+        />
+      </div>
+      <div class="comment-message-block">
+        <el-scrollbar height="300">
+          <div v-for="comment in itemInfo.review" :key="comment.id" class="single-comment">
+            <div class="comment-item">
+              <el-avatar
+                  :size="35"
+                  shape="square"
+                  class="avatar_small"
+                  @click="handleOtherAvatarClick(comment.owner)">
+                {{getAvatar(comment.owner)}}
+              </el-avatar>
+              <div id="content">
+                <div id="comment_header">
+                  <div id="comment_owner">{{ comment.owner }}</div>
+                  <div id="comment_time">{{ formatTime(comment.create_at) }}</div>
+                </div>
+                <div id="comment_body">{{ comment.body }}</div>
+              </div>
+            </div>
+          </div>
+        </el-scrollbar>
       </div>
     </div>
     <AddItemDialog
@@ -222,7 +267,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 30px;
   margin-left: 2.5%;
   margin-right: 2.5%;
@@ -279,6 +324,71 @@ onMounted(() => {
 
 .buyer-functional-block .el-button {
   width: 200px;
+}
+
+.bottom-block {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fcfafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.message-input-block {
+  width: 100%;
+  height: 150px;
+}
+
+.comment-message-block {
+  width: 100%;
+  height: calc(100% - 150px);
+  margin-top: 20px;
+}
+
+.single-comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.avatar_small {
+  font-size: 20px;
+  background-color: #79b7f8;
+  color: #ffffff;
+}
+
+#content {
+  flex: 1;
+}
+
+#comment_header {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 14px;
+  color: #888;
+}
+
+#comment_body {
+  margin-top: 5px;
+  font-size: 16px;
 }
 
 #shadow-block {

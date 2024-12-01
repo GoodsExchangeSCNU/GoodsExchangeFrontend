@@ -135,7 +135,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 1100px;
   background-color: #CAD9F1;
 }
 
@@ -167,6 +167,7 @@ onMounted(() => {
 
 .right-container-selected {
   display: flex;
+  height: 100%;
   flex-direction: column;
   background-color: #ffffff;
   border-radius: 5px;

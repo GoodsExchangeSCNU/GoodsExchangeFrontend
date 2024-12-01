@@ -13,5 +13,7 @@
   "delete_success": "Successfully deleted item",
   "delete_failure": "Failed to delete item",
   "want_success": "Add success and create chat room",
-  "want_failure": "Failed to Add"
+  "want_failure": "Failed to Add",
+  "comment_failure": "Comment failed",
+  "comment_success": "Comment success"
 }

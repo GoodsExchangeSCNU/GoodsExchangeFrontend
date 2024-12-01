@@ -49,5 +49,6 @@
   "rating_placeholder": "Please rate this transaction",
   "empty_comment": "You have not yet entered a comment or made a review",
   "comment_fail": "Failed to comment",
-  "comment_success": "Commented successfully"
+  "comment_success": "Commented successfully",
+  "purchase_already_buy": "The goods have already been purchased by someone else"
 }

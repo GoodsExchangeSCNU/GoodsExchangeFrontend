@@ -33,23 +33,24 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 1200px;
   background-color: #CAD9F1;
 }
 
 .center-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
   max-width: 1200px;
   min-width: 1200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #CAD9F1;
+  margin-top: 50px;
 }
 
 .whole-item-view {
   width: 100%;
-  height: 900px;
+  height: 1000px;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;

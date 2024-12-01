@@ -119,7 +119,7 @@ const handleRegisterSuccess = () => {
   font-weight: bold;
   margin-bottom: 20px;
   background: #8e9aaf;
-  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   text-align: center;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
