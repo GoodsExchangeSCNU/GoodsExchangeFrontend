@@ -61,7 +61,6 @@ const dialogClose = () => {
 
 const handleEdit = () => {
   isItemAddDialogVisible.value = true;
-  window.location.reload();
 }
 
 const handleDelete = () => {
@@ -116,6 +115,7 @@ const updateSuccessGetItemInfo = (responseData) => {
   getItemInfo()
   isItemAddDialogVisible.value = false;
   componentKey.value += 1;
+  window.location.reload();
 }
 
 const handleWant = () => {

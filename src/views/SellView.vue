@@ -35,6 +35,12 @@ const dialogClose = () => {
   componentKey.value += 1
 }
 
+const dialogSuccess = () => {
+  isItemAddDialogVisible.value = false;
+  window.location.reload();
+  componentKey.value += 1
+}
+
 const dialogOpen = () => {
   isItemAddDialogVisible.value = true;
   componentKey.value += 1
@@ -123,7 +129,7 @@ onMounted(() => {
           :is-put-request="false"
           :key="componentKey"
           @update-cancel="dialogClose"
-          @update-success="dialogClose"
+          @update-success="dialogSuccess"
         />
       </div>
     </div>
