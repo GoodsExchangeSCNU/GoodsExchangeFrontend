@@ -104,12 +104,6 @@ const handleSelect = (key, keyPath) => {
   else if (key[0] === "8") {
     const emailURL = "hongyu.yan@163.com";
     window.location.href = `mailto:${emailURL}`;
-    navigator.clipboard.writeText(emailURL).then(() => {
-      ElMessage.success(t("navigator.email_address_1"));
-      ElMessage.success(t("navigator.email_address_2"));
-    }).catch(err => {
-      ElMessage.warning(t("navigator.email_address_fail"));
-    });
   }
 };
 
@@ -179,7 +173,7 @@ watch(
     </el-menu-item>
     <el-menu-item index="8">
       <el-icon><Phone /></el-icon>
-      <span>{{t("navigator.contact_us")}}</span>
+      <span>hongyu.yan@163.com</span>
     </el-menu-item>
     <el-menu-item index="7" v-if="MODE != 'desktop'">
       <el-icon><Download /></el-icon>
