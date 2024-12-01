@@ -7,6 +7,8 @@ import {ElMessage} from "element-plus";
 import axios from '../axios_client/index.js';
 import WebSocketService from "@/socket_client/socket.js";
 
+const MODE = process.env.NODE_ENV;
+
 // 组件全局变量定义
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -179,7 +181,7 @@ watch(
       <el-icon><Phone /></el-icon>
       <span>{{t("navigator.contact_us")}}</span>
     </el-menu-item>
-    <el-menu-item index="7">
+    <el-menu-item index="7" v-if="MODE != 'desktop'">
       <el-icon><Download /></el-icon>
       <span>{{t("navigator.download_desktop_app")}}</span>
     </el-menu-item>
