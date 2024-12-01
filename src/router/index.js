@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
@@ -8,7 +8,7 @@ import ProfileSearchView from "@/views/ProfileSearchView.vue";
 import ItemInfoView from "@/views/ItemInfoView.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     { // 首页界面，也是我要购买界面，同时为默认页面
       path: '/',
