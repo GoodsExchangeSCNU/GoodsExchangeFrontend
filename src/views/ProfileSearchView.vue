@@ -120,7 +120,7 @@
       router.push('/login');
     }
     else if (key[0] === "3") {
-      const fileURL = "/app/Goods_Exchange_Setup_0.0.0.exe";
+      const fileURL = "/app/Goods Exchange Setup 0.0.0.exe";
       if (!checkFileAvailable(fileURL)) {
         ElMessage.warning(t("profile.download_error"));
       }
