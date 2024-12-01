@@ -289,8 +289,8 @@ onMounted(() => {
 
 <template>
   <div class="tableInfo-pictureViewer">
-    <el-scrollbar height="500">
-      <el-table :data="tableData" stripe border style="width: 100%" scrollbar-always-on>
+    <el-scrollbar height="650">
+      <el-table :data="tableData" stripe border style="width: 95%" scrollbar-always-on>
         <el-table-column fixed prop="name" :label="t('saleInfo.name_col_table')" width="100" sortable/>
         <el-table-column prop="picture" :label="t('saleInfo.picture_col_table')" width="200" sortable>
           <template #default="scope">

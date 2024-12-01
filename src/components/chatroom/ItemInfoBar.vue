@@ -100,4 +100,12 @@ const imageViewerVisible = (data_index) => {
 .nth-picture {
   margin-bottom: 5px;
 }
+
+.el-image {
+  cursor: pointer;
+  max-width: 200px;
+  min-width: 200px;
+  max-height: 150px;
+  min-height: 150px;
+}
 </style>
