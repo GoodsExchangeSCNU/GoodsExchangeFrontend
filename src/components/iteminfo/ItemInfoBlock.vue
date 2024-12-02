@@ -238,6 +238,12 @@ onMounted(() => {
             <el-icon><ShoppingCart /></el-icon>
             {{t("itemInfo.buy")}}
           </el-button>
+          <div v-if="props.isItemInfoPage">
+            <el-button @click="handleBack">
+              <el-icon><Back /></el-icon>
+              {{t("itemInfo.back")}}
+            </el-button>
+          </div>
         </div>
       </div>
     </div>
