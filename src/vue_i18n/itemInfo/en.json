@@ -16,5 +16,6 @@
   "want_failure": "Failed to Add",
   "comment_failure": "Comment failed",
   "comment_success": "Comment success",
-  "detail_info_title": "Detail Info of the Item"
+  "detail_info_title": "Detail Info of the Item",
+  "back": "Back to previous page"
 }

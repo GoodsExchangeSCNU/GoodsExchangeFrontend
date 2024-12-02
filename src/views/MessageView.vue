@@ -126,16 +126,18 @@ const handleOtherAvatarClick = (username) => {
                       </div>
                     </el-card>
                   </div>
-                  <div class="room-list-end">
-                    <div>{{t("chatroom.end_of_room_list_1")}}</div>
-                    <div>{{t("chatroom.end_of_room_list_2")}}</div>
-                    <div class="empty-navigator">
-                      <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
-                      <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
-                    </div>
-                  </div>
                 </div>
               </el-scrollbar>
+              <div class="room-list-end">
+                <div v-if="roomList.length !== 0">
+                  <div>{{t("chatroom.end_of_room_list_1")}}</div>
+                  <div>{{t("chatroom.end_of_room_list_2")}}</div>
+                  <div class="empty-navigator">
+                    <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+                    <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -429,6 +431,9 @@ h3 {
 
 .room-list-end {
   margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
   display: flex;
   text-align: center;
   flex-direction: column;

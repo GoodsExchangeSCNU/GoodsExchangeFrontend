@@ -2,7 +2,7 @@
 import {ref, onMounted, computed} from 'vue';
 import axios from '../../axios_client/index.js';
 import {ElMessage} from "element-plus";
-import {ChatLineRound, Loading, Message, Picture, ShoppingCart} from "@element-plus/icons-vue";
+import {Back, ChatLineRound, Delete, EditPen, Loading, Message, Picture, ShoppingCart} from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
 import router from "@/router/index.js";
 import AddItemDialog from "@/components/sell/AddItemDialog.vue";
@@ -12,7 +12,11 @@ import InputBlock from "@/components/chatroom/InputBlock.vue";
 
 // 组件基本事件属性定义
 const props = defineProps({
-  itemID: String
+  itemID: String,
+  isItemInfoPage: {
+    type: Boolean,
+    default: false
+  }
 })
 
 // 组件基本变量定义
@@ -43,6 +47,7 @@ let itemInfo = ref(init_item_info);
 let username = ref(localStorage.getItem('username'));
 let isItemAddDialogVisible = ref(false);
 let componentKey = ref(0);
+let fill_image_style = ref("fill")
 
 // 组件基本函数定义
 const getAvatarChar = (username) => {
@@ -141,6 +146,10 @@ const handleWantResponse = (data) => {
 
 }
 
+const handleBack = () => {
+  window.history.back();
+}
+
 function getAvatar (owner) {
   return owner ? owner.slice(0, 2).toUpperCase() : "NA";
 }
@@ -168,7 +177,6 @@ onMounted(() => {
               :min-scale="0.2"
               :preview-src-list="FormatObject.formattedImgUrlList(itemInfo.img)"
               :initial-index="0"
-              fit="cover"
           >
             <template #error>
               <div class="image-slot">
@@ -206,8 +214,20 @@ onMounted(() => {
       </div>
       <div class="functional-block">
         <div v-if="isSeller" class="seller-functional-block">
-          <el-button type="primary" @click="handleEdit">{{t("itemInfo.edit")}}</el-button>
-          <el-button type="danger" @click="handleDelete">{{t("itemInfo.delete")}}</el-button>
+          <el-button type="primary" @click="handleEdit">
+            <el-icon><EditPen /></el-icon>
+            {{t("itemInfo.edit")}}
+          </el-button>
+          <el-button type="danger" @click="handleDelete">
+            <el-icon><Delete /></el-icon>
+            {{t("itemInfo.delete")}}
+          </el-button>
+          <div v-if="props.isItemInfoPage">
+            <el-button @click="handleBack">
+              <el-icon><Back /></el-icon>
+              {{t("itemInfo.back")}}
+            </el-button>
+          </div>
         </div>
         <div v-else class="buyer-functional-block">
           <el-button type="primary" @click="handleWant">
@@ -283,7 +303,17 @@ onMounted(() => {
 }
 
 .picture-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
+}
+
+.el-image {
+  max-width: 400px;
+  max-height: 300px;
+  min-width: 300px;
+  min-height: 300px;
 }
 
 .top-block {
@@ -443,12 +473,5 @@ onMounted(() => {
   font-size: 20px;
   margin-top: 10px;
   margin-left: 10px;
-}
-
-.el-image {
-  min-width: 300px;
-  max-width: 300px;
-  min-height: 300px;
-  max-height: 300px;
 }
 </style>

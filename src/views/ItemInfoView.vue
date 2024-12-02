@@ -26,6 +26,7 @@ onMounted(() => {
         </div>
         <ItemInfoBlock
             :itemID="search_item_id"
+            :isItemInfoPage="true"
             :key="componentKey"
         />
       </div>

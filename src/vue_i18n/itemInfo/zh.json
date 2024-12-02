@@ -16,5 +16,6 @@
   "want_failure": "添加失败",
   "comment_failure": "评论失败",
   "comment_success": "评论成功",
-  "detail_info_title": "物品详细信息"
+  "detail_info_title": "物品详细信息",
+  "back": "返回上一页"
 }

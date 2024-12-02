@@ -1,7 +1,7 @@
 <script setup>
   import {onMounted, ref, reactive, computed} from "vue";
   import { useI18n } from "vue-i18n";
-  import { EditPen } from "@element-plus/icons-vue";
+  import {Back, EditPen} from "@element-plus/icons-vue";
   import axios from "@/axios_client/index.js";
   import { ElMessage } from "element-plus";
   import PatternCheck from "@/utils/pattern.js";
@@ -145,6 +145,10 @@
     router.push(`/profile/${username}`)
   }
 
+  const handleBack = () => {
+    window.history.back();
+  }
+
   onMounted(() => {
     origin_form.username = props.username
     origin_form.email = props.email
@@ -200,6 +204,10 @@
         <el-button type="primary" @click="handleEdit" v-if="!isSearching">
           <el-icon><EditPen /></el-icon>
            {{ t("profile.edit_button") }}
+        </el-button>
+        <el-button @click="handleBack" v-else>
+          <el-icon><Back /></el-icon>
+          {{t("itemInfo.back")}}
         </el-button>
       </div>
     </div>
