@@ -38,6 +38,7 @@
       () => ((dormitory.value === "") || (dormitory.value === null)) ? t("profile.detail_none_shown") : dormitory.value
   );
   const { t, locale } = useI18n(); // 解构出t函数，t函数用于获取当前语言环境下的文本
+  const MODE = process.env.NODE_ENV; // 获取当前环境
   let activeIndex = ref("1"); // 控制显示的内容，初始化为个人数据页面
   let componentKey = ref(0); // 用于强制刷新子组件
   let passwordDialogVisible = ref(false); // 控制修改密码对话框的显示
@@ -183,7 +184,7 @@
                 <el-icon><Delete /></el-icon>
                 <span>{{t("profile.logout")}}</span>
               </el-menu-item>
-              <el-menu-item index="3">
+              <el-menu-item index="3" v-if="MODE !== 'desktop'">
                 <el-icon><Download /></el-icon>
                 <span>{{t("profile.download_desktop_app")}}</span>
               </el-menu-item>
