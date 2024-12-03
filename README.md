@@ -46,7 +46,6 @@ If you want to package our application and deploy it, we offer two packaging opt
 ```
 npm run build
 ```
-Since the build script does not compile and package the js files in the assets folder, you need to manually copy the scripts in `/src/assets/js/` to `/dist/assets/js/` after packaging.
 
 Once you have completed the above steps, the /dist folder is the complete packaged front-end file that you can deploy to the server
 
