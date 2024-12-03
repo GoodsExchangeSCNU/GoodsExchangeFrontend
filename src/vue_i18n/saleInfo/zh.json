@@ -49,5 +49,6 @@
   "rating_placeholder": "请对本次交易评分",
   "empty_comment": "您暂未输入评论或未做出评价",
   "comment_fail": "评论失败",
-  "comment_success": "评论成功"
+  "comment_success": "评论成功",
+  "purchase_already_buy": "商品已经被别人购买了"
 }

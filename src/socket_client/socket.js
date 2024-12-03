@@ -1,5 +1,6 @@
 import { ElMessage } from "element-plus";
 import i18n from './../vue_i18n/index.js';
+import BackendConfig from "../../backend.config";
 
 const onErrorMessage = (data) => {
     console.error(`WebSocket error with code ${data.code} \n ${data.message}`);
@@ -18,14 +19,15 @@ const WebSocketService = {
         ReceiveNotice: [],
         FetchMessage: [],
         ReceiveMessage: [onReceiveNotice],
-        ErrorMessage: [onErrorMessage]
+        ErrorMessage: [onErrorMessage],
+        SendNoticeResponse: [],
     },
     messageQueue: [],  // 添加消息队列
 
     init(userId) {
         console.log('WebSocketService init');
         this.userId = userId;
-        this.socket = new WebSocket(`ws://8.138.167.80:6699/ws/chat/${this.userId}/`);
+        this.socket = new WebSocket(BackendConfig.WebSocket_URL + `/${this.userId}/`);
 
         this.socket.onopen = () => {
             console.log('WebSocket connection opened');
@@ -98,6 +100,7 @@ const WebSocketService = {
     },
 
     sendNotice(anotherUserId) {
+        console.log("send notice");
         this.send('sendnotice', {
             userid: this.userId,
             another_userid: anotherUserId

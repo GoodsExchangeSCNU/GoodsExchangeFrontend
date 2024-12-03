@@ -3,8 +3,15 @@
   "sell_page":"Sell",
   "chat_page":"Message",
   "personal_page": "Profile",
-  "change_language": "Change into Chinese",
+  "change_language": "Chinese",
   "logout": "Logout",
   "personal_info": "Personal Information",
-  "username_error": "failed to get avatar"
+  "username_error": "failed to get avatar",
+  "download_desktop_app": "Desktop App",
+  "contact_us": "hongyu.yan@163.com",
+  "email_address_1": "The email address has been copied to the paste board.",
+  "email_address_2": "If the email client does not open automatically, please paste it to the recipient manually.",
+  "email_address_fail": "Failed to copy email address",
+  "delete_success": "Delete item successfully",
+  "delete_failure": "Failed to delete item"
 }

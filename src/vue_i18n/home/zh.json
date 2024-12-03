@@ -29,5 +29,13 @@
   "tag17": "汽车配件",
   "tag18":"儿童用品",
   "tag19": "收藏品",
-  "tag20": "宠物用品"
+  "tag20": "宠物用品",
+  "recommend_api_failure": "获取物品信息失败",
+  "search_api_failure": "获取物品信息失败",
+  "search_get_none": "未搜索到任何数据",
+  "search_empty": "请输入搜索信息",
+  "empty_hint": "似乎没有搜索到商品",
+  "refresh": "换一换",
+  "item_list_title": "商品列表 （猜你喜欢）",
+  "bad_request_refresh": "刷新页面"
 }

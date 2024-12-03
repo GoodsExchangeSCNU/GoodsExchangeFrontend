@@ -2,7 +2,7 @@
 import { onMounted, ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
-import { ChatLineRound, House, Sell, Switch, User } from "@element-plus/icons-vue";
+import {ChatLineRound, Download, House, Phone, Sell, Switch, User} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import axios from '../axios_client/index.js';
 import WebSocketService from "@/socket_client/socket.js";
@@ -11,6 +11,7 @@ import WebSocketService from "@/socket_client/socket.js";
 const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
+const MODE = process.env.NODE_ENV;
 let username = ref('');
 let avatar_char = computed(() => username.value.slice(0, 2).toUpperCase());
 
@@ -56,6 +57,23 @@ const handleStorageChange = (event) => {
   }
 };
 
+const checkFileAvailable = async (fileURL) => {
+  try {
+    const res = await fetch(fileURL, {
+      method: 'HEAD'
+    });
+    if (res.ok) {
+      window.location.href = fileURL;
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 // 菜单选择事件
 const handleSelect = (key, keyPath) => {
   const routes = {
@@ -75,6 +93,16 @@ const handleSelect = (key, keyPath) => {
     router.push('/login');
   } else if (keyPath[1] === '6-2') {
     router.push('/profile');
+  }
+  else if (key[0] === "7") {
+    const fileURL = "/app/Goods Exchange Setup 0.0.0.exe";
+    if (!checkFileAvailable(fileURL)) {
+      ElMessage.warning(t("profile.download_error"));
+    }
+  }
+  else if (key[0] === "8") {
+    const emailURL = "hongyu.yan@163.com";
+    window.location.href = `mailto:${emailURL}`;
   }
 };
 
@@ -141,6 +169,14 @@ watch(
     <el-menu-item index="5" @click="change_language">
       <el-icon><Switch /></el-icon>
       <span>{{ t("navigator.change_language") }}</span>
+    </el-menu-item>
+    <el-menu-item index="8">
+      <el-icon><Phone /></el-icon>
+      <span>hongyu.yan@163.com</span>
+    </el-menu-item>
+    <el-menu-item index="7" v-if="MODE !== 'desktop'">
+      <el-icon><Download /></el-icon>
+      <span>{{t("navigator.download_desktop_app")}}</span>
     </el-menu-item>
     <el-sub-menu index="6">
       <template #title>

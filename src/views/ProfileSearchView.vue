@@ -60,8 +60,6 @@
           contact.value = res.data.data.profile.contact;
           facauty.value = res.data.data.profile.facauty;
           dormitory.value = res.data.data.profile.dormitory;
-          localStorage.setItem("username", res.data.data.username);
-          localStorage.setItem("userId", res.data.data.id);
         }
         else{
           console.warn("获取用户信息失败")
@@ -122,7 +120,7 @@
       router.push('/login');
     }
     else if (key[0] === "3") {
-      const fileURL = "/app/Goods_Exchange_Setup_0.0.0.exe";
+      const fileURL = "/app/Goods Exchange Setup 0.0.0.exe";
       if (!checkFileAvailable(fileURL)) {
         ElMessage.warning(t("profile.download_error"));
       }
@@ -214,7 +212,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 1000px;
   background-color: #CAD9F1;
 }
 

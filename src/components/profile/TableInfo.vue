@@ -112,7 +112,11 @@ const event_change_purchase = (trade_id) => {
       if (res.data.code === 0) {
         console.log('购买请求成功')
         tableInfoRefresh()
-      } else {
+      }
+      else if (res.data.code === 101) {
+        ElMessage.error(t("saleInfo.purchase_already_buy"))
+      }
+      else {
         console.warn('购买请求失败')
       }
     } else {
@@ -285,15 +289,15 @@ onMounted(() => {
 
 <template>
   <div class="tableInfo-pictureViewer">
-    <el-scrollbar height="500">
-      <el-table :data="tableData" stripe border style="width: 100%" scrollbar-always-on>
+    <el-scrollbar height="650">
+      <el-table :data="tableData" stripe border style="width: 95%" scrollbar-always-on>
         <el-table-column fixed prop="name" :label="t('saleInfo.name_col_table')" width="100" sortable/>
         <el-table-column prop="picture" :label="t('saleInfo.picture_col_table')" width="200" sortable>
           <template #default="scope">
             <div class="image-preview">
               <el-image
                   style="width: 150px; height: 100px"
-                  :src="scope.row.picture"
+                  :src="FormatObject.formattedImgUrl(scope.row.picture)"
                   :zoom-rate="1.2"
                   :max-scale="7"
                   :min-scale="0.2"
@@ -328,7 +332,7 @@ onMounted(() => {
         <el-table-column fixed="right" prop="operation" :label="t('saleInfo.operation_col_table')" width="300" sortable>
           <template #default="scope">
             <template v-if="scope.row.state === 0">
-              <div>{{t("sellInfo.event_operation_None")}}</div>
+              <div>{{t("saleInfo.event_operation_None")}}</div>
             </template>
             <template v-if="(scope.row.state === 1) && (props.isSell)">
               <el-button @click="event_change_reject(scope.row.id)" type="danger">{{t("saleInfo.event_operation_reject")}}</el-button>
@@ -393,7 +397,7 @@ onMounted(() => {
         :initial-index="0"
         :infinite="true"
         :z-index="2000"
-        :url-list="picture_list_data"
+        :url-list="FormatObject.formattedImgUrlList(picture_list_data)"
         @close="viewerVisible = false" />
     <el-dialog
         v-model="commentDialogVisible"

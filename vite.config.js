@@ -1,9 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import BackendConfig from "./backend.config";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     vue(),
   ],
@@ -16,7 +18,7 @@ export default defineConfig({
     port: 3301,
     proxy: {
       '/api': {
-        target: 'http://8.138.167.80:6699',
+        target: BackendConfig.BASIC_URL,
         changeOrigin: true,
       }
     }

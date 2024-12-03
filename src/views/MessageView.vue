@@ -7,7 +7,7 @@ import FormatObject from "@/utils/format.js";
 import axios from "@/axios_client/index.js";
 import ChatMessage from "@/components/chatroom/ChatMessage.vue";
 import InputBlock from "@/components/chatroom/InputBlock.vue";
-import ItemInfoBlock from "@/components/chatroom/ItemInfoBlock.vue";
+import ItemInfoBlock from "@/components/chatroom/ItemInfoBar.vue";
 import router from "@/router/index.js";
 
 // 组件全局变量定义
@@ -75,6 +75,7 @@ const select_contact = (room) => {
     console.warn('获取购买记录失败')
     console.warn(res)
   })
+  componentKey.value += 1;
 };
 
 const handleGoSell = () => {
@@ -110,7 +111,7 @@ const handleOtherAvatarClick = (username) => {
             <div class="room-list">
               <el-scrollbar height="600px" class="room-list-scrollbar">
                 <div v-if="roomList.length === 0" class="select-notice">
-                  <h1>{{t('chatroom.no_chatroom')}}</h1>
+                  <el-empty :description="t('chatroom.no_chatroom')"></el-empty>
                   <div class="empty-navigator">
                     <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
                     <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
@@ -123,18 +124,21 @@ const handleOtherAvatarClick = (username) => {
                         <el-avatar :size="40" shape="square" class="small_avatar" @click="handleOtherAvatarClick(room.contact)">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
                         <p>{{room.contact}}</p>
                       </div>
+                      <p><b>RoomID: </b>{{FormatObject.formattedUUID(room.room_id)}}</p>
                     </el-card>
-                  </div>
-                  <div class="room-list-end">
-                    <div>{{t("chatroom.end_of_room_list_1")}}</div>
-                    <div>{{t("chatroom.end_of_room_list_2")}}</div>
-                    <div class="empty-navigator">
-                      <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
-                      <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
-                    </div>
                   </div>
                 </div>
               </el-scrollbar>
+              <div class="room-list-end">
+                <div v-if="roomList.length !== 0">
+                  <div>{{t("chatroom.end_of_room_list_1")}}</div>
+                  <div>{{t("chatroom.end_of_room_list_2")}}</div>
+                  <div class="empty-navigator">
+                    <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
+                    <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -159,6 +163,7 @@ const handleOtherAvatarClick = (username) => {
               <div class="input-container">
                 <InputBlock
                     :key="componentKey"
+                    :isChatroom="true"
                     :item_id="selected_room_item_id"
                     :room_id="selected_room_id"
                 />
@@ -174,14 +179,14 @@ const handleOtherAvatarClick = (username) => {
         </div>
         <div class="right-container-unselected" v-else>
           <div v-if="roomList.length === 0" class="select-notice">
-            <h1>{{t('chatroom.no_classrooms_available')}}</h1>
+            <el-empty :description="t('chatroom.no_classrooms_available')"/>
             <div class="empty-navigator">
               <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
               <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
             </div>
           </div>
           <div v-else class="select-notice">
-            <h1>{{t('chatroom.select_chatroom')}}</h1>
+            <el-empty :description="t('chatroom.select_chatroom')"/>
             <div class="empty-navigator">
               <el-button type="primary" @click="handleGoSell">{{t('chatroom.navigator_to_sell')}}</el-button>
               <el-button type="primary" @click="handleGoBuy">{{t('chatroom.navigator_to_buy')}}</el-button>
@@ -198,7 +203,6 @@ const handleOtherAvatarClick = (username) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #CAD9F1;
 }
 
@@ -219,7 +223,6 @@ const handleOtherAvatarClick = (username) => {
   display: grid;
   grid-template-columns: 28% 2% 70%;
   border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .left-container {
@@ -236,6 +239,12 @@ const handleOtherAvatarClick = (username) => {
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.el-card {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .right-container-unselected {
@@ -423,9 +432,17 @@ h3 {
 
 .room-list-end {
   margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
   display: flex;
   text-align: center;
   flex-direction: column;
   justify-content: center;
+}
+
+p b {
+  font-weight: bold;
+  margin-top: 10px;
 }
 </style>
