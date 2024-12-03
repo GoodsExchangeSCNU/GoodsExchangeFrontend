@@ -26,7 +26,7 @@ const imageViewerVisible = (data_index) => {
   <div class="trade-info-title">{{t("chatroom.item_info_title")}}</div>
   <div class="info-column">
     <p><b>{{t("chatroom.item_name")}}</b>{{props.item_info.name}}</p>
-    <p><b>{{t("chatroom.item_price")}}</b>{{props.item_info.price}}</p>
+    <p><b>{{t("chatroom.item_price")}}</b><span class="item-info-price">￥{{props.item_info.price}}</span></p>
     <p><b>{{t("chatroom.item_picture")}}</b></p>
   </div>
   <div class="item-picture-block">
@@ -107,5 +107,10 @@ const imageViewerVisible = (data_index) => {
   min-width: 200px;
   max-height: 150px;
   min-height: 150px;
+}
+
+.item-info-price {
+  font-weight: 700;
+  color: #ff4f24;
 }
 </style>

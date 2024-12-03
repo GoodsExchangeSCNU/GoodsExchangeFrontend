@@ -108,6 +108,7 @@ const recommendCall = () => {
   top_item_1.value = cardList.value[0];
   top_item_2.value = cardList.value[1];
   top_item_3.value = cardList.value[2];
+  searchQuery.value = "";
 };
 
 const handleTagClick = (tag) => {

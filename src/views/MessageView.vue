@@ -124,6 +124,7 @@ const handleOtherAvatarClick = (username) => {
                         <el-avatar :size="40" shape="square" class="small_avatar" @click="handleOtherAvatarClick(room.contact)">{{room.contact.slice(0, 2).toUpperCase()}}</el-avatar>
                         <p>{{room.contact}}</p>
                       </div>
+                      <p><b>RoomID: </b>{{FormatObject.formattedUUID(room.room_id)}}</p>
                     </el-card>
                   </div>
                 </div>
@@ -438,5 +439,10 @@ h3 {
   text-align: center;
   flex-direction: column;
   justify-content: center;
+}
+
+p b {
+  font-weight: bold;
+  margin-top: 10px;
 }
 </style>

@@ -31,3 +31,4 @@ coverage
 *.exe
 /release
 /cache
+/.vscode
